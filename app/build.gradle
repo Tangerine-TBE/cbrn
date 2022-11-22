@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.dangkang.cbrn'
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.dangkang.cbrn"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "PR_APK_${buildType.name}_V${versionName}_${generateTime()}.apk"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    viewBinding {
+        enabled = true
+    }
+}
+static def generateTime() {
+    return new Date().format("yyyy_MM_dd_HH_mm")
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    // For Java
+    implementation 'androidx.work:work-runtime:2.7.1'
+    // For Kotlin
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+}
