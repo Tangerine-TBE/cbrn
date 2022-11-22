@@ -1,29 +1,25 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    namespace 'com.dangkang.cbrn'
+    namespace 'com.dangkang.core'
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.dangkang.cbrn"
         minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    android.applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "PR_APK_${buildType.name}_V${versionName}_${generateTime()}.apk"
         }
     }
     compileOptions {
@@ -33,15 +29,14 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    viewBinding {
-        enabled = true
-    }
 }
-static def generateTime() {
-    return new Date().format("yyyy_MM_dd_HH_mm")
-}
-
 dependencies {
-
-implementation project(path: ':core')
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    // For Java
+    implementation 'androidx.work:work-runtime:2.7.1'
+    // For Kotlin
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 }
