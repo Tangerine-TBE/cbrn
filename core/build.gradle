@@ -41,4 +41,9 @@ dependencies {
     api 'androidx.work:work-runtime:2.7.1'
     // For Kotlin
     api 'androidx.work:work-runtime-ktx:2.7.1'
+    /*状态栏*/
+    /*工具包*/
+    /*蓝牙用内置*/
+    /*串口通信内置*/
+    /*usb串口内置*/
 }
