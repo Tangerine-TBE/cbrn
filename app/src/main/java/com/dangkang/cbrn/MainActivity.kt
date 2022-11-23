@@ -4,10 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputBinding
 import com.dangkang.cbrn.databinding.ActivityMainBinding
+import com.dangkang.core.activity.BaseActivity
+import com.dangkang.core.activity.fragment.BaseFragment
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityMainBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class MainActivity : BaseActivity() {
+    override fun setRootFragment(): BaseFragment {
+        return MainFragment.newInstance()
     }
+
+    override fun setStatusBar() {
+        //暂时不关联主题
+    }
+
 }

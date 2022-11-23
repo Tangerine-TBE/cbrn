@@ -12,8 +12,6 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -29,8 +27,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled = true
+    }
 }
 dependencies {
+    api 'me.yokeyword:fragmentationx:1.0.2'
     api 'androidx.core:core-ktx:1.7.0'
     api 'androidx.appcompat:appcompat:1.5.1'
     api 'com.google.android.material:material:1.7.0'
