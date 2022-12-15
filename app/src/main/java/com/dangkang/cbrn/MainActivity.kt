@@ -1,14 +1,12 @@
 package com.dangkang.cbrn
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.view.inputmethod.InputBinding
+import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.databinding.ActivityMainBinding
 import com.dangkang.core.activity.BaseActivity
-import com.dangkang.core.activity.fragment.BaseFragment
+import com.dangkang.core.fragment.BaseFragment
 
 class MainActivity : BaseActivity() {
-    override fun setRootFragment(): BaseFragment {
+    override fun setRootFragment(): BaseFragment<ViewBinding> {
         return MainFragment.newInstance()
     }
 

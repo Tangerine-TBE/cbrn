@@ -6,14 +6,15 @@ import android.os.PersistableBundle
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.ContentFrameLayout
+import androidx.viewbinding.ViewBinding
 import com.dangkang.core.R
-import com.dangkang.core.activity.fragment.BaseFragment
+import com.dangkang.core.fragment.BaseFragment
 import me.yokeyword.fragmentation.SupportActivity
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 
 abstract class BaseActivity : SupportActivity() {
-    abstract fun setRootFragment(): BaseFragment
+    abstract fun setRootFragment(): BaseFragment<ViewBinding>
 
     //强制更改的沉浸式
     abstract fun setStatusBar()
