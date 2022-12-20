@@ -1,4 +1,4 @@
-package com.dangkang.cbrn.fragment
+package com.dangkang.cbrn.fragment.main
 
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.databinding.FragmentMainBinding
