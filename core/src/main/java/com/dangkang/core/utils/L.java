@@ -2,6 +2,8 @@ package com.dangkang.core.utils;
 
 import android.util.Log;
 
+import com.dangkang.core.BuildConfig;
+
 public class L {
 
     private static final String TAG = "dihealth_box";

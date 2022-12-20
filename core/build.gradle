@@ -16,8 +16,14 @@ android {
 
     buildTypes {
         release {
+            manifestPlaceholders = [app_name_channel: "CBRN"]
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+        debug{
+            manifestPlaceholders = [app_name_channel: "CBRN测试"]
+            debuggable true  //可以debug
+            minifyEnabled false //启用Proguard
         }
     }
     compileOptions {
