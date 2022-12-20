@@ -1,0 +1,62 @@
+/**
+ *  全局统一配置文件
+ */
+ext {
+    isModule = false
+    host = [
+
+
+    ]
+    //版本号
+    versions = [
+            applicationId    : "com.dangkang.cbrn",        //应用ID
+            applicationName  : "CBRN",
+            versionCode      : 1,                    //版本号
+            versionName      : "1.0",              //版本名称
+            compileSdkVersion: 32,
+            minSdkVersion    : 21,
+            targetSdkVersion : 32,
+
+    ]
+    dependencies = [
+            //方法数超过65535解决方法64K MultiDex分包方法
+            "multidex"             : "com.android.support:multidex:1.0.2",
+            //路由
+            "arouter_api"          : "com.alibaba:arouter-api:1.4.0",
+            "arouter_compiler"     : "com.alibaba:arouter-compiler:1.2.1",
+            "arouter_annotation"   : "com.alibaba:arouter-annotation:1.0.4",
+            //事件订阅
+            "eventbus"             : "org.greenrobot:eventbus:3.0.0",
+            //retrofit
+            "retrofit"             : "com.squareup.retrofit2:retrofit:2.4.0",
+            "retrofitConverter"    : "com.squareup.retrofit2:converter-gson:2.4.0",
+            "retrofitAdapter"      : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
+            //rxlifecycle
+            "rxlifecycle"          : "com.trello.rxlifecycle2:rxlifecycle:2.1.0",
+            "rxlifecycleComponents": "com.trello.rxlifecycle2:rxlifecycle-components:2.1.0",
+            //rx android
+            "rxjava"               : "io.reactivex.rxjava2:rxandroid:2.0.2",
+            "rxandroid"            : "io.reactivex.rxjava2:rxjava:2.2.4",
+            //Gson
+            "Gson"                 : "com.google.code.gson:gson:2.8.5",
+            //沉浸式状态栏
+            "immersionbar"         : "com.gyf.immersionbar:immersionbar:2.3.2-beta05",
+            //图片加载
+            "glide"                : "com.github.bumptech.glide:glide:4.12.0",
+            //数据库
+            "greenDao"             : "org.greenrobot:greendao:3.3.0",
+            //工具包
+            "utils"                : "com.blankj:utilcode:1.23.4",
+            //BaseRecyclerView
+            "BaseRecyclerView"     : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30",
+            //万能Adapter
+            "superAdapter"         : "org.byteam.superadapter:superadapter:3.6.8",
+            //下拉刷新上拉加载
+            "smartRefresh"         : "com.scwang.smart:refresh-layout-kernel:2.0.1",
+            "smartRefreshHeader"   : "com.scwang.smart:refresh-header-classics:2.0.1",
+            //设置内项目按下的效果
+            "ripple"               : "com.balysv:material-ripple:1.0.2",
+            //RX权限
+            "rxpermissions"        : "com.github.tbruyelle:rxpermissions:0.10.2",
+    ]
+}

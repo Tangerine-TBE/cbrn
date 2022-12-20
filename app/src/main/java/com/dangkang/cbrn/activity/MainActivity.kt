@@ -1,11 +1,11 @@
-package com.dangkang.cbrn
+package com.dangkang.cbrn.activity
 
 import androidx.viewbinding.ViewBinding
-import com.dangkang.cbrn.databinding.ActivityMainBinding
+import com.dangkang.cbrn.fragment.MainFragment
 import com.dangkang.core.activity.BaseActivity
 import com.dangkang.core.fragment.BaseFragment
 
-class MainActivity : BaseActivity() {
+class MainActivity: BaseActivity(){
     override fun setRootFragment(): BaseFragment<ViewBinding> {
         return MainFragment.newInstance()
     }

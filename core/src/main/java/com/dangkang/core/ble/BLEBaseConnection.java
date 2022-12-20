@@ -1,6 +1,5 @@
 package com.dangkang.core.ble;
 
-import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -8,21 +7,14 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.core.app.ActivityCompat;
-
 import com.dangkang.core.application.BaseApplication;
 import com.dangkang.core.utils.L;
 import com.dangkang.core.utils.StringUtil;
-
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -219,7 +211,7 @@ public abstract class BLEBaseConnection {
         }
     }
 
-    private void    unregisterChrNotifies(UUID svc, UUID chr){
+    private void   unregisterChrNotifies(UUID svc, UUID chr){
         BluetoothGattCharacteristic ch = mGatt.getService(svc).getCharacteristic(chr);
         mGatt.setCharacteristicNotification(ch, false);
         for (BluetoothGattDescriptor descriptor : ch.getDescriptors()) {

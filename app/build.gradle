@@ -8,27 +8,52 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.dangkang.cbrn"
-        minSdk 21
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        compileSdkVersion rootProject.ext.versions.compileSdkVersion
+        minSdkVersion rootProject.ext.versions.minSdkVersion
+        targetSdkVersion rootProject.ext.versions.targetSdkVersion
+        versionCode rootProject.ext.versions.versionCode
+        versionName rootProject.ext.versions.versionName
+    }
+    signingConfigs{
+        debug {
+            storeFile file('/pr.jks')
+            storePassword 'pr123456'
+            keyAlias 'pr'
+            keyPassword 'pr123456'
+        }
+        release {
+            storeFile file('/pr.jks')
+            storePassword 'pr123456'
+            keyAlias 'pr'
+            keyPassword 'pr123456'
+        }
     }
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            debuggable true  //可以debug
+            minifyEnabled false //启用Proguard
         }
     }
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "PR_APK_${buildType.name}_V${versionName}_${generateTime()}.apk"
+            outputFileName = "CNRN_APK_${buildType.name}_V${versionName}_${generateTime()}.apk"
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
     kotlinOptions {
         jvmTarget = '1.8'
