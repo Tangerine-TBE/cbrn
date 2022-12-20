@@ -2,16 +2,16 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
-
 android {
     namespace 'com.dangkang.core'
     compileSdk 32
 
     defaultConfig {
-        minSdk 21
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        compileSdkVersion rootProject.ext.versions.compileSdkVersion
+        minSdkVersion rootProject.ext.versions.minSdkVersion
+        targetSdkVersion rootProject.ext.versions.targetSdkVersion
+        versionCode rootProject.ext.versions.versionCode
+        versionName rootProject.ext.versions.versionName
     }
 
     buildTypes {
@@ -32,20 +32,17 @@ android {
     }
 }
 dependencies {
-    api 'me.yokeyword:fragmentationx:1.0.2'
-    api 'androidx.core:core-ktx:1.7.0'
-    api 'androidx.appcompat:appcompat:1.5.1'
-    api 'com.google.android.material:material:1.7.0'
-    api 'androidx.constraintlayout:constraintlayout:2.1.4'
-    // For Java
-    api 'androidx.work:work-runtime:2.7.1'
-    // For Kotlin
-    api 'androidx.work:work-runtime-ktx:2.7.1'
-    api 'io.reactivex.rxjava2:rxjava:2.2.3'
-    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    /*状态栏*/
-    /*工具包*/
-    /*蓝牙用内置*/
-    /*串口通信内置*/
-    /*usb串口内置*/
+    api rootProject.ext.dependencies["multidex"]
+    api rootProject.ext.dependencies["kotlin"]
+    api rootProject.ext.dependencies["appcompat"]
+    api rootProject.ext.dependencies["material"]
+    api rootProject.ext.dependencies["constraintlayout"]
+    api rootProject.ext.dependencies["_java"]
+    api rootProject.ext.dependencies["_kotlin"]
+    api rootProject.ext.dependencies["rxjava"]
+    api rootProject.ext.dependencies["rxandroid"]
+    api rootProject.ext.dependencies["immersionbar"]
+    api rootProject.ext.dependencies["greenDao"]
+    api rootProject.ext.dependencies["rxpermissions"]
+    api rootProject.ext.dependencies["eventbus"]
 }
