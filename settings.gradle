@@ -1,7 +1,11 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        google()
+        maven {
+            allowInsecureProtocol = true
+            url "https://maven.aliyun.com/repository/google"
+        }
+//        google()
         maven {
             allowInsecureProtocol = true
             url "http://maven.aliyun.com/nexus/content/groups/public/"
@@ -19,7 +23,10 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+        maven {
+            allowInsecureProtocol = true
+            url "https://maven.aliyun.com/repository/google"
+        }
         maven { url "https://www.jitpack.io" }
         maven {
             url 'https://artifact.bytedance.com/repository/pangle'
@@ -34,6 +41,30 @@ dependencyResolutionManagement {
 
         }
         mavenCentral()
+    }
+}
+buildscript {
+    repositories {
+        maven {
+            allowInsecureProtocol = true
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+        maven{
+            allowInsecureProtocol = true
+            url "http://maven.aliyun.com/nexus/content/repositories/jcenter"
+
+        }
+        maven {
+            allowInsecureProtocol = true
+            url "https://maven.aliyun.com/repository/google"
+        }
+        mavenCentral()
+        dependencies {
+            classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20"
+            classpath "com.android.tools.build:gradle:7.3.1"
+
+        }
     }
 }
 rootProject.name = "cbrn"

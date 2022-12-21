@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.greenrobot.greendao'
 }
 android {
     namespace 'com.dangkang.cbrn'
@@ -60,6 +61,11 @@ android {
     }
     viewBinding {
         enabled = true
+    }
+    greendao {
+        schemaVersion 1 //??????
+        daoPackage 'com.dangkang.db'// ??DaoMaster?DaoSession?Dao ??
+        targetGenDir 'src/main/java'//??DaoMaster?DaoSession?Dao??
     }
 }
 static def generateTime() {
