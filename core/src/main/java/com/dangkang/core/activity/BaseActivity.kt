@@ -11,6 +11,8 @@ import com.dangkang.core.R
 import com.dangkang.core.fragment.BaseFragment
 import me.yokeyword.fragmentation.SupportActivity
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator
+import me.yokeyword.fragmentation.anim.DefaultNoAnimator
+import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 
 abstract class BaseActivity : SupportActivity() {
