@@ -10,4 +10,5 @@
     <color name="transparent">#00000000</color>
     <color name = "navigation">#181816</color>
     <color name = "status">#2C2C2C</color>
+    <color name="blue">#178FFF</color>
 </resources>
