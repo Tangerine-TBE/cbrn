@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-
+    <color name = "navigation">#181816</color>
+    <color name = "status">#2C2C2C</color>
 </resources>

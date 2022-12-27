@@ -24,10 +24,10 @@ class SplashActivity : BaseActivity(){
 
     override fun setStatusBar() {
         ImmersionBar.with(this)
-            .statusBarColor(android.R.color.transparent)
-            .statusBarDarkFont(true)
-            .hideBar(BarHide.FLAG_HIDE_BAR)
-            .navigationBarColor(R.color.white)
+            .statusBarColor(R.color.navigation)
+            .statusBarDarkFont(false)
+            .navigationBarColor(R.color.navigation)
+            .barColor(R.color.navigation)
             .init()
     }
 }
