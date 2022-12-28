@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
+import androidx.viewpager.widget.PagerAdapter
 import me.yokeyword.fragmentation.SupportFragment
 
 abstract class BaseFragment <VB:ViewBinding>: SupportFragment() {

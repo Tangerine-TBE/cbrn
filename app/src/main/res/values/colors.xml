@@ -11,4 +11,5 @@
     <color name = "navigation">#181816</color>
     <color name = "status">#2C2C2C</color>
     <color name="blue">#178FFF</color>
+    <color name="un_select_color">#C3C3C3</color>
 </resources>
