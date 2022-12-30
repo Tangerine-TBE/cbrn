@@ -34,4 +34,28 @@
         android:src="@mipmap/ic_cancel"
         android:layout_marginEnd="20dp"
         android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/connect_sir"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/cancel"
+        android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/icon_disconnect"
+                android:layout_marginEnd="10dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <TextView
+
+                android:id="@+id/connect_info"
+                android:textSize="18sp"
+                android:text="未连接模块..."
+                android:textColor="#FC5743"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

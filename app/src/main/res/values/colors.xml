@@ -12,4 +12,7 @@
     <color name = "status">#2C2C2C</color>
     <color name="blue">#178FFF</color>
     <color name="un_select_color">#C3C3C3</color>
+    <color name="red">#F42626</color>
+    <color name="color_FDC457">#FDC457</color>
+    <color name="color_37B48B">#37B48B</color>
 </resources>
