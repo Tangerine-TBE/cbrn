@@ -3,6 +3,7 @@ package com.dangkang.cbrn.fragment.main
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.databinding.FragmentMainBinding
 import com.dangkang.cbrn.fragment.main.setting.SettingFragment
+import com.dangkang.cbrn.fragment.main.workSpace.WorkSpaceFragment
 import com.dangkang.core.fragment.BaseFragment
 
 class TeacherFragment : BaseFragment<ViewBinding>() {
@@ -36,6 +37,7 @@ class TeacherFragment : BaseFragment<ViewBinding>() {
         start(SettingFragment.newInstance())
     }
     private fun  toWorkSpace(){
+        start(WorkSpaceFragment.newInstance())
 
     }
 }

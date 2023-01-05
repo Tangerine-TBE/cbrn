@@ -8,6 +8,8 @@ import androidx.multidex.MultiDex;
 
 import com.dangkang.core.utils.SPUtil;
 
+import org.greenrobot.greendao.internal.DaoConfig;
+
 public class BaseApplication extends Application {
     public static Application APPLICATION;
 

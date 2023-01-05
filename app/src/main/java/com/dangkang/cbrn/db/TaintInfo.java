@@ -14,14 +14,14 @@ public class TaintInfo {
     private String taint_sim; //模拟污点
     private String taint_dis; //辐射距离
     private String taint_max; // 中心峰值
-
+    private long create_time;//创建时间
     @Generated(hash = 1646616816)
     public TaintInfo() {
     }
 
 
-    @Generated(hash = 243811105)
-    public TaintInfo(Long id, int type, int taint_num, String taint_loc, String taint_sim, String taint_dis, String taint_max) {
+    @Generated(hash = 1410964319)
+    public TaintInfo(Long id, int type, int taint_num, String taint_loc, String taint_sim, String taint_dis, String taint_max, long create_time) {
         this.id = id;
         this.type = type;
         this.taint_num = taint_num;
@@ -29,8 +29,17 @@ public class TaintInfo {
         this.taint_sim = taint_sim;
         this.taint_dis = taint_dis;
         this.taint_max = taint_max;
+        this.create_time = create_time;
     }
 
+
+    public long getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(long create_time) {
+        this.create_time = create_time;
+    }
 
     public Long getId() {
         return id;

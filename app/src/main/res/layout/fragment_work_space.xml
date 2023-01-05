@@ -24,16 +24,17 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:padding="10dp"
                 android:id="@+id/radiation"
+                android:background="@drawable/item_ws_bg"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:src="@mipmap/radiation"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"/>
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
                 <TextView
                     android:layout_gravity="center"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:textColor="@color/white"
                     android:text="辐射"
                     android:padding="10dp"
@@ -50,6 +51,7 @@
                     />
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:background="@drawable/item_ws_bg"
                 android:layout_width="wrap_content"
                 android:padding="10dp"
                 android:id="@+id/biologics"
@@ -57,11 +59,11 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:src="@mipmap/biologics"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"/>
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
                 <TextView
                     android:layout_gravity="center"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:text="生物"
                     android:padding="10dp"
 
@@ -78,6 +80,8 @@
                     />
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
+
+                android:background="@drawable/item_ws_bg"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:id="@+id/chemical"
@@ -85,11 +89,11 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:src="@mipmap/chemical"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"/>
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
                 <TextView
                     android:layout_gravity="center"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:textColor="@color/white"
                     android:text="化学"
                     android:padding="10dp"
@@ -144,7 +148,7 @@
             android:padding="10dp"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:background="@drawable/item_timer_task_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

@@ -17,62 +17,73 @@
         android:textColor="@color/white"
         android:text=" | "
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textIndex2"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/textIndex2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textIndex1"
+        app:layout_constraintStart_toStartOf="@id/layout1"
         android:text="单位及类型"
         android:textSize="18sp"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
-    <TextView
-        android:textColor="#D1D1D0"
-        android:id="@+id/textIndex3"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/layout1"
         app:layout_constraintTop_toBottomOf="@id/textIndex2"
-        app:layout_constraintStart_toStartOf="@id/textIndex2"
-        android:text="单位类型显示: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        app:layout_constraintTop_toTopOf="@id/textIndex3"
-        app:layout_constraintStart_toEndOf="@id/textIndex3"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text=" CPS， gay， uSv/h"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_marginStart="20dp"
-        android:textColor="#D1D1D0"
-        android:id="@+id/textIndex4"
-        android:textSize="18sp"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textIndex2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="#D1D1D0"
+            android:id="@+id/textIndex3"
+            android:textSize="18sp"
+            android:text="单位类型显示: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text=" CPS， gay， uSv/h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/layout2"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        android:text="辐射类型显示: "
+        app:layout_constraintTop_toBottomOf="@id/textIndex2"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/textIndex7"
-        app:layout_constraintTop_toTopOf="@id/textIndex4"
-        app:layout_constraintStart_toEndOf="@id/textIndex4"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text=" X射线，Y射线，B射线"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="#D1D1D0"
+            android:id="@+id/textIndex4"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/textIndex2"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            android:text="辐射类型显示: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textIndex7"
+            app:layout_constraintTop_toTopOf="@id/textIndex4"
+            app:layout_constraintStart_toEndOf="@id/textIndex4"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text=" X射线，Y射线，B射线"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
         android:layout_marginStart="20dp"
@@ -81,8 +92,8 @@
         android:text=" | "
         android:id="@+id/textIndex5"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textIndex4"
+        app:layout_constraintEnd_toStartOf="@id/layout1"
+        app:layout_constraintTop_toBottomOf="@id/layout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
@@ -100,7 +111,7 @@
         android:id="@+id/add"
         app:layout_constraintTop_toTopOf="@id/textIndex5"
         android:backgroundTint="#178FFF"
-        app:layout_constraintEnd_toEndOf="@id/textIndex7"
+        app:layout_constraintEnd_toEndOf="@id/layout2"
         android:drawableLeft="@mipmap/ic_more"
         android:text="创建"
         android:textColor="@color/white"
@@ -108,7 +119,11 @@
         android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@id/add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/layout1"
+        app:layout_constraintEnd_toEndOf="@id/add"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

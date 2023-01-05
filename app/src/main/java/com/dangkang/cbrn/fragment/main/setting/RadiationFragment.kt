@@ -1,18 +1,23 @@
 package com.dangkang.cbrn.fragment.main.setting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.adapter.RadiationAdapter
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingRadiationBinding
-import com.dangkang.cbrn.databinding.FragmentSettingsBinding
 import com.dangkang.cbrn.db.TaintInfo
 import com.dangkang.core.fragment.BaseFragment
+import com.dangkang.core.utils.L
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class RadiationFragment : BaseFragment<ViewBinding>() {
-    private val list: MutableList<TaintInfo> = DaoTool.queryTaintInfo()
-
     companion object {
         fun newInstance(): BaseFragment<ViewBinding> {
             return RadiationFragment()
@@ -24,18 +29,23 @@ class RadiationFragment : BaseFragment<ViewBinding>() {
         return initView(binding as FragmentSettingRadiationBinding)
     }
 
+    @SuppressLint("CheckResult")
     private fun initView(binding: FragmentSettingRadiationBinding): ViewBinding {
         binding.recyclerView.apply {
-            val gridLayoutManager = GridLayoutManager(_mActivity, 3)
+            val gridLayoutManager = GridLayoutManager(_mActivity, 2)
             layoutManager = gridLayoutManager
-            adapter = RadiationAdapter(list)
+            Observable.create<MutableList<TaintInfo>>() {
+                val list = DaoTool.queryTaintInfo()
+                it.onNext(list)
+            }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                adapter = RadiationAdapter(it)
+            }, { L.e(it.message) })
+
         }
-        binding.add.setOnClickListener{
-            val taintInfo :TaintInfo
-
-
-
+        binding.add.setOnClickListener {
+            (binding.recyclerView.adapter as RadiationAdapter).addItem(DaoTool.addTaintInfoTest())
         }
         return binding
     }
+
 }

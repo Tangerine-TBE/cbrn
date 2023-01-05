@@ -27,6 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <EditText
+        android:gravity="center"
+        android:textColor="@color/white"
         android:id="@+id/taint_num"
         android:background="@drawable/item_raditation_bg"
         app:layout_constraintStart_toEndOf="@id/tv1"
@@ -35,7 +37,7 @@
         android:layout_marginStart="20dp"
         android:textSize="18sp"
         android:maxLines="1"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:layout_height="30dp"/>
     <TextView
         android:id="@+id/tv2"
@@ -49,6 +51,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <EditText
+        android:gravity="center"
+        android:textColor="@color/white"
         android:id="@+id/taint_loc"
         android:background="@drawable/item_raditation_bg"
         app:layout_constraintStart_toEndOf="@id/tv2"
@@ -56,7 +60,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tv2"
         android:layout_marginStart="20dp"
         android:textSize="18sp"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:layout_height="30dp"/>
     <TextView
         android:id="@+id/tv3"
@@ -70,12 +74,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:paddingEnd="8dp"
         android:id="@+id/taint_sim"
         android:background="@drawable/item_raditation_bg"
         app:layout_constraintStart_toEndOf="@id/tv3"
         app:layout_constraintTop_toTopOf="@id/tv3"
         app:layout_constraintBottom_toBottomOf="@id/tv3"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:layout_marginStart="20dp"
         android:layout_height="30dp"
         app:drawableRightCompat="@mipmap/ic_add" />
@@ -92,6 +100,8 @@
         android:layout_height="wrap_content"/>
 
     <EditText
+        android:textColor="@color/white"
+        android:gravity="center"
         android:id="@+id/taint_dis"
         android:background="@drawable/item_raditation_bg"
         app:layout_constraintStart_toEndOf="@id/tv4"
@@ -99,7 +109,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tv4"
         android:layout_marginStart="20dp"
         android:textSize="18sp"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:layout_height="30dp"/>
 
     <TextView
@@ -118,12 +128,14 @@
         android:layout_marginStart="20dp"
         app:layout_constraintTop_toTopOf="@id/tv5"
         app:layout_constraintBottom_toBottomOf="@id/tv5"
-        android:layout_width="120dp"
+        android:layout_width="200dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_height="30dp">
 
         <EditText
+            android:gravity="center"
+            android:textColor="@color/white"
             android:id="@+id/taint_max"
             android:layout_weight="1"
             android:background="@drawable/item_raditation_bg"
@@ -133,6 +145,7 @@
             android:layout_width="10dp"
             android:layout_height="wrap_content"/>
         <TextView
+            android:paddingEnd="8dp"
             android:layout_weight="1"
             android:background="@drawable/item_raditation_bg"
             android:layout_width="wrap_content"

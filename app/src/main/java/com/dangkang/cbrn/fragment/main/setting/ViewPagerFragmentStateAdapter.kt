@@ -14,8 +14,8 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager,lifecycle:L
     override fun createFragment(position: Int): Fragment {
         return when (position){
             0 -> ChemicalFragment.newInstance()
-            1 -> BiologicsFragment.newInstance()
-            2 -> RadiationFragment.newInstance()
+            1 -> ChemicalFragment.newInstance()
+            2 -> ChemicalFragment.newInstance()
             else -> ChemicalFragment.newInstance()
         }
     }

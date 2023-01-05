@@ -56,6 +56,7 @@ class SettingFragment : BaseFragment<ViewBinding>() {
                 }
             })
         }
+        viewBinding.viewPager.offscreenPageLimit = 1
         TabLayoutMediator(viewBinding.tabLayout,
             viewBinding.viewPager,
             true
@@ -69,6 +70,12 @@ class SettingFragment : BaseFragment<ViewBinding>() {
             textView.setTextColor(resources.getColor(R.color.white))
             tab.customView = textView
         }.attach()
+        viewBinding.titleBar.back.setOnClickListener{
+            pop()
+        }
+        viewBinding.titleBar.cancel.setOnClickListener{
+            _mActivity.finish()
+        }
         return viewBinding
     }
 
