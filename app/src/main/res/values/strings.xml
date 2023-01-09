@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">cbrn</string>
+
+
+
+
+
+
+
+
+
+
+    <!--辐射设置-->
+    <!--检测类型选择-->
+    <string-array name="radiation_measurement">
+        <item >剂量率</item>
+        <item >计数率</item>
+    </string-array>
+    <!--模拟污点-->
+    <string-array name="radiation_sim">
+
+    </string-array>
+    <!--辐射距离-->
+
+    <!--中心峰值单位-->
 </resources>

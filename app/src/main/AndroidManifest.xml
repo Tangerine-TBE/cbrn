@@ -21,6 +21,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,6 +34,7 @@
                 android:value="" />
         </activity>
         <activity android:name=".activity.MainActivity" android:exported="true"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="landscape"
             />
         <meta-data

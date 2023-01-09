@@ -1,6 +1,5 @@
 /**
- *  全局统一配置文件
- */
+ *  全局统一配置文件*/
 ext {
     isModule = false
     host = [
@@ -8,14 +7,13 @@ ext {
 
     ]
     //版本号
-    versions = [
-            applicationId    : "com.dangkang.cbrn",        //应用ID
-            applicationName  : "CBRN",
-            versionCode      : 1,                    //版本号
-            versionName      : "1.0",              //版本名称
-            compileSdkVersion: 32,
-            minSdkVersion    : 21,
-            targetSdkVersion : 32,
+    versions = [applicationId    : "com.dangkang.cbrn",        //应用ID
+                applicationName  : "CBRN",
+                versionCode      : 1,                    //版本号
+                versionName      : "1.0",              //版本名称
+                compileSdkVersion: 32,
+                minSdkVersion    : 21,
+                targetSdkVersion : 32,
 
     ]
     dependencies = [
@@ -66,6 +64,6 @@ ext {
             "material"             : "com.google.android.material:material:1.7.0",
             "constraintlayout"     : "androidx.constraintlayout:constraintlayout:2.1.4",
             "_java"                : "androidx.work:work-runtime:2.7.1",
-            "_kotlin"              : "androidx.work:work-runtime-ktx:2.7.1"
-    ]
+            "_kotlin"              : "androidx.work:work-runtime-ktx:2.7.1",
+            "PopWindow"            : "io.github.razerdp:BasePopup:3.2.1"]
 }

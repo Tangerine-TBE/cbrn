@@ -48,14 +48,16 @@ public class RadiationAdapter extends RecyclerView.Adapter<RadiationAdapter.View
 
     }
     public final void addItems(List<TaintInfo> list){
-        int dataSize = data.size();
-        data.addAll(list);
-        notifyItemRangeInserted(dataSize-1,list.size());
+        if (data != null){
+            if (!data.isEmpty()){
+                data.clear();
+            }
+            data.addAll(list);
+            notifyItemInserted(0);
+
+        }
     }
-    public final void addItem(TaintInfo taintInfo){
-        data.add(taintInfo);
-        notifyItemInserted(data.size());
-    }
+
 
     @Override
     public int getItemCount() {
@@ -66,7 +68,7 @@ public class RadiationAdapter extends RecyclerView.Adapter<RadiationAdapter.View
         EditText taint_num;
         EditText taint_loc;
         TextView taint_sim;
-        EditText taint_dis;
+        TextView taint_dis;
         EditText taint_max;
         ImageView delete;
         public ViewHolder(@NonNull View itemView) {

@@ -36,7 +36,7 @@ public class DaoTool {
     private static void dealWithDemoData() {
         String sql = "delete from TAINT_INFO where  CREATE_TIME <= 1542708900";
         sDaoSession.getDatabase().execSQL(sql);
-        Query<TaintInfo> taintInfoQuery = sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Taint_num.eq("0110")).build();
+        Query<TaintInfo> taintInfoQuery = sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Taint_num.eq("0110")).orderDesc(TaintInfoDao.Properties.Create_time).build();
         TaintInfo taintInfo = taintInfoQuery.unique();
         if (taintInfo == null) {
             sql = "INSERT INTO \"main\".\"TAINT_INFO\"(\"TYPE\", \"TAINT_NUM\", \"TAINT_LOC\", \"TAINT_SIM\", \"TAINT_DIS\", \"TAINT_MAX\", \"CREATE_TIME\") VALUES ('0', '0110', '未知', '56','100', '5300','1542708900');";
@@ -57,6 +57,7 @@ public class DaoTool {
         taintInfo.setTaint_loc("未知");
         taintInfo.setTaint_max("300");
         taintInfo.setTaint_num(1144);
+        taintInfo.setTaint_loc("头部");
         taintInfo.setCreate_time(System.currentTimeMillis()/1000);
         sDaoSession.getTaintInfoDao().insert(taintInfo);
         return taintInfo;

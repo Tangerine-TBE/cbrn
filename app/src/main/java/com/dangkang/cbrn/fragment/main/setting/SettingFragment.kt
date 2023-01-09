@@ -55,6 +55,7 @@ class SettingFragment : BaseFragment<ViewBinding>() {
                   }
                 }
             })
+            isUserInputEnabled = false
         }
         viewBinding.viewPager.offscreenPageLimit = 1
         TabLayoutMediator(viewBinding.tabLayout,
