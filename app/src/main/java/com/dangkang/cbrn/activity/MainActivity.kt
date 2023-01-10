@@ -1,5 +1,6 @@
 package com.dangkang.cbrn.activity
 
+import android.view.MotionEvent
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.fragment.main.TeacherFragment

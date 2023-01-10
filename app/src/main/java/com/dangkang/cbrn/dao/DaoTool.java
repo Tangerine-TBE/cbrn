@@ -30,8 +30,11 @@ public class DaoTool {
         DaoMaster.createAllTables(daoMaster.getDatabase(), true);
     }
 
-    public static List<TaintInfo> queryTaintInfo() {
-        return sDaoSession.getTaintInfoDao().queryBuilder().build().list();
+    public static List<TaintInfo> queryRadiationTaintInfo() {
+        return sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Type.eq(1)).build().list();
+    }
+    public static List<TaintInfo> queryChemicalTaintInfo(){
+        return sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Type.eq(2)).build().list();
     }
     private static void dealWithDemoData() {
         String sql = "delete from TAINT_INFO where  CREATE_TIME <= 1542708900";
@@ -51,18 +54,9 @@ public class DaoTool {
         String sql = "delete from TAINT_INFO where TAINT_NUM = ?";
         sDaoSession.getDatabase().execSQL(sql,new String[]{String.valueOf(taint_num)});
     }
-    public static TaintInfo addTaintInfoTest(){
-        TaintInfo taintInfo = new TaintInfo();
-        taintInfo.setTaint_dis("200");
-        taintInfo.setTaint_loc("未知");
-        taintInfo.setTaint_max("300");
-        taintInfo.setTaint_num(1144);
-        taintInfo.setTaint_loc("头部");
-        taintInfo.setCreate_time(System.currentTimeMillis()/1000);
-        sDaoSession.getTaintInfoDao().insert(taintInfo);
-        return taintInfo;
-
-
+    public static void updateTaintInfo(List<TaintInfo> taintInfo){
+        sDaoSession.getTaintInfoDao().deleteAll();
+        sDaoSession.getTaintInfoDao().insertOrReplaceInTx(taintInfo);
     }
 
 }

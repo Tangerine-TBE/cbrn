@@ -31,7 +31,8 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
         public final static Property Taint_sim = new Property(4, String.class, "taint_sim", false, "TAINT_SIM");
         public final static Property Taint_dis = new Property(5, String.class, "taint_dis", false, "TAINT_DIS");
         public final static Property Taint_max = new Property(6, String.class, "taint_max", false, "TAINT_MAX");
-        public final static Property Create_time = new Property(7, long.class, "create_time", false, "CREATE_TIME");
+        public final static Property Taint_unit = new Property(7, String.class, "taint_unit", false, "TAINT_UNIT");
+        public final static Property Create_time = new Property(8, long.class, "create_time", false, "CREATE_TIME");
     }
 
 
@@ -54,7 +55,8 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
                 "\"TAINT_SIM\" TEXT," + // 4: taint_sim
                 "\"TAINT_DIS\" TEXT," + // 5: taint_dis
                 "\"TAINT_MAX\" TEXT," + // 6: taint_max
-                "\"CREATE_TIME\" INTEGER NOT NULL );"); // 7: create_time
+                "\"TAINT_UNIT\" TEXT," + // 7: taint_unit
+                "\"CREATE_TIME\" INTEGER NOT NULL );"); // 8: create_time
     }
 
     /** Drops the underlying database table. */
@@ -93,7 +95,12 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
         if (taint_max != null) {
             stmt.bindString(7, taint_max);
         }
-        stmt.bindLong(8, entity.getCreate_time());
+ 
+        String taint_unit = entity.getTaint_unit();
+        if (taint_unit != null) {
+            stmt.bindString(8, taint_unit);
+        }
+        stmt.bindLong(9, entity.getCreate_time());
     }
 
     @Override
@@ -126,7 +133,12 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
         if (taint_max != null) {
             stmt.bindString(7, taint_max);
         }
-        stmt.bindLong(8, entity.getCreate_time());
+ 
+        String taint_unit = entity.getTaint_unit();
+        if (taint_unit != null) {
+            stmt.bindString(8, taint_unit);
+        }
+        stmt.bindLong(9, entity.getCreate_time());
     }
 
     @Override
@@ -144,7 +156,8 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // taint_sim
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // taint_dis
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // taint_max
-            cursor.getLong(offset + 7) // create_time
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // taint_unit
+            cursor.getLong(offset + 8) // create_time
         );
         return entity;
     }
@@ -158,7 +171,8 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
         entity.setTaint_sim(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setTaint_dis(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setTaint_max(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setCreate_time(cursor.getLong(offset + 7));
+        entity.setTaint_unit(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setCreate_time(cursor.getLong(offset + 8));
      }
     
     @Override

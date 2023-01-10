@@ -65,5 +65,7 @@ ext {
             "constraintlayout"     : "androidx.constraintlayout:constraintlayout:2.1.4",
             "_java"                : "androidx.work:work-runtime:2.7.1",
             "_kotlin"              : "androidx.work:work-runtime-ktx:2.7.1",
-            "PopWindow"            : "io.github.razerdp:BasePopup:3.2.1"]
+            "PopWindow"            : "io.github.razerdp:BasePopup:3.2.1",
+            "blankJ"               : "com.blankj:utilcodex:1.31.1"
+]
 }

@@ -11,10 +11,13 @@ import android.view.animation.Animation;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.blankj.utilcode.util.AdaptScreenUtils;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.dangkang.cbrn.R;
 
 import java.util.List;
@@ -29,11 +32,12 @@ import razerdp.util.animation.TranslationConfig;
  * @date:2023/1/9
  */
 public class DataSelectWindow extends BasePopupWindow {
-    private List<String > mArrayStrings;
-    private String mSelValue;
+    private final List<String > mArrayStrings;
+    private final String mSelValue;
     public int gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-    private OnValueSelected mSelected;
+    private final OnValueSelected mSelected;
     public BasePopupWindow.GravityMode gravityMode = BasePopupWindow.GravityMode.RELATIVE_TO_ANCHOR;
+    private final int width;
     /**
      *@description 辐射 类型选择 多选一规则
      *@param  arrayStrings 给定的字符串集合
@@ -43,16 +47,18 @@ public class DataSelectWindow extends BasePopupWindow {
      *
      *
      */
-    public DataSelectWindow(Context context, List<String> arrayStrings,OnValueSelected selected,String selectedValue) {
+    public DataSelectWindow(Context context, List<String> arrayStrings,OnValueSelected selected,String selectedValue,int width) {
         super(context);
         this.mArrayStrings = arrayStrings;
-        setPopupGravity(gravityMode, gravity); //设置吸附规则
-        setAutoShowKeyboard(false); //因为每次弹出window会弹出输入法 进而选择屏蔽输入法弹出
+        setPopupGravity(gravityMode, gravity);//设置吸附规则
+        hideKeyboardOnShow(true);
         setBlurBackgroundEnable(false); //背景模糊
         setOverlayMask(false);//是否允许蒙层叠加
         setBackgroundColor(Color.TRANSPARENT);//背景颜色设置 透明图层
         this.mSelected = selected;
         this.mSelValue = selectedValue;
+        /**/
+        this.width = width;
         /*此处SetContentView必须要在最后才进行视图绑定*/
         setContentView(R.layout.dialog_selecter); //设置主要图层
     }
@@ -61,14 +67,15 @@ public class DataSelectWindow extends BasePopupWindow {
     public void onViewCreated(@NonNull View contentView) {
         super.onViewCreated(contentView);
         RadioGroup radioGroup = findViewById(R.id.selector);
+        ScrollView.LayoutParams layoutParams = new ScrollView.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+        radioGroup.setLayoutParams(layoutParams);
+
         ColorStateList colorStateList = new ColorStateList(new int[][]
                 {{-android.R.attr.state_enabled },{android.R.attr.state_enabled}},
                 new int[]{ContextCompat.getColor(getContext(),R.color.blue),ContextCompat.getColor(getContext(),R.color.blue)});
         RadioGroup.LayoutParams buttonParams = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         RadioGroup.LayoutParams lineParams = new RadioGroup.LayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT,2);
-        View view = new View(getContext());
-        view.setLayoutParams(lineParams);
-        view.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.navigation));
+
         for (int i = 0  ; i < mArrayStrings.size(); i ++) {
             RadioButton radioButton = new RadioButton(getContext());
             radioButton.setPadding(10,4,10,4);
@@ -90,6 +97,9 @@ public class DataSelectWindow extends BasePopupWindow {
             //先后顺序不可以改变
             radioGroup.addView(radioButton);
             if (i  != mArrayStrings.size() - 1){
+                View view = new View(getContext());
+                view.setLayoutParams(lineParams);
+                view.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.navigation));
                 radioGroup.addView(view);
             }
             if (!TextUtils.isEmpty(mSelValue)){

@@ -1,15 +1,5 @@
 <resources>
     <string name="app_name">cbrn</string>
-
-
-
-
-
-
-
-
-
-
     <!--辐射设置-->
     <!--检测类型选择-->
     <string-array name="radiation_measurement">
@@ -18,9 +8,22 @@
     </string-array>
     <!--模拟污点-->
     <string-array name="radiation_sim">
-
+        <item>头部</item>
+        <item>脚部</item>
+        <item>腿部</item>
     </string-array>
     <!--辐射距离-->
-
+    <string-array name="radiation_dis">
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+    </string-array>
     <!--中心峰值单位-->
+    <string-array name="radiation_unit">
+        <item>uSv/h</item>
+        <item>CPS</item>
+        <item>gay</item>
+    </string-array>
+
+
 </resources>

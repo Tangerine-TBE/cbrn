@@ -9,7 +9,7 @@ import com.dangkang.core.fragment.BaseFragment
 class ChemicalFragment :BaseFragment<ViewBinding>() {
     companion object{
         fun newInstance(): BaseFragment<ViewBinding> {
-            return RadiationFragment()
+            return ChemicalFragment()
         }
     }
 

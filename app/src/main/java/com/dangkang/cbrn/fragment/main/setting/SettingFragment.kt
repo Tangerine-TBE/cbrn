@@ -1,27 +1,23 @@
 package com.dangkang.cbrn.fragment.main.setting
 
-import android.R.id.tabs
 import android.graphics.Color
+import android.os.Bundle
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.databinding.FragmentSettingsBinding
+import com.dangkang.cbrn.dialog.SettingBackDialog
 import com.dangkang.core.fragment.BaseFragment
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 
 class SettingFragment : BaseFragment<ViewBinding>() {
     private val titleList = arrayListOf("核辐射", "化学制剂", "生物制剂")
-    private val fragments: MutableList<Fragment> = ArrayList()
-
+    private var settingBackDialog:SettingBackDialog ?= null
+    private  var fragmentSettingsBinding: FragmentSettingsBinding?= null
+    private var viewPagerFragmentStateAdapter:ViewPagerFragmentStateAdapter? = null
     companion object {
         fun newInstance(): BaseFragment<ViewBinding> {
             return SettingFragment()
@@ -30,15 +26,17 @@ class SettingFragment : BaseFragment<ViewBinding>() {
 
     override fun setBindingView(): ViewBinding {
         binding = FragmentSettingsBinding.inflate(layoutInflater)
-        fragments.add(ChemicalFragment.newInstance())
-        fragments.add(RadiationFragment.newInstance())
-        fragments.add(BiologicsFragment.newInstance())
-        return initView(binding as FragmentSettingsBinding)
+        fragmentSettingsBinding = binding as FragmentSettingsBinding
+        return fragmentSettingsBinding as FragmentSettingsBinding
+    }
+
+    override fun onLazyInitView(savedInstanceState: Bundle?) {
+        initView(fragmentSettingsBinding as FragmentSettingsBinding)
     }
 
     private fun initView(viewBinding: FragmentSettingsBinding): ViewBinding {
         viewBinding.viewPager.apply {
-            adapter = ViewPagerFragmentStateAdapter(_mActivity.supportFragmentManager, lifecycle)
+            viewPagerFragmentStateAdapter = ViewPagerFragmentStateAdapter(_mActivity.supportFragmentManager, lifecycle)
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     val tabCount  =viewBinding.tabLayout.tabCount
@@ -55,9 +53,10 @@ class SettingFragment : BaseFragment<ViewBinding>() {
                   }
                 }
             })
+            adapter = viewPagerFragmentStateAdapter
             isUserInputEnabled = false
         }
-        viewBinding.viewPager.offscreenPageLimit = 1
+        viewBinding.viewPager.offscreenPageLimit = 3
         TabLayoutMediator(viewBinding.tabLayout,
             viewBinding.viewPager,
             true
@@ -72,7 +71,20 @@ class SettingFragment : BaseFragment<ViewBinding>() {
             tab.customView = textView
         }.attach()
         viewBinding.titleBar.back.setOnClickListener{
-            pop()
+            if (settingBackDialog == null){
+                settingBackDialog = SettingBackDialog(_mActivity,R.style.DialogStyle,object :SettingBackDialog.OnItemSelected{
+                    override fun onSaveItem() {
+                        viewPagerFragmentStateAdapter?.save()
+                        pop()
+                    }
+
+                    override fun onUnSaveItem() {
+                        pop()
+                    }
+                })
+            }
+            settingBackDialog!!.show()
+
         }
         viewBinding.titleBar.cancel.setOnClickListener{
             _mActivity.finish()
