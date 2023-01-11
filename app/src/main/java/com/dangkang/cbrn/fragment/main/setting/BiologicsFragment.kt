@@ -6,6 +6,7 @@ import com.dangkang.cbrn.databinding.FragmentSettingsBiologicsBinding
 import com.dangkang.core.fragment.BaseFragment
 
 class BiologicsFragment :BaseFragment<ViewBinding>() {
+    /*1.查询附近的蓝牙设备*/
     companion object{
         fun newInstance(): BaseFragment<ViewBinding> {
             return BiologicsFragment()

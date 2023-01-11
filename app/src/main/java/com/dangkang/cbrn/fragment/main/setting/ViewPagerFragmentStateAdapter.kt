@@ -40,8 +40,9 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle:
 
     fun save() {
         DaoTool.updateTaintInfo(
-            (radiationFragment as RadiationFragment).getRadiationInfo()
-        )
+            (radiationFragment as RadiationFragment).getRadiationInfo(), 1)
+        DaoTool.updateTaintInfo(
+            (chemicalFragment as ChemicalFragment).getRadiationInfo(), 2)
     }
 
 }

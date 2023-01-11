@@ -1,83 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="#22272D"
+    android:background="@color/navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_percent="0.5"
+        android:layout_height="wrap_content"/>
     <TextView
-        android:id="@+id/zTitle"
-        android:text="1."
+        android:id="@+id/textIndex1"
+        android:layout_marginStart="40dp"
+        android:textSize="18sp"
         android:textColor="@color/white"
+        android:text=" | "
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textIndex2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/zTitle"
+        app:layout_constraintStart_toEndOf="@id/textIndex1"
+        android:text="类型"
+        android:textSize="18sp"
         android:textColor="@color/white"
-        android:text="单位及类型"
-        android:id="@+id/fTitle"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    <TextView
+    <androidx.appcompat.widget.LinearLayoutCompat
+        app:layout_constraintStart_toStartOf="@id/textIndex2"
+        android:id="@+id/layout1"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/textIndex2"
         android:layout_marginTop="20dp"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fTitle"
-        app:layout_constraintStart_toStartOf="@id/fTitle"
-        android:textColor="@color/white"
-        android:text="单位类型显示:"
-        android:id="@+id/seTitle"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/thrTitle"
-        app:layout_constraintStart_toEndOf="@id/seTitle"
-        app:layout_constraintTop_toTopOf="@id/seTitle"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:text = "   CPS,  gay,  uSv/h"
-        android:layout_height="wrap_content"/>
-    <View
-        android:layout_width="0dp"
-        app:layout_constraintStart_toStartOf="@id/thrTitle"
-        app:layout_constraintTop_toBottomOf="@id/thrTitle"
-        android:background="@color/white"
-        android:layout_height="1dp"/>
-    <TextView
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/seTitle"
-        app:layout_constraintStart_toStartOf="@id/seTitle"
-        android:text="辐射类型显示:"
-        android:id="@+id/forTitle"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/fiveTitle"
-        app:layout_constraintStart_toEndOf="@id/forTitle"
-        app:layout_constraintTop_toTopOf="@id/forTitle"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:text = "   x射线,  y射线,  B射线"
-        android:layout_height="wrap_content"/>
-    <View
-        android:layout_width="0dp"
-        app:layout_constraintStart_toStartOf="@id/fiveTitle"
-        app:layout_constraintTop_toBottomOf="@id/fiveTitle"
-        android:background="@color/white"
-        android:layout_height="1dp"/>
-    <TextView
-        android:id="@+id/sixTitle"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/forTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        android:textColor="@color/white"
-        android:text="2.污点设置"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:textColor="@color/un_select_color"
+                android:paddingEnd="8dp"
+                android:text="制剂类型显示:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"/>
+            <TextView
+                android:textColor="@color/white"
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:paddingEnd="8dp"
+                android:text="兔热，鼠疫"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                />
+        </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@id/sixTitle"
-        android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:textColor="@color/un_select_color"
+                android:paddingEnd="8dp"
+                android:text="可用试剂盒ID:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"/>
+            <TextView
+                android:textColor="@color/white"
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:paddingEnd="8dp"
+                android:text="SW01，SW02"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:textColor="@color/un_select_color"
+                android:paddingEnd="8dp"
+                android:text="可选结果类型:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"/>
+            <TextView
+                android:textColor="@color/white"
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:paddingEnd="8dp"
+                android:text="阴性，阳性，弱阳"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                />
+        </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+    <Button
+        android:layout_marginEnd="40dp"
+        android:visibility="invisible"
+        android:id="@+id/add"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#178FFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:drawableLeft="@mipmap/ic_more"
+        android:text="创建"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/layout1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/layout1"
+        app:layout_constraintEnd_toEndOf="@id/add"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
