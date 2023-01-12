@@ -18,10 +18,10 @@ class SettingFragment : BaseFragment<ViewBinding>() {
     private var settingBackDialog:SettingBackDialog ?= null
     private  var fragmentSettingsBinding: FragmentSettingsBinding?= null
     private var viewPagerFragmentStateAdapter:ViewPagerFragmentStateAdapter? = null
-    companion object {
-        fun newInstance(): BaseFragment<ViewBinding> {
-            return SettingFragment()
-        }
+
+    override fun onDestroy() {
+        viewPagerFragmentStateAdapter?.destroyAllItem()
+        super.onDestroy()
     }
 
     override fun setBindingView(): ViewBinding {

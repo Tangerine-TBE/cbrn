@@ -54,8 +54,7 @@ ext {
             "smartRefreshHeader"   : "com.scwang.smart:refresh-header-classics:2.0.1",
             //设置内项目按下的效果
             "ripple"               : "com.balysv:material-ripple:1.0.2",
-            //RX权限
-            "rxpermissions"        : "com.github.tbruyelle:rxpermissions:0.10.2",
+
 
 
             "fragmentation"        : "me.yokeyword:fragmentationx:1.0.2",
@@ -66,6 +65,7 @@ ext {
             "_java"                : "androidx.work:work-runtime:2.7.1",
             "_kotlin"              : "androidx.work:work-runtime-ktx:2.7.1",
             "PopWindow"            : "io.github.razerdp:BasePopup:3.2.1",
-            "blankJ"               : "com.blankj:utilcodex:1.31.1"
-]
+            "blankJ"               : "com.blankj:utilcodex:1.31.1",
+            "bleCore"              : "com.github.Jasonchenlijian:FastBle:2.4.0",
+            "permission"           : "pub.devrel:easypermissions:3.0.0"]
 }

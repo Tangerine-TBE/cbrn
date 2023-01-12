@@ -6,10 +6,10 @@ import com.dangkang.cbrn.fragment.main.setting.SettingFragment
 import com.dangkang.cbrn.fragment.main.workSpace.WorkSpaceFragment
 import com.dangkang.core.fragment.BaseFragment
 
-class TeacherFragment : BaseFragment<ViewBinding>() {
+class SelectModeFragment : BaseFragment<ViewBinding>() {
     companion object{
         fun newInstance(): BaseFragment<ViewBinding> {
-            return TeacherFragment()
+            return SelectModeFragment()
         }
     }
     override fun setBindingView() : ViewBinding  {
@@ -34,7 +34,7 @@ class TeacherFragment : BaseFragment<ViewBinding>() {
         return viewBinding
     }
     private fun  toSetting(){
-        start(SettingFragment.newInstance())
+        start(SettingFragment())
     }
     private fun  toWorkSpace(){
         start(WorkSpaceFragment.newInstance())

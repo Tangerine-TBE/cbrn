@@ -20,29 +20,40 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle:
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                radiationFragment = RadiationFragment.newInstance()
+                radiationFragment = RadiationFragment()
                 return radiationFragment as BaseFragment<ViewBinding>
             }
             1 -> {
-                chemicalFragment = ChemicalFragment.newInstance()
+                chemicalFragment = ChemicalFragment()
                 return chemicalFragment as BaseFragment<ViewBinding>
             }
             2 -> {
-                biologicsFragment = BiologicsFragment.newInstance()
+                biologicsFragment = BiologicsFragment()
                 return biologicsFragment as BaseFragment<ViewBinding>
             }
             else -> {
-                radiationFragment = RadiationFragment.newInstance()
+                radiationFragment = RadiationFragment()
                 return radiationFragment as BaseFragment<ViewBinding>
             }
         }
     }
+    fun destroyAllItem(){
+        radiationFragment?.onDestroy()
+        chemicalFragment?.onDestroy()
+        biologicsFragment?.onDestroy()
+
+    }
+
+
 
     fun save() {
         DaoTool.updateTaintInfo(
             (radiationFragment as RadiationFragment).getRadiationInfo(), 1)
         DaoTool.updateTaintInfo(
             (chemicalFragment as ChemicalFragment).getRadiationInfo(), 2)
+        DaoTool.updateDeviceInfo(
+            (biologicsFragment as BiologicsFragment).getRadiationInfo()
+        )
     }
 
 }

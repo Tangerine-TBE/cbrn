@@ -24,12 +24,6 @@ import io.reactivex.schedulers.Schedulers
 
 class ChemicalFragment :BaseFragment<ViewBinding>() {
     private var adapter:ChemicalAdapter? = null
-    companion object{
-        fun newInstance(): BaseFragment<ViewBinding> {
-            return ChemicalFragment()
-        }
-    }
-
     override fun setBindingView() : ViewBinding {
         binding  = FragmentSettingChemicalBinding.inflate(layoutInflater)
         return initView(binding as FragmentSettingChemicalBinding)

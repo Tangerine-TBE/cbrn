@@ -2,7 +2,7 @@ package com.dangkang.cbrn.fragment.splash
 
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.databinding.FragmentSplashBinding
-import com.dangkang.cbrn.fragment.main.TeacherFragment
+import com.dangkang.cbrn.fragment.main.SelectModeFragment
 import com.dangkang.core.fragment.BaseFragment
 
 class SplashFragment : BaseFragment<ViewBinding>() {
@@ -31,7 +31,7 @@ class SplashFragment : BaseFragment<ViewBinding>() {
     }
 
     private fun toTeacherSelect() {
-        start(TeacherFragment.newInstance())
+        start(SelectModeFragment.newInstance())
 
     }
 }

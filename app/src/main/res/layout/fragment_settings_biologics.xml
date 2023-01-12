@@ -56,7 +56,7 @@
                 android:gravity="left|center_vertical"
                 android:textSize="18sp"
                 android:paddingEnd="8dp"
-                android:text="兔热，鼠疫"
+                android:text="蓖麻毒素，炭疽，葡萄球肠菌毒素B，痘，肉毒杆菌毒素，兔热，鼠疫，COVID—19"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 />
@@ -74,11 +74,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"/>
             <TextView
+                android:id="@+id/deviceNameSet"
                 android:textColor="@color/white"
                 android:gravity="left|center_vertical"
                 android:textSize="18sp"
                 android:paddingEnd="8dp"
-                android:text="SW01，SW02"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 />

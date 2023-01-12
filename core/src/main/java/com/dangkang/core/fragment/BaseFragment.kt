@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager.widget.PagerAdapter
+import com.dangkang.core.utils.L
 import me.yokeyword.fragmentation.SupportFragment
 
 abstract class BaseFragment <VB:ViewBinding>: SupportFragment() {
@@ -15,8 +16,15 @@ abstract class BaseFragment <VB:ViewBinding>: SupportFragment() {
     protected open val mBinding get()= binding!!
     abstract fun setBindingView(): VB?
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        L.e("${javaClass.name} onCreateView")
         binding = setBindingView()
         return binding?.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        L.e("${javaClass.name} onResume")
+
     }
     open fun initialize() {
     }

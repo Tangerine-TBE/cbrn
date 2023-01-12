@@ -24,6 +24,24 @@
         <item>CPS</item>
         <item>gay</item>
     </string-array>
+    <!--生物设置-->
+    <!--制剂类型显示-->
+    <string-array name="biglogics_type">
+        <item>蓖麻毒素</item>
+        <item>炭疽</item>
+        <item>葡萄球肠菌毒素B</item>
+        <item>痘</item>
+        <item>肉毒杆菌毒素</item>
+        <item>兔热</item>
+        <item>鼠疫</item>
+        <item>COVID—19</item>
+    </string-array>
+    <!--结果类型-->
+    <string-array name="biglogics_result">
+        <item>阴性</item>
+        <item>阳性</item>
+        <item>弱阳</item>
 
+    </string-array>
 
 </resources>

@@ -1,8 +1,11 @@
 package com.dangkang.cbrn.fragment.splash
 
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import androidx.viewbinding.ViewBinding
+import com.dangkang.cbrn.activity.MainActivity
+import com.dangkang.cbrn.activity.SplashActivity
 import com.dangkang.cbrn.databinding.FragmentWelcomeBinding
 import com.dangkang.core.fragment.BaseFragment
 import me.yokeyword.fragmentation.ISupportFragment.LaunchMode
@@ -25,7 +28,7 @@ class WelComeFragment : BaseFragment<ViewBinding>() {
     override fun onResume() {
         super.onResume()
         Handler(Looper.getMainLooper()).postDelayed({
-            start(SplashFragment.newInstance())
+          startActivity(Intent(_mActivity,MainActivity::class.java))
         },2000)
     }
 }

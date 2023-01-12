@@ -49,10 +49,10 @@ dependencies {
     api rootProject.ext.dependencies["rxandroid"]
     api rootProject.ext.dependencies["immersionbar"]
     api rootProject.ext.dependencies["greenDao"]
-    api rootProject.ext.dependencies["rxpermissions"]
     api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["fragmentation"]
     api rootProject.ext.dependencies["PopWindow"]
     api rootProject.ext.dependencies["blankJ"]
-
+    api rootProject.ext.dependencies["bleCore"]
+    api rootProject.ext.dependencies["permission"]
 }

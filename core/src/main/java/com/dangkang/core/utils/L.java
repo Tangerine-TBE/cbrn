@@ -6,7 +6,7 @@ import com.dangkang.core.BuildConfig;
 
 public class L {
 
-    private static final String TAG = "dihealth_box";
+    private static final String TAG = "cbrn";
 
     public static void e(String tag, String str) {
         Log.e(tag, str);

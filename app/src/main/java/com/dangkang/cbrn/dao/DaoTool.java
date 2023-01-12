@@ -4,9 +4,11 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.db.TaintInfo;
 import com.dangkang.db.DaoMaster;
 import com.dangkang.db.DaoSession;
+import com.dangkang.db.DeviceInfoDao;
 import com.dangkang.db.TaintInfoDao;
 
 import org.greenrobot.greendao.query.Query;
@@ -22,7 +24,6 @@ public class DaoTool {
         SQLiteDatabase db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);
         sDaoSession = daoMaster.newSession();
-        dealWithDemoData();
     }
 
     public static void clearDataBase() {
@@ -36,18 +37,12 @@ public class DaoTool {
     public static List<TaintInfo> queryChemicalTaintInfo(){
         return sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Type.eq(2)).build().list();
     }
-    private static void dealWithDemoData() {
-        String sql = "delete from TAINT_INFO where  CREATE_TIME <= 1542708900";
-        sDaoSession.getDatabase().execSQL(sql);
-        Query<TaintInfo> taintInfoQuery = sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Taint_num.eq("0110")).orderDesc(TaintInfoDao.Properties.Create_time).build();
-        TaintInfo taintInfo = taintInfoQuery.unique();
-        if (taintInfo == null) {
-            sql = "INSERT INTO \"main\".\"TAINT_INFO\"(\"TYPE\", \"TAINT_NUM\", \"TAINT_LOC\", \"TAINT_SIM\", \"TAINT_DIS\", \"TAINT_MAX\", \"CREATE_TIME\") VALUES ('1', '0110', '未知', '56','100', '5300','1542708900');";
-            sDaoSession.getDatabase().execSQL(sql);
-            sql = "INSERT INTO \"main\".\"TAINT_INFO\"(\"TYPE\", \"TAINT_NUM\", \"TAINT_LOC\", \"TAINT_SIM\", \"TAINT_DIS\", \"TAINT_MAX\", \"CREATE_TIME\") VALUES ('2', '0111', '未知', '56','99', '5400','1542708800');";
-            sDaoSession.getDatabase().execSQL(sql);
-            sql = "INSERT INTO \"main\".\"TAINT_INFO\"(\"TYPE\", \"TAINT_NUM\", \"TAINT_LOC\", \"TAINT_SIM\", \"TAINT_DIS\", \"TAINT_MAX\", \"CREATE_TIME\") VALUES ('2', '0112', '未知', '56','98', '5500','1542708700');";
-            sDaoSession.getDatabase().execSQL(sql);
+    public static DeviceInfo queryDeviceInfo(String name){
+        List<DeviceInfo> deviceInfo = sDaoSession.getDeviceInfoDao().queryBuilder().where(DeviceInfoDao.Properties.Brand.eq(name)).build().list();
+        if (deviceInfo != null && deviceInfo.size() > 0){
+            return deviceInfo.get(0);
+        }else{
+            return null;
         }
     }
     public static void removeTaintInfo(int taint_num){
@@ -58,6 +53,11 @@ public class DaoTool {
         String sql  = "DELETE from TAINT_INFO where type = ?";
         sDaoSession.getDatabase().execSQL(sql,new String[]{String.valueOf(type)});
         sDaoSession.getTaintInfoDao().insertOrReplaceInTx(taintInfo);
+    }
+    public static void updateDeviceInfo(List<DeviceInfo> deviceInfo){
+        String sql = "delete from DEVICE_INFO ";
+        sDaoSession.getDatabase().execSQL(sql);
+        sDaoSession.getDeviceInfoDao().insertOrReplaceInTx(deviceInfo);
     }
 
 }

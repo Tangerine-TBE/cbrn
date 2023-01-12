@@ -1,14 +1,9 @@
 package com.dangkang.cbrn.fragment.main.workSpace
 
-import android.opengl.Visibility
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.R
-import com.dangkang.cbrn.databinding.FragmentMainBinding
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
-import com.dangkang.cbrn.fragment.main.TeacherFragment
-import com.dangkang.cbrn.fragment.main.setting.ChemicalFragment
 import com.dangkang.core.fragment.BaseFragment
 
 class WorkSpaceFragment : BaseFragment<ViewBinding>() ,View.OnClickListener {

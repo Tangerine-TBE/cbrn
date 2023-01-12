@@ -23,11 +23,6 @@ import io.reactivex.schedulers.Schedulers
 
 class RadiationFragment : BaseFragment<ViewBinding>() {
     private var adapter:RadiationAdapter? = null
-    companion object {
-        fun newInstance(): BaseFragment<ViewBinding> {
-            return RadiationFragment()
-        }
-    }
     override fun setBindingView(): ViewBinding {
         binding = FragmentSettingRadiationBinding.inflate(layoutInflater)
         return initView(binding as FragmentSettingRadiationBinding)
