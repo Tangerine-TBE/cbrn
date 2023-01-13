@@ -50,6 +50,9 @@ public class RadiationAdapter extends RecyclerView.Adapter<RadiationAdapter.View
         holder.taint_sim.setText(data.get(position).getTaint_sim()+"");
         holder.delete.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();
+            if (pos < 0){
+                return;
+            }
             data.remove(pos);
             notifyItemRemoved(pos);
         });

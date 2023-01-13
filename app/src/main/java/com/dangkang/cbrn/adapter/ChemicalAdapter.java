@@ -49,6 +49,9 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
         holder.taint_sim.setText(data.get(position).getTaint_sim()+"");
         holder.delete.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();
+            if (pos < 0){
+                return;
+            }
             data.remove(pos);
             notifyItemRemoved(pos);
         });
