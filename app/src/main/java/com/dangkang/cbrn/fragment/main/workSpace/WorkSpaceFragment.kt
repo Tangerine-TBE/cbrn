@@ -42,7 +42,6 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>() ,View.OnClickListener {
     override fun onClick(v: View?) {
         var selectedFragment: BaseFragment<ViewBinding>? = null
         when(v?.id){
-
             R.id.radiation ->{
                 selectedFragment = RadiationWSFragment()
             }
@@ -53,7 +52,7 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>() ,View.OnClickListener {
                 selectedFragment = ChemicalWSFragment()
             }
             R.id.connect_sir ->{
-                selectedFragment = SocketBindingFragment()
+                selectedFragment = ModelSelectFragment()
             }
         }
         v?.isSelected = true

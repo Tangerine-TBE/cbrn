@@ -30,7 +30,7 @@ class MainActivity: BaseActivity(){
 
     private fun checkPermissions() {
         if (!EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)){
-            EasyPermissions.requestPermissions(this, "当前需要一个非常重要的权限申请   ",
+            EasyPermissions.requestPermissions(this, "当前需要一个非常重要的权限申请",
                 1, Manifest.permission.ACCESS_FINE_LOCATION
             )
         }

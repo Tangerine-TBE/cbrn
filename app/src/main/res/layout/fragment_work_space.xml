@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:Battery="http://schemas.android.com/tools"
     android:background="@color/navigation"
     android:orientation="vertical"
     android:layout_height="match_parent">
@@ -21,7 +22,7 @@
             android:orientation="vertical"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:padding="10dp"
                 android:id="@+id/radiation"
                 android:background="@drawable/item_ws_bg"
@@ -29,10 +30,16 @@
                 android:gravity="center"
                 android:layout_height="wrap_content">
                 <ImageView
+                    android:id="@+id/iv1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:src="@mipmap/radiation"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
                 <TextView
+                    app:layout_constraintTop_toBottomOf="@id/iv1"
+                    app:layout_constraintStart_toStartOf="@id/iv1"
+                    app:layout_constraintEnd_toEndOf="@id/iv1"
                     android:layout_gravity="center"
                     android:textSize="18sp"
                     android:textColor="@color/white"
@@ -41,16 +48,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <com.dangkang.cbrn.weight.BatteryView
+                    app:layout_constraintStart_toEndOf="@id/iv1"
+                    app:layout_constraintTop_toTopOf="@id/iv1"
+                    app:layout_constraintBottom_toBottomOf="@id/iv1"
                     android:id="@+id/battery"
-                    android:layout_width="40dp"
+                    app:batteryOrientation ="vertical"
+                    android:layout_width="10dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="28dp"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <androidx.appcompat.widget.LinearLayoutCompat
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:background="@drawable/item_ws_bg"
                 android:layout_width="wrap_content"
                 android:padding="10dp"
@@ -58,28 +69,37 @@
                 android:gravity="center"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:src="@mipmap/biologics"
+                    android:id="@+id/iv2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@mipmap/radiation"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
                 <TextView
+                    app:layout_constraintTop_toBottomOf="@id/iv2"
+                    app:layout_constraintStart_toStartOf="@id/iv2"
+                    app:layout_constraintEnd_toEndOf="@id/iv2"
                     android:layout_gravity="center"
                     android:textSize="18sp"
+                    android:textColor="@color/white"
                     android:text="生物"
                     android:padding="10dp"
-
-                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <com.dangkang.cbrn.weight.BatteryView
-                    android:layout_width="40dp"
+                    app:layout_constraintStart_toEndOf="@id/iv2"
+                    app:layout_constraintTop_toTopOf="@id/iv2"
+                    app:layout_constraintBottom_toBottomOf="@id/iv2"
+                    app:batteryOrientation ="vertical"
+                    android:layout_width="10dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="28dp"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-            <androidx.appcompat.widget.LinearLayoutCompat
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
 
                 android:background="@drawable/item_ws_bg"
                 android:layout_width="wrap_content"
@@ -88,10 +108,16 @@
                 android:padding="10dp"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:src="@mipmap/chemical"
+                    android:id="@+id/iv3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@mipmap/radiation"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
                 <TextView
+                    app:layout_constraintTop_toBottomOf="@id/iv3"
+                    app:layout_constraintStart_toStartOf="@id/iv3"
+                    app:layout_constraintEnd_toEndOf="@id/iv3"
                     android:layout_gravity="center"
                     android:textSize="18sp"
                     android:textColor="@color/white"
@@ -100,14 +126,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <com.dangkang.cbrn.weight.BatteryView
-                    android:layout_width="40dp"
+                    app:layout_constraintStart_toEndOf="@id/iv3"
+                    app:layout_constraintTop_toTopOf="@id/iv3"
+                    app:layout_constraintBottom_toBottomOf="@id/iv3"
+                    app:batteryOrientation ="vertical"
+                    android:layout_width="10dp"
                     android:layout_height="20dp"
                     android:layout_marginEnd="28dp"
                     android:gravity="center"
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

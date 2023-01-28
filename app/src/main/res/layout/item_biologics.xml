@@ -41,6 +41,7 @@
             android:src="@mipmap/ic_delete"
             app:layout_constraintStart_toEndOf="@id/id"
             app:layout_constraintTop_toTopOf="@id/id"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@id/id"
             android:layout_width="26dp"
             android:layout_height="26dp"/>

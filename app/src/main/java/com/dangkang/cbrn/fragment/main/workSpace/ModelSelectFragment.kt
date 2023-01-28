@@ -1,14 +1,13 @@
 package com.dangkang.cbrn.fragment.main.workSpace
 
 import androidx.viewbinding.ViewBinding
-import com.dangkang.cbrn.databinding.FragmentRadiationWsBinding
 import com.dangkang.cbrn.databinding.FragmentSocketBingBinding
 import com.dangkang.core.fragment.BaseFragment
 
-class SocketBindingFragment :BaseFragment<ViewBinding>() {
+class ModelSelectFragment :BaseFragment<ViewBinding>() {
     companion object{
         fun newInstance(): BaseFragment<ViewBinding> {
-            return SocketBindingFragment()
+            return ModelSelectFragment()
         }
     }
     override fun setBindingView(): ViewBinding {

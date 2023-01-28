@@ -29,6 +29,7 @@ class WelComeFragment : BaseFragment<ViewBinding>() {
         super.onResume()
         Handler(Looper.getMainLooper()).postDelayed({
           startActivity(Intent(_mActivity,MainActivity::class.java))
+            _mActivity.finish()
         },2000)
     }
 }
