@@ -55,4 +55,5 @@ dependencies {
     api rootProject.ext.dependencies["blankJ"]
     api rootProject.ext.dependencies["bleCore"]
     api rootProject.ext.dependencies["permission"]
+    api rootProject.ext.dependencies["tabLayout"]
 }

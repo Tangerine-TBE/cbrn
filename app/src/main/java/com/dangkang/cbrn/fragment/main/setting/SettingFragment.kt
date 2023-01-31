@@ -11,6 +11,8 @@ import com.dangkang.cbrn.databinding.FragmentSettingsBinding
 import com.dangkang.cbrn.dialog.SettingBackDialog
 import com.dangkang.core.fragment.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator
+import me.yokeyword.fragmentation.anim.FragmentAnimator
 
 
 class SettingFragment : BaseFragment<ViewBinding>() {

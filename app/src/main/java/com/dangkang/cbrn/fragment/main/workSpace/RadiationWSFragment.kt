@@ -1,5 +1,6 @@
 package com.dangkang.cbrn.fragment.main.workSpace
 
+import android.os.Bundle
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.databinding.FragmentChemicalWsBinding
 import com.dangkang.cbrn.databinding.FragmentRadiationWsBinding

@@ -2,12 +2,34 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
-    <TextView
+    android:background="@color/navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View
+        android:id="@+id/title_bar"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:gravity="center"
+        android:background="@color/status"
+        android:layout_height="60dp"/>
+    <Button
+        android:layout_marginTop="10dp"
         android:textColor="@color/white"
-        android:text="生物"
-        android:layout_height="match_parent"/>
+        android:backgroundTint="@color/status"
+        android:paddingStart="20dp"
+        android:id="@+id/btnReset"
+        android:paddingEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_bar"
+        android:text="复位所有试剂盒"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/btnReset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="0dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

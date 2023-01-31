@@ -67,5 +67,8 @@ ext {
             "PopWindow"            : "io.github.razerdp:BasePopup:3.2.1",
             "blankJ"               : "com.blankj:utilcodex:1.31.1",
             "bleCore"              : "com.github.Jasonchenlijian:FastBle:2.4.0",
-            "permission"           : "pub.devrel:easypermissions:3.0.0"]
+            "permission"           : "pub.devrel:easypermissions:3.0.0",
+            "tabLayout": "q.rorbin:VerticalTabLayout:1.2.5"
+
+    ]
 }
