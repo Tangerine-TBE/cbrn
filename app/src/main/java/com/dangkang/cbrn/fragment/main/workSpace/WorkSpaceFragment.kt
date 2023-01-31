@@ -1,14 +1,9 @@
 package com.dangkang.cbrn.fragment.main.workSpace
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.viewbinding.ViewBinding
-import androidx.viewpager2.widget.ViewPager2
-import com.dangkang.cbrn.R
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
-import com.dangkang.cbrn.fragment.main.setting.ViewPagerFragmentStateAdapter
 import com.dangkang.core.fragment.BaseFragment
 
 class WorkSpaceFragment : BaseFragment<ViewBinding>() ,View.OnClickListener {
