@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -23,15 +24,12 @@ import com.dangkang.cbrn.databinding.FragmentBiologicsWsBinding
 import com.dangkang.cbrn.databinding.FragmentSettingsBiologicsBinding
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
 import com.dangkang.cbrn.db.DeviceInfo
+import com.dangkang.cbrn.fragment.main.setting.BiologicsFragment
 import com.dangkang.core.fragment.BaseFragment
 
 class BiologicsWSFragment :BaseFragment<ViewBinding>() {
-    /*这里的流程和设置流程差不多*/
-    companion object {
-        fun newInstance(): BaseFragment<ViewBinding> {
-            return BiologicsWSFragment()
-        }
-    }
+
+    private var systemListener: SystemListener = SystemListener()
 
     private var mScanStop = false
     private var fragmentBiologicsWsBinding:FragmentBiologicsWsBinding? = null
@@ -46,6 +44,37 @@ class BiologicsWSFragment :BaseFragment<ViewBinding>() {
 
     override fun onResume() {
         super.onResume()
+        /*为什么要在onResume上做这些？因为不想当前fra会在隐藏或者不被用户看到的时候
+ 做一些用户交互，当转入当前fra 被用户看到时，才进行这部份逻辑，我觉得相当不错的体验*/
+
+        /*全程生命周期需要:*/
+        /*1.动态监听蓝牙启动或关闭广播以达到业务流畅*/
+        /*2.动态监听位置定位启动或关闭广播以达到业务流畅*/
+        /*1.检测权限*/
+        super.onResume()
+        mScanStop = false
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+        intentFilter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
+        _mActivity.registerReceiver(
+            systemListener,intentFilter
+        )
+        /*初始化生命周期需要:*/
+        /**
+         * 2.检测蓝牙是否开启
+         * 3.检测位置服务是否开启
+         * 4.打开蓝牙扫描（视图可见开启蓝牙扫描 视图不可见关闭蓝牙扫描）*/
+        val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+        if (!bluetoothAdapter?.isEnabled!!) {
+            Toast.makeText(_mActivity, "请先打开蓝牙", Toast.LENGTH_LONG).show()
+            return
+        }
+        startWork()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        _mActivity.unregisterReceiver(systemListener)
     }
     private fun checkGPSIsOpen(): Boolean {
         val locationManager = _mActivity.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
@@ -97,6 +126,7 @@ class BiologicsWSFragment :BaseFragment<ViewBinding>() {
             }
         })
     }
+
 
     private fun setScanRule(){
         val scanRuleConfig = BleScanRuleConfig.Builder()

@@ -24,7 +24,16 @@ abstract class BaseFragment <VB:ViewBinding>: SupportFragment() {
     override fun onResume() {
         super.onResume()
         L.e("${javaClass.name} onResume")
+    }
 
+    override fun onPause() {
+        super.onPause()
+        L.e("${javaClass.name} onPause")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        L.e("${javaClass.name} onDestroyView")
     }
     open fun initialize() {
     }
