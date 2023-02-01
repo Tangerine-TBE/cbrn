@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangkang.cbrn.R;
@@ -23,7 +24,9 @@ import java.util.List;
 public class BiologicsWsAdapter extends RecyclerView.Adapter<BiologicsWsAdapter.ViewHolder> {
     public List<DeviceInfo> deviceBeans = new ArrayList<>();
     public Context mContext;
-    public BiologicsWsAdapter(Context context){
+    private OnIconClickListener mOnIconClickListener;
+    public BiologicsWsAdapter(Context context,OnIconClickListener onIconClickListener){
+        this.mOnIconClickListener = onIconClickListener;
         this.mContext = context;
     }
     @NonNull
@@ -41,21 +44,41 @@ public class BiologicsWsAdapter extends RecyclerView.Adapter<BiologicsWsAdapter.
         int status = deviceBeans.get(position).getStatus();
         if (status == 0 ){
             //显示结果，阴性
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(mContext,R.mipmap.ic_green));
+            holder.icon.setTag(0);
         }else if (status == 1){
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(mContext,R.mipmap.vector));
+            holder.icon.setTag(1);
+
             //显示结果，阳性
         }else if ( status == 2){
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(mContext,R.mipmap.ic_before));
+            holder.icon.setTag(2);
+
             //尚未测试
         }else if (status == 3){
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(mContext,R.mipmap.ic_after));
+            holder.icon.setTag(3);
             //测试中
         }else{
-            //未连接状态
-
-
+            holder.icon.setImageDrawable(null);
         }
+        holder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (2 == (int)v.getTag()){
+                    mOnIconClickListener.onItemClicked();
+                }
+            }
+        });
+    }
+    public interface OnIconClickListener{
+        void onItemClicked();
+    }
 
-
-        byte[] datas = new byte[]{(byte) 0xDC, (byte) 0xEC,0x73,0x30,0x30,0x31,0x01, (byte) 0xCD};
-
+    public final void addItem(DeviceInfo deviceBean){
+        deviceBeans.add(0,deviceBean);
+        notifyItemInserted(0);
     }
 
     @Override
