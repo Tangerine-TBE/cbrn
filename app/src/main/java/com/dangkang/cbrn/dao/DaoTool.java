@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.db.TaintInfo;
+import com.dangkang.cbrn.db.TypeInfo;
 import com.dangkang.db.DaoMaster;
 import com.dangkang.db.DaoSession;
 import com.dangkang.db.DeviceInfoDao;
@@ -58,6 +59,9 @@ public class DaoTool {
         String sql = "delete from DEVICE_INFO ";
         sDaoSession.getDatabase().execSQL(sql);
         sDaoSession.getDeviceInfoDao().insertOrReplaceInTx(deviceInfo);
+    }
+    public static void addTypeInfo(int type,String name){
+        sDaoSession.getTypeInfoDao().insertOrReplace(new TypeInfo(type,name));
     }
 
 }

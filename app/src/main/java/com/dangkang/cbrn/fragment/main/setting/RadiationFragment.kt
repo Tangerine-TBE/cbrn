@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ScreenUtils
+import com.dangkang.Constant
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.adapter.RadiationAdapter
 import com.dangkang.cbrn.dao.DaoTool
@@ -50,11 +51,11 @@ class RadiationFragment : BaseFragment<ViewBinding>() {
             , { value ->
                     if(!TextUtils.isEmpty(value)){
                         binding.measurement.text = value
-                        SPUtil.getInstance().putString("measurement",value)
+                        SPUtil.getInstance().putString(Constant.MEASUREMENT,value)
                     }
                 },binding.measurement.text.toString(),ConvertUtils.dp2px(200f)).showPopupWindow(binding.measurement)
         }
-        val textValue = SPUtil.getInstance().getString("measurement")
+        val textValue = SPUtil.getInstance().getString(Constant.MEASUREMENT)
         if(!TextUtils.isEmpty(textValue)){
             binding.measurement.text =textValue
         }
