@@ -2,16 +2,14 @@ package com.dangkang.cbrn.fragment.main.setting
 
 import android.annotation.SuppressLint
 import android.text.TextUtils
-import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ConvertUtils
-import com.blankj.utilcode.util.ScreenUtils
 import com.dangkang.Constant
 import com.dangkang.cbrn.R
-import com.dangkang.cbrn.adapter.RadiationAdapter
+import com.dangkang.cbrn.adapter.setting.RadiationAdapter
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingRadiationBinding
 import com.dangkang.cbrn.db.TaintInfo
@@ -24,7 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class RadiationFragment : BaseFragment<ViewBinding>() {
-    private var adapter:RadiationAdapter? = null
+    private var adapter: RadiationAdapter? = null
     override fun setBindingView(): ViewBinding {
         binding = FragmentSettingRadiationBinding.inflate(layoutInflater)
         return initView(binding as FragmentSettingRadiationBinding)
@@ -68,7 +66,10 @@ class RadiationFragment : BaseFragment<ViewBinding>() {
             it.onNext(list)
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             if (adapter == null){
-                adapter = RadiationAdapter(it,_mActivity)
+                adapter = RadiationAdapter(
+                    it,
+                    _mActivity
+                )
                 binding.recyclerView.adapter = adapter
             }else{
                 val taintInfo = TaintInfo()

@@ -14,20 +14,17 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.SnapHelper
 import androidx.viewbinding.ViewBinding
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleScanCallback
 import com.clj.fastble.data.BleDevice
 import com.clj.fastble.scan.BleScanRuleConfig
 import com.dangkang.cbrn.R
-import com.dangkang.cbrn.adapter.BiologicsAdapter
+import com.dangkang.cbrn.adapter.setting.BiologicsAdapter
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingsBiologicsBinding
 import com.dangkang.cbrn.db.DeviceInfo
-import com.dangkang.cbrn.db.TaintInfo
 import com.dangkang.core.fragment.BaseFragment
-import com.dangkang.core.utils.L
 
 class BiologicsFragment : BaseFragment<ViewBinding>() {
     /*全程生命周期需要:*/
@@ -38,7 +35,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
     * 2.检测蓝牙是否开启
     * 3.检测位置服务是否开启
     * 4.打开蓝牙扫描（视图可见开启蓝牙扫描 视图不可见关闭蓝牙扫描）*/
-    private var biologicsAdapter:BiologicsAdapter ?= null
+    private var biologicsAdapter: BiologicsAdapter?= null
     private var mScanStop = false
     override fun setBindingView(): ViewBinding {
         binding = FragmentSettingsBiologicsBinding.inflate(layoutInflater)
@@ -193,7 +190,8 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
 
 
     private fun initView(binding: FragmentSettingsBiologicsBinding): ViewBinding {
-        biologicsAdapter = BiologicsAdapter(_mActivity)
+        biologicsAdapter =
+            BiologicsAdapter(_mActivity)
         binding.recyclerView.adapter = biologicsAdapter
         binding.recyclerView.layoutManager = GridLayoutManager(_mActivity,2)
         val pagerSnapHelper = PagerSnapHelper()

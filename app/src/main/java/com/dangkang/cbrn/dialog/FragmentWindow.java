@@ -3,18 +3,15 @@ package com.dangkang.cbrn.dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangkang.cbrn.R;
-import com.dangkang.cbrn.adapter.ChemicalCwaAdapter;
+import com.dangkang.cbrn.adapter.setting.ChemicalCwaAdapter;
 import com.dangkang.cbrn.bean.CwaBean;
-import com.dangkang.cbrn.databinding.FragmentCwaBinding;
 import com.dangkang.cbrn.weight.SimplePaddingDecoration;
 
 import java.util.ArrayList;

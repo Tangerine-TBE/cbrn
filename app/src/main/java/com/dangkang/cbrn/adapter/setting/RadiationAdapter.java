@@ -1,4 +1,4 @@
-package com.dangkang.cbrn.adapter;
+package com.dangkang.cbrn.adapter.setting;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,14 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangkang.cbrn.R;
-import com.dangkang.cbrn.dao.DaoTool;
-import com.dangkang.cbrn.databinding.DialogSelecterBinding;
 import com.dangkang.cbrn.db.TaintInfo;
 import com.dangkang.cbrn.dialog.DataSelectWindow;
 import com.dangkang.core.utils.L;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class RadiationAdapter extends RecyclerView.Adapter<RadiationAdapter.ViewHolder>  {

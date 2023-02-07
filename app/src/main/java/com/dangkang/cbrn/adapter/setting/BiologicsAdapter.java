@@ -1,4 +1,4 @@
-package com.dangkang.cbrn.adapter;
+package com.dangkang.cbrn.adapter.setting;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangkang.cbrn.R;
 import com.dangkang.cbrn.db.DeviceInfo;
-import com.dangkang.cbrn.db.TaintInfo;
 import com.dangkang.cbrn.dialog.DataSelectWindow;
 
 import java.util.ArrayList;

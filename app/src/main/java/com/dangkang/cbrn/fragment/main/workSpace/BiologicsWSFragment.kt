@@ -19,9 +19,8 @@ import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleScanCallback
 import com.clj.fastble.data.BleDevice
 import com.clj.fastble.scan.BleScanRuleConfig
-import com.dangkang.cbrn.adapter.BiologicsAdapter
-import com.dangkang.cbrn.adapter.BiologicsWsAdapter
-import com.dangkang.cbrn.adapter.BiologicsWsAdapter.OnIconClickListener
+import com.dangkang.cbrn.adapter.workspace.BiologicsWsAdapter
+import com.dangkang.cbrn.adapter.workspace.BiologicsWsAdapter.OnIconClickListener
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentBiologicsWsBinding
 import com.dangkang.cbrn.device.ble.BiologicalDevice
@@ -38,7 +37,11 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
     }
 
     private fun initView(viewBinding: FragmentBiologicsWsBinding): FragmentBiologicsWsBinding {
-        biologicsWsAdapter = BiologicsWsAdapter(_mActivity,this)
+        biologicsWsAdapter =
+            BiologicsWsAdapter(
+                _mActivity,
+                this
+            )
         viewBinding.recyclerView.adapter = biologicsWsAdapter
         viewBinding.recyclerView.layoutManager = GridLayoutManager(_mActivity, 2)
         val pagerSnapHelper = PagerSnapHelper()

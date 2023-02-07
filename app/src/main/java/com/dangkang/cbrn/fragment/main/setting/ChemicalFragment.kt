@@ -1,20 +1,15 @@
 package com.dangkang.cbrn.fragment.main.setting
 
 import android.annotation.SuppressLint
-import android.text.TextUtils
-import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.blankj.utilcode.util.ConvertUtils
 import com.dangkang.cbrn.R
-import com.dangkang.cbrn.adapter.ChemicalAdapter
+import com.dangkang.cbrn.adapter.setting.ChemicalAdapter
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingChemicalBinding
-import com.dangkang.cbrn.databinding.FragmentSettingRadiationBinding
 import com.dangkang.cbrn.db.TaintInfo
-import com.dangkang.cbrn.dialog.DataSelectWindow
 import com.dangkang.cbrn.dialog.FragmentWindow
 import com.dangkang.core.fragment.BaseFragment
 import com.dangkang.core.utils.L
@@ -23,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class ChemicalFragment :BaseFragment<ViewBinding>() {
-    private var adapter:ChemicalAdapter? = null
+    private var adapter: ChemicalAdapter? = null
     override fun setBindingView() : ViewBinding {
         binding  = FragmentSettingChemicalBinding.inflate(layoutInflater)
         return initView(binding as FragmentSettingChemicalBinding)
@@ -57,7 +52,10 @@ class ChemicalFragment :BaseFragment<ViewBinding>() {
             it.onNext(list)
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             if (adapter == null){
-                adapter = ChemicalAdapter(it,_mActivity)
+                adapter = ChemicalAdapter(
+                    it,
+                    _mActivity
+                )
                 binding.recyclerView.adapter = adapter
             }else{
                 val taintInfo = TaintInfo()

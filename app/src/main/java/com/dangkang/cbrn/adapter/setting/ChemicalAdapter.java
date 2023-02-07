@@ -1,4 +1,4 @@
-package com.dangkang.cbrn.adapter;
+package com.dangkang.cbrn.adapter.setting;
 
 import android.content.Context;
 import android.text.Editable;

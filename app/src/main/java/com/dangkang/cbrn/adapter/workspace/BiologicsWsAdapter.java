@@ -1,4 +1,4 @@
-package com.dangkang.cbrn.adapter;
+package com.dangkang.cbrn.adapter.workspace;
 
 import android.content.Context;
 import android.view.LayoutInflater;
