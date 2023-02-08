@@ -21,23 +21,23 @@ import java.util.List;
  * @author:Administrator
  * @date:2022/1/31
  */
-public class BiologicsWsAdapter extends RecyclerView.Adapter<BiologicsWsAdapter.ViewHolder> {
+public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.ViewHolder> {
     public List<DeviceInfo> deviceBeans = new ArrayList<>();
     public Context mContext;
     private OnIconClickListener mOnIconClickListener;
-    public BiologicsWsAdapter(Context context,OnIconClickListener onIconClickListener){
+    public BiologicsWSAdapter(Context context, OnIconClickListener onIconClickListener){
         this.mOnIconClickListener = onIconClickListener;
         this.mContext = context;
     }
     @NonNull
     @Override
-    public BiologicsWsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BiologicsWSAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_biologics_ws,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BiologicsWsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BiologicsWSAdapter.ViewHolder holder, int position) {
         holder.id.setText(deviceBeans.get(position).getBrand());
         holder.result.setText(deviceBeans.get(position).getResult());
         holder.whatFor.setText(deviceBeans.get(position).getType());

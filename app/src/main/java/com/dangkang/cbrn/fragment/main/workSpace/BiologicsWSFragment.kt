@@ -19,8 +19,8 @@ import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleScanCallback
 import com.clj.fastble.data.BleDevice
 import com.clj.fastble.scan.BleScanRuleConfig
-import com.dangkang.cbrn.adapter.workspace.BiologicsWsAdapter
-import com.dangkang.cbrn.adapter.workspace.BiologicsWsAdapter.OnIconClickListener
+import com.dangkang.cbrn.adapter.workspace.BiologicsWSAdapter
+import com.dangkang.cbrn.adapter.workspace.BiologicsWSAdapter.OnIconClickListener
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentBiologicsWsBinding
 import com.dangkang.cbrn.device.ble.BiologicalDevice
@@ -29,7 +29,7 @@ import com.dangkang.core.fragment.BaseFragment
 class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
 
     private var systemListener: SystemListener = SystemListener()
-    private var biologicsWsAdapter: BiologicsWsAdapter? = null
+    private var biologicsWsAdapter: BiologicsWSAdapter? = null
     private var mScanStop = false
     override fun setBindingView(): ViewBinding {
         binding = FragmentBiologicsWsBinding.inflate(layoutInflater)
@@ -38,7 +38,7 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
 
     private fun initView(viewBinding: FragmentBiologicsWsBinding): FragmentBiologicsWsBinding {
         biologicsWsAdapter =
-            BiologicsWsAdapter(
+            BiologicsWSAdapter(
                 _mActivity,
                 this
             )
