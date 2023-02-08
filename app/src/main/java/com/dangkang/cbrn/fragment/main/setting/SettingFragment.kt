@@ -89,6 +89,7 @@ class SettingFragment : BaseFragment<ViewBinding>() {
         viewBinding.titleBar.cancel.setOnClickListener{
             _mActivity.finish()
         }
+        viewBinding.titleBar.title.text = "设置"
         return viewBinding
     }
 
