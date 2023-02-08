@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.dangkang.core.utils;
+package com.dangkang.cbrn.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -22,8 +22,8 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.dangkang.cbrn.application.config.Config;
 import com.dangkang.core.application.BaseApplication;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +52,7 @@ public class SPUtil {
     public static void init(Context context) {
         prefsUtil = new SPUtil();
         prefsUtil.context = context;
-        prefsUtil.prefs = prefsUtil.context.getSharedPreferences(BaseApplication.APPLICATION.getPackageName(), Context.MODE_PRIVATE);
+        prefsUtil.prefs = prefsUtil.context.getSharedPreferences(Config.getApplicationContext().getPackageName(), Context.MODE_PRIVATE);
         prefsUtil.editor = prefsUtil.prefs.edit();
     }
 

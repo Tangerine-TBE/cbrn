@@ -14,9 +14,9 @@ import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingRadiationBinding
 import com.dangkang.cbrn.db.TaintInfo
 import com.dangkang.cbrn.dialog.DataSelectWindow
+import com.dangkang.cbrn.utils.SPUtil
 import com.dangkang.core.fragment.BaseFragment
 import com.dangkang.core.utils.L
-import com.dangkang.core.utils.SPUtil
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
