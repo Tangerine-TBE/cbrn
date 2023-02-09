@@ -55,6 +55,7 @@ public class DataSelectWindow extends BasePopupWindow {
         setBlurBackgroundEnable(false); //背景模糊
         setOverlayMask(false);//是否允许蒙层叠加
         setBackgroundColor(Color.TRANSPARENT);//背景颜色设置 透明图层
+        setOutSideTouchable(false);
         this.mSelected = selected;
         this.mSelValue = selectedValue;
         /**/

@@ -25,6 +25,7 @@ import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingsBiologicsBinding
 import com.dangkang.cbrn.db.DeviceInfo
 import com.dangkang.core.fragment.BaseFragment
+import java.util.*
 
 class BiologicsFragment : BaseFragment<ViewBinding>() {
     /*全程生命周期需要:*/
@@ -35,7 +36,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
     * 2.检测蓝牙是否开启
     * 3.检测位置服务是否开启
     * 4.打开蓝牙扫描（视图可见开启蓝牙扫描 视图不可见关闭蓝牙扫描）*/
-    private var biologicsAdapter: BiologicsAdapter?= null
+    private var biologicsAdapter: BiologicsAdapter? = null
     private var mScanStop = false
     override fun setBindingView(): ViewBinding {
         binding = FragmentSettingsBiologicsBinding.inflate(layoutInflater)
@@ -43,6 +44,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
 
         return initView(binding as FragmentSettingsBiologicsBinding)
     }
+
     override fun onBackPressedSupport(): Boolean {
         findFragment(SettingFragment::class.java).onBackPressedSupport()
         return true
@@ -65,47 +67,48 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
                 //3.添加进数据列表中
                 //4.添加的时候要看看是否有重复添加的现象，去重！
                 //根据名字（名字=试剂盒id）数据库查找
-                if (mScanStop){
+                if (mScanStop) {
                     return
                 }
                 val deviceBrand = bleDevice.name
-                if (TextUtils.isEmpty(deviceBrand)){
+                if (TextUtils.isEmpty(deviceBrand)) {
                     return
                 }
-                var deviceInfo :DeviceInfo?= DaoTool.queryDeviceInfo(deviceBrand)
-                if (deviceInfo == null){
-                    deviceInfo  = DeviceInfo()
+                var deviceInfo: DeviceInfo? = DaoTool.queryDeviceInfo(deviceBrand)
+                if (deviceInfo == null) {
+                    deviceInfo = DeviceInfo()
                     deviceInfo.brand = deviceBrand
-                    deviceInfo.result = resources.getStringArray(R.array.biglogics_result)[0] //附加默认值
+                    deviceInfo.result =
+                        resources.getStringArray(R.array.biglogics_result)[0] //附加默认值
                     deviceInfo.type = resources.getStringArray(R.array.biglogics_type)[0] //附加默认值
                 }
-                for (item in biologicsAdapter?.data()!!){
-                    if (deviceInfo.brand.equals(item.brand)){
+                for (item in biologicsAdapter?.data()!!) {
+                    if (deviceInfo.brand.equals(item.brand)) {
                         return
                     }
                 }
-               val text =  (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text
-                (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text = "${deviceInfo.brand}  $text"
+                val text = (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text
+                (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text =
+                    "${deviceInfo.brand}  $text"
                 biologicsAdapter?.addItem(deviceInfo)
                 (binding as FragmentSettingsBiologicsBinding).recyclerView.scrollToPosition(0)
             }
 
             override fun onScanFinished(scanResultList: List<BleDevice>) {
-                if (!mScanStop){
+                if (!mScanStop) {
                     startScan()
                 }
             }
         })
     }
-    private fun setScanRule(){
-        val scanRuleConfig = BleScanRuleConfig.Builder()
-            .setAutoConnect(false) // 连接时的autoConnect参数，可选，默认false
-            .setScanTimeOut(10000) // 扫描超时时间，可选，默认10秒
-            .build()
+
+    private fun setScanRule() {
+        val scanRuleConfig =
+            BleScanRuleConfig.Builder().setAutoConnect(false) // 连接时的autoConnect参数，可选，默认false
+                .setScanTimeOut(10000) // 扫描超时时间，可选，默认10秒
+                .build()
         BleManager.getInstance().initScanRule(scanRuleConfig)
     }
-
-
 
     override fun onResume() {
         /*为什么要在onResume上做这些？因为不想当前fra会在隐藏或者不被用户看到的时候
@@ -121,7 +124,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
         intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         intentFilter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
         _mActivity.registerReceiver(
-            systemListener,intentFilter
+            systemListener, intentFilter
         )
         /*初始化生命周期需要:*/
         /**
@@ -135,27 +138,26 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
         }
         startWork()
     }
-    private fun  startWork(){
-        if (!checkGPSIsOpen()){
-            AlertDialog.Builder(_mActivity)
-                .setTitle("提示")
-                .setMessage("当前手机扫描需要打开定位功能")
-                .setNegativeButton("取消"
-                ) { _, _ -> pop() }
-                .setPositiveButton("前往设置"
+
+    private fun startWork() {
+        if (!checkGPSIsOpen()) {
+            AlertDialog.Builder(_mActivity).setTitle("提示").setMessage("当前手机扫描需要打开定位功能")
+                .setNegativeButton(
+                    "取消"
+                ) { _, _ -> pop() }.setPositiveButton(
+                    "前往设置"
                 ) { _, _ ->
                     val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                     startActivityForResult(intent, 1)
-                }
-                .setCancelable(false)
-                .show()
-        }else{
+                }.setCancelable(false).show()
+        } else {
             setScanRule()
             startScan()
         }
     }
-     @Deprecated("Deprecated in Java")
-     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1) {
             if (checkGPSIsOpen()) {
@@ -164,11 +166,14 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
             }
         }
     }
+
     private fun checkGPSIsOpen(): Boolean {
-        val locationManager = _mActivity.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-            ?: return false
+        val locationManager =
+            _mActivity.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+                ?: return false
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
+
     /**
      * onPause用于切换视图的停止*/
     override fun onPause() {
@@ -176,6 +181,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
         BleManager.getInstance().cancelScan()
         super.onPause()
     }
+
     /**
      * onDestroy用于销毁视图的停止*/
     override fun onDestroy() {
@@ -184,29 +190,36 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
             BleManager.getInstance().cancelScan()
             mScanStop = true
             _mActivity.unregisterReceiver(systemListener)
-        }catch (e:java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
 
     }
 
 
-
     private fun initView(binding: FragmentSettingsBiologicsBinding): ViewBinding {
-        biologicsAdapter =
-            BiologicsAdapter(_mActivity)
+        biologicsAdapter = BiologicsAdapter(_mActivity)
         binding.recyclerView.adapter = biologicsAdapter
-        binding.recyclerView.layoutManager = GridLayoutManager(_mActivity,2)
+        val list = listOf(resources.getStringArray(R.array.biglogics_type))[0]
+        var text = ""
+        for (i in list.indices){
+            val string = list[i]+" "
+            text += string
+        }
+        binding.tvValue.text = text;
+        binding.recyclerView.layoutManager = GridLayoutManager(_mActivity, 2)
         val pagerSnapHelper = PagerSnapHelper()
-        pagerSnapHelper.attachToRecyclerView( binding.recyclerView)
+        pagerSnapHelper.attachToRecyclerView(binding.recyclerView)
         return binding
     }
-    fun getRadiationInfo():List<DeviceInfo>{
+
+    fun getRadiationInfo(): List<DeviceInfo> {
         return biologicsAdapter?.data() as List<DeviceInfo>
     }
 
     private var systemListener: SystemListener = SystemListener()
-   inner class SystemListener : BroadcastReceiver() {
+
+    inner class SystemListener : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val action = intent?.action;
             var currentState = ""
@@ -220,22 +233,19 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
                         currentState = "蓝牙已断开"
                     }
                 }
-            }else if (LocationManager.PROVIDERS_CHANGED_ACTION == action){
-                val lm =  context?.getSystemService(Service.LOCATION_SERVICE) as LocationManager
+            } else if (LocationManager.PROVIDERS_CHANGED_ACTION == action) {
+                val lm = context?.getSystemService(Service.LOCATION_SERVICE) as LocationManager
                 val isEnabled: Boolean = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                if (!isEnabled){
-                    AlertDialog.Builder(context)
-                        .setTitle("提示")
-                        .setMessage("当前手机扫描需要打开定位功能")
-                        .setNegativeButton("取消"
-                        ) { _, _ -> pop() }
-                        .setPositiveButton("前往设置"
+                if (!isEnabled) {
+                    AlertDialog.Builder(context).setTitle("提示").setMessage("当前手机扫描需要打开定位功能")
+                        .setNegativeButton(
+                            "取消"
+                        ) { _, _ -> pop() }.setPositiveButton(
+                            "前往设置"
                         ) { _, _ ->
                             val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                             startActivityForResult(intent, 1)
-                        }
-                        .setCancelable(false)
-                        .show()
+                        }.setCancelable(false).show()
                 }
             }
             Toast.makeText(context, currentState, Toast.LENGTH_SHORT).show()
