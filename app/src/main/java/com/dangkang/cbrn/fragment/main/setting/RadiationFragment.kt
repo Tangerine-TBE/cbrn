@@ -27,6 +27,11 @@ class RadiationFragment : BaseFragment<ViewBinding>() {
         binding = FragmentSettingRadiationBinding.inflate(layoutInflater)
         return initView(binding as FragmentSettingRadiationBinding)
     }
+
+    override fun onBackPressedSupport(): Boolean {
+        findFragment(SettingFragment::class.java).onBackPressedSupport()
+        return true
+    }
     private fun initView(binding: FragmentSettingRadiationBinding): ViewBinding {
         val pageSnapHelper = PagerSnapHelper()
         binding.recyclerView.apply {

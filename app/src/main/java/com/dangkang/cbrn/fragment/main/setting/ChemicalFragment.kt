@@ -23,7 +23,10 @@ class ChemicalFragment :BaseFragment<ViewBinding>() {
         binding  = FragmentSettingChemicalBinding.inflate(layoutInflater)
         return initView(binding as FragmentSettingChemicalBinding)
     }
-
+    override fun onBackPressedSupport(): Boolean {
+        findFragment(SettingFragment::class.java).onBackPressedSupport()
+        return true
+    }
     private fun initView(binding: FragmentSettingChemicalBinding): ViewBinding {
         val pageSnapHelper = PagerSnapHelper()
         binding.recyclerView.apply {

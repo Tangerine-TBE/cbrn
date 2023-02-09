@@ -34,6 +34,22 @@ class SettingFragment : BaseFragment<ViewBinding>() {
         initView(fragmentSettingsBinding as FragmentSettingsBinding)
     }
 
+    override fun onBackPressedSupport(): Boolean {
+        if (settingBackDialog == null){
+            settingBackDialog = SettingBackDialog(_mActivity,R.style.DialogStyle,object :SettingBackDialog.OnItemSelected{
+                override fun onSaveItem() {
+                    viewPagerFragmentStateAdapter?.save()
+                    pop()
+                }
+
+                override fun onUnSaveItem() {
+                    pop()
+                }
+            })
+        }
+        settingBackDialog!!.show()
+        return true
+    }
     private fun initView(viewBinding: FragmentSettingsBinding): ViewBinding {
         viewBinding.viewPager.apply {
             viewPagerFragmentStateAdapter = ViewPagerFragmentStateAdapter(_mActivity.supportFragmentManager, lifecycle)

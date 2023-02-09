@@ -51,6 +51,7 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             typeOneViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
             typeOneViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
             typeOneViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
+            typeOneViewHolder.unit.setText(mList.get(position).getTaint_unit()+"");
         } else if (mViewType == 2) {
             TypeTwoViewHolder typeTwoViewHolder = (TypeTwoViewHolder) holder;
             typeTwoViewHolder.taint_num.setText(mList.get(position).getTaint_num() + "");
@@ -58,11 +59,15 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             typeTwoViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
             typeTwoViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
             typeTwoViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
+            typeTwoViewHolder.unit.setText(mList.get(position).getTaint_unit()+"");
+
         } else {
             TypeOneViewHolder typeOneViewHolder = (TypeOneViewHolder) holder;
             typeOneViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
             typeOneViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
             typeOneViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
+            typeOneViewHolder.unit.setText(mList.get(position).getTaint_unit()+"");
+
         }
     }
 

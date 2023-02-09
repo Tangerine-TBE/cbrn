@@ -8,6 +8,7 @@ import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
 import com.dangkang.cbrn.dialog.SettingBackDialog
 import com.dangkang.cbrn.dialog.WorkBackDialog
 import com.dangkang.core.fragment.BaseFragment
+import com.dangkang.core.utils.L
 
 class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     private var viewPagerWsStateAdapter: ViewPagerWsStateAdapter? = null
@@ -65,6 +66,22 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     override fun onDestroy() {
         viewPagerWsStateAdapter?.destroyAllItem()
         super.onDestroy()
+    }
+
+    override fun onBackPressedSupport(): Boolean {
+        if (workBackDialog == null) {
+            workBackDialog = WorkBackDialog(
+                _mActivity,
+                R.style.DialogStyle,
+                object : WorkBackDialog.OnItemSelected {
+                    override fun onSaveItem() {
+                        pop()
+                    }
+
+                })
+        }
+        workBackDialog!!.show()
+        return true
     }
 
     override fun onLazyInitView(savedInstanceState: Bundle?) {

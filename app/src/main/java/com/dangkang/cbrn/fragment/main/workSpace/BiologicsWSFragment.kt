@@ -48,6 +48,10 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
         pagerSnapHelper.attachToRecyclerView(viewBinding.recyclerView)
         return viewBinding
     }
+    override fun onBackPressedSupport(): Boolean {
+        findFragment(WorkSpaceFragment::class.java).onBackPressedSupport()
+        return true
+    }
 
     override fun onResume() {
         super.onResume()

@@ -65,6 +65,10 @@ class ChemicalWSFragment:BaseFragment<ViewBinding>() {
         })
     }
 
+    override fun onBackPressedSupport(): Boolean {
+        findFragment(WorkSpaceFragment::class.java).onBackPressedSupport()
+        return true
+    }
     override fun onResume() {
         super.onResume()
         fragmentChemicalWsBinding?.let { initData(it) }

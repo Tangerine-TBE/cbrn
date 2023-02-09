@@ -10,6 +10,10 @@ class ModelSelectFragment :BaseFragment<ViewBinding>() {
             return ModelSelectFragment()
         }
     }
+    override fun onBackPressedSupport(): Boolean {
+        findFragment(WorkSpaceFragment::class.java).onBackPressedSupport()
+        return true
+    }
     override fun setBindingView(): ViewBinding {
         binding  = FragmentSocketBingBinding.inflate(layoutInflater)
         return initView(binding as FragmentSocketBingBinding)

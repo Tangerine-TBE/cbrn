@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.R
+import com.dangkang.cbrn.activity.MainActivity
 import com.dangkang.cbrn.adapter.workspace.RadiationWSAdapter
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentRadiationWsBinding
@@ -39,6 +40,7 @@ class RadiationWSFragment : BaseFragment<ViewBinding>() {
         fragmentRadiationWsBinding?.let { initView(it) }
         super.onLazyInitView(savedInstanceState)
     }
+
     @SuppressLint("CheckResult")
     private fun initData(viewBinding: FragmentRadiationWsBinding){
         /*这个初始化流程不可以改变 0.*/
@@ -59,11 +61,18 @@ class RadiationWSFragment : BaseFragment<ViewBinding>() {
                     layoutManager = GridLayoutManager(_mActivity, 2)
 
                 }
+                viewBinding.taintNum2.text = "${it.size}"
             }, {
                 ToastUtil.showCenterToast(it.message)
             })
     }
 
+    override fun onBackPressedSupport(): Boolean {
+        findFragment(WorkSpaceFragment::class.java).onBackPressedSupport()
+
+
+        return true
+    }
     override fun onResume() {
         super.onResume()
         fragmentRadiationWsBinding?.let { initData(it) }

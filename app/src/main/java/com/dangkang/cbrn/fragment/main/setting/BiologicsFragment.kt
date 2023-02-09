@@ -43,7 +43,10 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
 
         return initView(binding as FragmentSettingsBiologicsBinding)
     }
-
+    override fun onBackPressedSupport(): Boolean {
+        findFragment(SettingFragment::class.java).onBackPressedSupport()
+        return true
+    }
 
     private fun startScan() {
         BleManager.getInstance().scan(object : BleScanCallback() {
