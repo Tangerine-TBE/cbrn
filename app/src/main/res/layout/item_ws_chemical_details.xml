@@ -178,6 +178,7 @@
                 android:maxEms="3"
                 android:maxLength="3"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:background="@drawable/item_raditation_bg"
                 android:layout_width="70dp"
                 android:layout_height="30dp"/>

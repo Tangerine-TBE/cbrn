@@ -91,6 +91,8 @@
                 android:id="@+id/taint_max"
                 android:maxEms="3"
                 android:maxLength="3"
+                android:textSize="18sp"
+
                 android:maxLines="1"
                 android:background="@drawable/item_raditation_bg"
                 android:layout_width="70dp"
