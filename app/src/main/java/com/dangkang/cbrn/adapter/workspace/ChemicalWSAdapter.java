@@ -41,22 +41,22 @@ public class ChemicalWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (mViewType == 1) {
-            RadiationWSAdapter.TypeOneViewHolder typeOneViewHolder = (RadiationWSAdapter.TypeOneViewHolder) holder;
+            TypeOneViewHolder typeOneViewHolder = (TypeOneViewHolder) holder;
             typeOneViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
             typeOneViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
-            typeOneViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
+            typeOneViewHolder.taint_dis.setText(mList.get(position).getTaint_sim() + "");
         } else if (mViewType == 2) {
-            RadiationWSAdapter.TypeTwoViewHolder typeTwoViewHolder = (RadiationWSAdapter.TypeTwoViewHolder) holder;
+            TypeTwoViewHolder typeTwoViewHolder = (TypeTwoViewHolder) holder;
             typeTwoViewHolder.taint_num.setText(mList.get(position).getTaint_num() + "");
             typeTwoViewHolder.taint_dis.setText(mList.get(position).getTaint_dis() + "");
             typeTwoViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
             typeTwoViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
             typeTwoViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
         } else {
-            RadiationWSAdapter.TypeOneViewHolder typeOneViewHolder = (RadiationWSAdapter.TypeOneViewHolder) holder;
+            TypeOneViewHolder typeOneViewHolder = (TypeOneViewHolder) holder;
             typeOneViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
             typeOneViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
-            typeOneViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
+            typeOneViewHolder.taint_dis.setText(mList.get(position).getTaint_sim() + "");
         }
     }
 
