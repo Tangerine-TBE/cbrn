@@ -5,11 +5,6 @@ import com.dangkang.cbrn.databinding.FragmentSocketBingBinding
 import com.dangkang.core.fragment.BaseFragment
 
 class ModelSelectFragment :BaseFragment<ViewBinding>() {
-    companion object{
-        fun newInstance(): BaseFragment<ViewBinding> {
-            return ModelSelectFragment()
-        }
-    }
     override fun onBackPressedSupport(): Boolean {
         findFragment(WorkSpaceFragment::class.java).onBackPressedSupport()
         return true
