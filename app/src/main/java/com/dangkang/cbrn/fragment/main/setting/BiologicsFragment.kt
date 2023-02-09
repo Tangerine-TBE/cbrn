@@ -46,8 +46,13 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
     }
 
     override fun onBackPressedSupport(): Boolean {
-        findFragment(SettingFragment::class.java).onBackPressedSupport()
-        return true
+        val fragment  = findFragment(SettingFragment::class.java)
+        return if (fragment != null){
+            fragment.onBackPressedSupport()
+            true
+        }else{
+            false
+        }
     }
 
     private fun startScan() {

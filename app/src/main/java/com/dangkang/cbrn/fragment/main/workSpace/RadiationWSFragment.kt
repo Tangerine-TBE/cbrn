@@ -68,10 +68,13 @@ class RadiationWSFragment : BaseFragment<ViewBinding>() {
     }
 
     override fun onBackPressedSupport(): Boolean {
-        findFragment(WorkSpaceFragment::class.java).onBackPressedSupport()
-
-
-        return true
+        val fragment  = findFragment(WorkSpaceFragment::class.java)
+        return if (fragment != null){
+            fragment.onBackPressedSupport()
+            true
+        }else{
+            false
+        }
     }
     override fun onResume() {
         super.onResume()

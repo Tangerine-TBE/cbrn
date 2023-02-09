@@ -14,6 +14,7 @@ import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingRadiationBinding
 import com.dangkang.cbrn.db.TaintInfo
 import com.dangkang.cbrn.dialog.DataSelectWindow
+import com.dangkang.cbrn.fragment.main.workSpace.WorkSpaceFragment
 import com.dangkang.cbrn.utils.SPUtil
 import com.dangkang.core.fragment.BaseFragment
 import com.dangkang.core.utils.L
@@ -29,8 +30,13 @@ class RadiationFragment : BaseFragment<ViewBinding>() {
     }
 
     override fun onBackPressedSupport(): Boolean {
-        findFragment(SettingFragment::class.java).onBackPressedSupport()
-        return true
+        val fragment  = findFragment(SettingFragment::class.java)
+        return if (fragment != null){
+            fragment.onBackPressedSupport()
+            true
+        }else{
+            false
+        }
     }
     private fun initView(binding: FragmentSettingRadiationBinding): ViewBinding {
         val pageSnapHelper = PagerSnapHelper()

@@ -24,8 +24,13 @@ class ChemicalFragment :BaseFragment<ViewBinding>() {
         return initView(binding as FragmentSettingChemicalBinding)
     }
     override fun onBackPressedSupport(): Boolean {
-        findFragment(SettingFragment::class.java).onBackPressedSupport()
-        return true
+        val fragment  = findFragment(SettingFragment::class.java)
+        return if (fragment != null){
+            fragment.onBackPressedSupport()
+            true
+        }else{
+            false
+        }
     }
     private fun initView(binding: FragmentSettingChemicalBinding): ViewBinding {
         val pageSnapHelper = PagerSnapHelper()
