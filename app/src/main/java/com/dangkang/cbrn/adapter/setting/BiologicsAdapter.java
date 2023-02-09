@@ -88,9 +88,6 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
     public final List<DeviceInfo> data(){
         return deviceBeans;
     }
-
-
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView whatFor;
         TextView id;

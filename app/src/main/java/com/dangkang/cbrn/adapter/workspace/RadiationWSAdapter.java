@@ -22,8 +22,9 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private int mViewType; /*1.simple 2.details*/ /*@setViewType can change the type */
 
     /*数据查找数据*/
-    public RadiationWSAdapter(List<TaintInfo> list) {
+    public RadiationWSAdapter(List<TaintInfo> list,int viewType) {
         this.mList = list;
+        this.mViewType = viewType;
     }
 
     @NonNull
