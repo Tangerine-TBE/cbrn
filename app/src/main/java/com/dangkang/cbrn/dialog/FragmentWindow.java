@@ -59,16 +59,16 @@ public class FragmentWindow extends BasePopupWindow {
         });
         mDisposable = Observable.create((ObservableOnSubscribe<List<CwaBean>>) emitter -> {
             ArrayList<CwaBean> values = new ArrayList<>();
-            values.add(new CwaBean("神经", R.mipmap.frame, "沙林", "0.1", "0.2", "0.3", "mg/m^3"));
-            values.add(new CwaBean("神经", R.mipmap.frame, "塔崩", "0.1", "0.2", "0.3", "mg/m^3"));
-            values.add(new CwaBean("神经", R.mipmap.frame, "梭曼", "0.1", "0.2", "0.3", "mg/m^3"));
-            values.add(new CwaBean("神经", R.mipmap.frame, "尔沙林", "0.1", "0.2", "0.3", "mg/m^3"));
-            values.add(new CwaBean("神经", R.mipmap.frame, "VX", "0.1", "0.2", "0.3", "mg/m^3"));
-            values.add(new CwaBean("皮肤", R.mipmap.frame, "硫芥", "0.5", "0.6", "0.7", "mg/m^3"));
-            values.add(new CwaBean("皮肤", R.mipmap.frame, "路易斯气", "2", "2.5", "3", "mg/m^3"));
-            values.add(new CwaBean("皮肤", R.mipmap.frame, "氮芥", "5", "5.5", "6", "mg/m^3"));
-            values.add(new CwaBean("血液", R.mipmap.frame, "氰胺酸", "50", "55", "60", "mg/m^3"));
-            values.add(new CwaBean("血液", R.mipmap.frame, "氯化氢", "50", "55", "60", "mg/m^3"));
+            values.add(new CwaBean("神经", R.mipmap.icon_frame1, "沙林", "0.1", "0.2", "0.3", "mg/m^3"));
+            values.add(new CwaBean("神经", R.mipmap.icon_frame1, "塔崩", "0.1", "0.2", "0.3", "mg/m^3"));
+            values.add(new CwaBean("神经", R.mipmap.icon_frame1, "梭曼", "0.1", "0.2", "0.3", "mg/m^3"));
+            values.add(new CwaBean("神经", R.mipmap.icon_frame1, "尔沙林", "0.1", "0.2", "0.3", "mg/m^3"));
+            values.add(new CwaBean("神经", R.mipmap.icon_frame1, "VX", "0.1", "0.2", "0.3", "mg/m^3"));
+            values.add(new CwaBean("皮肤", R.mipmap.icon_frame1, "硫芥", "0.5", "0.6", "0.7", "mg/m^3"));
+            values.add(new CwaBean("皮肤", R.mipmap.icon_frame1, "路易斯气", "2", "2.5", "3", "mg/m^3"));
+            values.add(new CwaBean("皮肤", R.mipmap.icon_frame1, "氮芥", "5", "5.5", "6", "mg/m^3"));
+            values.add(new CwaBean("血液", R.mipmap.icon_frame1, "氰胺酸", "50", "55", "60", "mg/m^3"));
+            values.add(new CwaBean("血液", R.mipmap.icon_frame1, "氯化氢", "50", "55", "60", "mg/m^3"));
             values.add(new CwaBean("有毒工业品", R.mipmap.frame, "氯", "10", "15", "20", "ppm"));
             values.add(new CwaBean("有毒工业品", R.mipmap.frame, "氨", "100", "150", "200", "ppm"));
             values.add(new CwaBean("有毒工业品", R.mipmap.frame, "有害的浓度和化学混合物", "-", "-", "-", "mg/m^3"));
