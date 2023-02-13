@@ -24,8 +24,9 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Type = new Property(0, int.class, "type", false, "TYPE");
-        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property Create_time = new Property(0, long.class, "create_time", false, "CREATE_TIME");
+        public final static Property Type = new Property(1, int.class, "type", false, "TYPE");
+        public final static Property Name = new Property(2, String.class, "name", false, "NAME");
     }
 
 
@@ -41,8 +42,9 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TYPE_INFO\" (" + //
-                "\"TYPE\" INTEGER NOT NULL ," + // 0: type
-                "\"NAME\" TEXT);"); // 1: name
+                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 0: create_time
+                "\"TYPE\" INTEGER NOT NULL ," + // 1: type
+                "\"NAME\" TEXT);"); // 2: name
     }
 
     /** Drops the underlying database table. */
@@ -54,22 +56,24 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, TypeInfo entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getType());
+        stmt.bindLong(1, entity.getCreate_time());
+        stmt.bindLong(2, entity.getType());
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(2, name);
+            stmt.bindString(3, name);
         }
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, TypeInfo entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getType());
+        stmt.bindLong(1, entity.getCreate_time());
+        stmt.bindLong(2, entity.getType());
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(2, name);
+            stmt.bindString(3, name);
         }
     }
 
@@ -81,16 +85,18 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
     @Override
     public TypeInfo readEntity(Cursor cursor, int offset) {
         TypeInfo entity = new TypeInfo( //
-            cursor.getInt(offset + 0), // type
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // name
+            cursor.getLong(offset + 0), // create_time
+            cursor.getInt(offset + 1), // type
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // name
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, TypeInfo entity, int offset) {
-        entity.setType(cursor.getInt(offset + 0));
-        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setCreate_time(cursor.getLong(offset + 0));
+        entity.setType(cursor.getInt(offset + 1));
+        entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     
     @Override

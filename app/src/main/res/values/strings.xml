@@ -27,6 +27,7 @@
     <!--生物设置-->
     <!--制剂类型显示-->
     <string-array name="biglogics_type">
+        <item>添加</item>
         <item>委内瑞拉马脑炎病毒</item>
         <item>东方马脑炎病毒</item>
         <item>西方马脑炎病毒</item>
@@ -53,7 +54,6 @@
         <item>葡萄球菌肠毒素</item>
         <item>志贺毒素</item>
         <item>产气荚膜梭菌毒素</item>
-        <item>志贺毒素</item>
         <item>T-2毒素</item>
         <item>石房蛤毒素</item>
         <item>蓖麻毒素</item>

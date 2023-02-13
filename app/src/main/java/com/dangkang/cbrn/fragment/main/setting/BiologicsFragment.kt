@@ -13,6 +13,7 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewbinding.ViewBinding
 import com.clj.fastble.BleManager
@@ -21,13 +22,27 @@ import com.clj.fastble.data.BleDevice
 import com.clj.fastble.scan.BleScanRuleConfig
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.adapter.setting.BiologicsAdapter
+import com.dangkang.cbrn.adapter.setting.BiologicsDeviceAdapter
+import com.dangkang.cbrn.adapter.setting.BiologicsTypeAdapter
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingsBiologicsBinding
 import com.dangkang.cbrn.db.DeviceInfo
+import com.dangkang.cbrn.db.TypeInfo
+import com.dangkang.cbrn.dialog.EditTextDialog
+import com.dangkang.cbrn.utils.ToastUtil
+import com.dangkang.cbrn.weight.BiologicsDecoration
 import com.dangkang.core.fragment.BaseFragment
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.lang.reflect.Type
 import java.util.*
+import kotlin.collections.ArrayList
 
-class BiologicsFragment : BaseFragment<ViewBinding>() {
+class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnItemClickListener {
     /*全程生命周期需要:*/
     /*1.动态监听蓝牙启动或关闭广播以达到业务流畅*/
     /*2.动态监听位置定位启动或关闭广播以达到业务流畅*/
@@ -38,19 +53,20 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
     * 4.打开蓝牙扫描（视图可见开启蓝牙扫描 视图不可见关闭蓝牙扫描）*/
     private var biologicsAdapter: BiologicsAdapter? = null
     private var mScanStop = false
+    private var editTextDialog: EditTextDialog? = null
+    private var biologicsTypeAdapter :BiologicsTypeAdapter?=null
+    private var biologicsDeviceAdapter:BiologicsDeviceAdapter? = null
     override fun setBindingView(): ViewBinding {
         binding = FragmentSettingsBiologicsBinding.inflate(layoutInflater)
-
-
         return initView(binding as FragmentSettingsBiologicsBinding)
     }
 
     override fun onBackPressedSupport(): Boolean {
-        val fragment  = findFragment(SettingFragment::class.java)
-        return if (fragment != null){
+        val fragment = findFragment(SettingFragment::class.java)
+        return if (fragment != null) {
             fragment.onBackPressedSupport()
             true
-        }else{
+        } else {
             false
         }
     }
@@ -92,10 +108,11 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
                         return
                     }
                 }
-                val text = (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text
-                (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text =
-                    "${deviceInfo.brand}  $text"
+//                val text = (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text
+//                (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text =
+//                    "${deviceInfo.brand}  $text"
                 biologicsAdapter?.addItem(deviceInfo)
+                biologicsScanner(bleDevice)
                 (binding as FragmentSettingsBiologicsBinding).recyclerView.scrollToPosition(0)
             }
 
@@ -105,6 +122,9 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
                 }
             }
         })
+    }
+    private fun biologicsScanner(bleDevice: BleDevice){
+        biologicsDeviceAdapter?.addItem(bleDevice)
     }
 
     private fun setScanRule() {
@@ -118,7 +138,6 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
     override fun onResume() {
         /*为什么要在onResume上做这些？因为不想当前fra会在隐藏或者不被用户看到的时候
         做一些用户交互，当转入当前fra 被用户看到时，才进行这部份逻辑，我觉得相当不错的体验*/
-
         /*全程生命周期需要:*/
         /*1.动态监听蓝牙启动或关闭广播以达到业务流畅*/
         /*2.动态监听位置定位启动或关闭广播以达到业务流畅*/
@@ -198,28 +217,75 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
     }
 
 
     private fun initView(binding: FragmentSettingsBiologicsBinding): ViewBinding {
+        initData(binding)
         biologicsAdapter = BiologicsAdapter(_mActivity)
+        biologicsDeviceAdapter = BiologicsDeviceAdapter()
         binding.recyclerView.adapter = biologicsAdapter
-        val list = listOf(resources.getStringArray(R.array.biglogics_type))[0]
-        var text = ""
-        for (i in list.indices){
-            val string = list[i]+" "
-            text += string
-        }
-        binding.tvValue.text = text;
         binding.recyclerView.layoutManager = GridLayoutManager(_mActivity, 2)
+        binding.deviceRecyclerView.adapter = biologicsDeviceAdapter
+        binding.deviceRecyclerView.layoutManager = FlexboxLayoutManager(_mActivity)
+        binding.deviceRecyclerView.addItemDecoration(BiologicsDecoration())
         val pagerSnapHelper = PagerSnapHelper()
+        val deviceSnapHelper = PagerSnapHelper();
+        deviceSnapHelper.attachToRecyclerView(binding.deviceRecyclerView)
         pagerSnapHelper.attachToRecyclerView(binding.recyclerView)
         return binding
     }
 
     fun getRadiationInfo(): List<DeviceInfo> {
         return biologicsAdapter?.data() as List<DeviceInfo>
+    }
+
+    @SuppressLint("CheckResult")
+    private fun initData(viewBinding: FragmentSettingsBiologicsBinding) {
+        /**查询数据
+         * 1.BiologicsTypeAdapter
+         * 2.BiologicsDeviceAdapter
+         * 3.BiologicsResultAdapter
+         *
+         * 1.BiologicsType's default data query and the dynamic data query ,the dynamic data should save in the database
+         * 2.BiologicsResult 's default data query
+         * 3.BiologicsDevice should load from ble scanner it's the same way with recyclerView scanner
+         * */
+        /* load in the thread to save the application running */
+        /*RxJava2 join*/
+        io.reactivex.Observable.create<List<TypeInfo>> {
+            val strings = mutableListOf(resources.getStringArray(R.array.biglogics_type))[0]
+            val listDefault: ArrayList<TypeInfo> = kotlin.collections.ArrayList()
+            for (i in strings.indices) {
+                val typeInfo: TypeInfo = if (i == 0) {
+                    TypeInfo(0, strings[i])
+                } else {
+                    TypeInfo(1, strings[i])
+                }
+                listDefault.add(typeInfo)
+            }
+            val listDynamic = DaoTool.queryAllTypeInfo()
+            if (listDynamic != null && listDynamic.isNotEmpty()) {
+                //这里的添加要进行额外的处理
+                //0 header 不进行额外处理
+                //从1开始进行添加知道dynamic数组添加完毕 kotlin ArrayList == java ArrayList
+                //最后添加default数组
+                listDefault.addAll(1,listDynamic)
+//                listDefault = listDefault.plus(listDynamic) as ArrayList<TypeInfo>
+            }
+            it.onNext(listDefault.toList())
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            biologicsTypeAdapter = BiologicsTypeAdapter(it,context,this)
+            viewBinding.typeRecyclerView.adapter =biologicsTypeAdapter
+            viewBinding.typeRecyclerView.layoutManager = FlexboxLayoutManager(_mActivity).apply {
+                val pagerSnapHelper = PagerSnapHelper()
+                pagerSnapHelper.attachToRecyclerView(viewBinding.typeRecyclerView)
+            }
+            viewBinding.typeRecyclerView.addItemDecoration(BiologicsDecoration())
+        }, {
+            ToastUtil.showCenterToast(it.message)
+        })
+
     }
 
     private var systemListener: SystemListener = SystemListener()
@@ -256,6 +322,23 @@ class BiologicsFragment : BaseFragment<ViewBinding>() {
             Toast.makeText(context, currentState, Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    override fun onItemClicked(value: Int) {
+        if (value == 0) {
+            if (editTextDialog == null) {
+                editTextDialog = EditTextDialog(_mActivity,
+                    R.style.DialogStyle,
+                    object : EditTextDialog.OnItemSelected {
+                        override fun onSaveItem(value:String) {
+                            if (biologicsTypeAdapter != null){
+                                biologicsTypeAdapter?.addItem(value)
+                            }
+                        }
+                    })
+            }
+            editTextDialog!!.show()
+        }
     }
 
 }

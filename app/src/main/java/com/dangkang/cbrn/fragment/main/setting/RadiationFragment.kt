@@ -95,7 +95,8 @@ class RadiationFragment : BaseFragment<ViewBinding>() {
                 adapter!!.addItem(taintInfo)
                 binding.recyclerView.scrollToPosition(0)
             }
-        }, { L.e(it.message) })
+        }, {
+            L.e(it.message) })
     }
 
     fun getRadiationInfo():List<TaintInfo>{

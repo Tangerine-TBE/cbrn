@@ -3,7 +3,8 @@ package com.dangkang.cbrn.db;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-
+/**
+ * 这个类是核辐射和化学需要存储的污点*/
 @Entity
 public class TaintInfo {
     @Id(autoincrement = true)

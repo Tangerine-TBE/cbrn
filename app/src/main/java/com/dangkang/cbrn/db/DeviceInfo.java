@@ -7,6 +7,7 @@ import org.greenrobot.greendao.annotation.Id;
 /**
  * @author:Administrator
  * @date:2023/1/11
+ * 这个类的写入状态是在设置时，输出状态是在实时操作时，为了存储用户对生物试剂盒修改的状态
  */
 @Entity
 public class DeviceInfo {
