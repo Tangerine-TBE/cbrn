@@ -33,6 +33,7 @@ import com.dangkang.cbrn.dialog.EditTextDialog
 import com.dangkang.cbrn.utils.ToastUtil
 import com.dangkang.cbrn.weight.BiologicsDecoration
 import com.dangkang.core.fragment.BaseFragment
+import com.dangkang.core.utils.L
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -204,28 +205,36 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
     }
 
 
+    @SuppressLint("CheckResult")
     private fun initView(binding: FragmentSettingsBiologicsBinding): ViewBinding {
         initData(binding)
-        biologicsAdapter = BiologicsAdapter(_mActivity)
-        biologicsDeviceAdapter = BiologicsDeviceAdapter()
-        binding.recyclerView.adapter = biologicsAdapter
-        binding.recyclerView.layoutManager = GridLayoutManager(_mActivity, 2)
-        binding.deviceRecyclerView.adapter = biologicsDeviceAdapter
-        binding.deviceRecyclerView.layoutManager = FlexboxLayoutManager(_mActivity)
-        binding.deviceRecyclerView.addItemDecoration(BiologicsDecoration())
-        binding.add.setOnClickListener {
-            val deviceInfo = DeviceInfo()
-            deviceInfo.brand = "未知设备"
-            deviceInfo.type = resources.getStringArray(R.array.biglogics_type)[1]
-            deviceInfo.result = resources.getStringArray(R.array.biglogics_result)[0]
-            deviceInfo.location = ""
-            biologicsAdapter!!.addItem(deviceInfo)
-            binding.recyclerView.scrollToPosition(0)
-        }
-        val pagerSnapHelper = PagerSnapHelper()
-        val deviceSnapHelper = PagerSnapHelper();
-        deviceSnapHelper.attachToRecyclerView(binding.deviceRecyclerView)
-        pagerSnapHelper.attachToRecyclerView(binding.recyclerView)
+        io.reactivex.Observable.create<ArrayList<DeviceInfo>> {
+
+            it.onNext(DaoTool.queryAllDeviceInfo() as ArrayList<DeviceInfo>)
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            biologicsDeviceAdapter = BiologicsDeviceAdapter()
+            biologicsAdapter = BiologicsAdapter(_mActivity, biologicsDeviceAdapter, it)
+            binding.recyclerView.adapter = biologicsAdapter
+            binding.recyclerView.layoutManager = GridLayoutManager(_mActivity, 2)
+            binding.deviceRecyclerView.adapter = biologicsDeviceAdapter
+            binding.deviceRecyclerView.layoutManager = FlexboxLayoutManager(_mActivity)
+            binding.deviceRecyclerView.addItemDecoration(BiologicsDecoration())
+            binding.add.setOnClickListener {
+                val deviceInfo = DeviceInfo()
+                deviceInfo.brand = "未知设备"
+                deviceInfo.type = resources.getStringArray(R.array.biglogics_type)[1]
+                deviceInfo.result = resources.getStringArray(R.array.biglogics_result)[0]
+                deviceInfo.location = ""
+                biologicsAdapter!!.addItem(deviceInfo)
+                binding.recyclerView.scrollToPosition(0)
+            }
+            val pagerSnapHelper = PagerSnapHelper()
+            val deviceSnapHelper = PagerSnapHelper();
+            deviceSnapHelper.attachToRecyclerView(binding.deviceRecyclerView)
+            pagerSnapHelper.attachToRecyclerView(binding.recyclerView)
+        },
+            { L.e(it.message)})
+
         return binding
     }
 
@@ -320,8 +329,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
     override fun onItemClicked(value: Int) {
         if (value == 0) {
             if (editTextDialog == null) {
-                editTextDialog = EditTextDialog(
-                    _mActivity,
+                editTextDialog = EditTextDialog(_mActivity,
                     R.style.DialogStyle,
                     object : EditTextDialog.OnItemSelected {
                         override fun onSaveItem(value: String) {

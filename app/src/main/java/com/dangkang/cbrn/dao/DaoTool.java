@@ -14,6 +14,7 @@ import com.dangkang.db.TypeInfoDao;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class DaoTool {
@@ -49,6 +50,10 @@ public class DaoTool {
         }
     }
 
+    public static List<DeviceInfo> queryAllDeviceInfo() {
+        return sDaoSession.getDeviceInfoDao().queryBuilder().orderDesc(DeviceInfoDao.Properties.Id).list();
+    }
+
     public static List<TypeInfo> queryAllTypeInfo() {
         List<TypeInfo> typeInfo = sDaoSession.getTypeInfoDao().queryBuilder().orderDesc(TypeInfoDao.Properties.Create_time).list();
         if (typeInfo != null && typeInfo.size() > 0) {
@@ -72,11 +77,20 @@ public class DaoTool {
     public static void updateDeviceInfo(List<DeviceInfo> deviceInfo) {
         String sql = "delete from DEVICE_INFO ";
         sDaoSession.getDatabase().execSQL(sql);
+        /*如果是未知设备就不进行保存*/
+        /*迭代器循环*/
+        Iterator<DeviceInfo> iterator = deviceInfo.iterator();
+        while (iterator.hasNext()) {
+            String value = iterator.next().getBrand();
+            if ("未知设备".equals(value)) {
+                iterator.remove();
+            }
+        }
         sDaoSession.getDeviceInfoDao().insertOrReplaceInTx(deviceInfo);
     }
 
-    public static void addTypeInfo(int type, String name,long create_time) {
-        sDaoSession.getTypeInfoDao().insertOrReplace(new TypeInfo(create_time,type, name));
+    public static void addTypeInfo(int type, String name, long create_time) {
+        sDaoSession.getTypeInfoDao().insertOrReplace(new TypeInfo(create_time, type, name));
     }
 
 }

@@ -7,16 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.clj.fastble.data.BleDevice;
 import com.dangkang.cbrn.R;
 import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.dialog.DataSelectWindow;
-
-import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,12 +31,14 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
     public Context mContext;
     private final List<String> mStrings = new ArrayList<>();
     private DataSelectWindow dataSelectWindow;
+    private BiologicsDeviceAdapter adapter;
 
-    public BiologicsAdapter(Context context) {
+    public BiologicsAdapter(Context context,BiologicsDeviceAdapter adapter,List<DeviceInfo> deviceBeans) {
         this.mContext = context;
         this.mStrings.addAll(Arrays.asList(mContext.getResources().getStringArray(R.array.biglogics_type)));
         this.mStrings.remove(0);
-
+        this.adapter = adapter;
+        this.deviceBeans.addAll(deviceBeans);
     }
 
     @NonNull
@@ -70,7 +72,13 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
             dataSelectWindow.showPopupWindow(holder.result);
         });
         holder.id.setOnClickListener(v->{
-            dataSelectWindow = new DataSelectWindow(mContext, new ArrayList<>(), value -> {
+            ArrayList<String> arrayList = new ArrayList<>();
+            for (BleDevice bleDevice : adapter.data()){
+                arrayList.add(bleDevice.getName());
+            }
+            dataSelectWindow = new DataSelectWindow(mContext, arrayList, value -> {
+                holder.id.setText(value);
+                deviceBeans.get(holder.getAdapterPosition()).setBrand(value);
             },holder.id.getText().toString(),holder.id.getWidth(),false);
             dataSelectWindow.showPopupWindow(holder.id);
         });
@@ -89,6 +97,14 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
             public void afterTextChanged(Editable s) {
                 deviceBeans.get(holder.getAdapterPosition()).setLocation(s.toString());
             }
+        });
+        holder.delete.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos < 0){
+                return;
+            }
+            deviceBeans.remove(pos);
+            notifyItemRemoved(pos);
         });
     }
 
@@ -117,6 +133,7 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
         TextView id;
         TextView result;
         EditText editText;
+        ImageView delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -124,6 +141,7 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
             id = itemView.findViewById(R.id.id);
             result = itemView.findViewById(R.id.result);
             editText = itemView.findViewById(R.id.editText);
+            delete = itemView.findViewById(R.id.delete);
         }
     }
 }
