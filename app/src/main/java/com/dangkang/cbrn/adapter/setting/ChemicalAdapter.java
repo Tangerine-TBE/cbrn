@@ -149,7 +149,7 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
                         holder.taint_sim.setText(value);
                         data.get(holder.getAdapterPosition()).setTaint_sim(value);
                     }
-                }, holder.taint_sim.getText().toString(), holder.taint_sim.getWidth()).showPopupWindow(holder.taint_sim);
+                }, holder.taint_sim.getText().toString(), holder.taint_sim.getWidth(),false).showPopupWindow(holder.taint_sim);
             }
         });
         holder.unit.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +161,7 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
                         holder.unit.setText(value);
                         data.get(holder.getAdapterPosition()).setTaint_unit(value);
                     }
-                }, holder.unit.getText().toString(), holder.unit.getWidth()).showPopupWindow(holder.unit);
+                }, holder.unit.getText().toString(), holder.unit.getWidth(),false).showPopupWindow(holder.unit);
             }
         });
         holder.taint_dis.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +173,7 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
                         holder.taint_dis.setText(value);
                         data.get(holder.getAdapterPosition()).setTaint_unit(value);
                     }
-                }, holder.taint_dis.getText().toString(), holder.taint_dis.getWidth()).showPopupWindow(holder.taint_dis);
+                }, holder.taint_dis.getText().toString(), holder.taint_dis.getWidth(),false).showPopupWindow(holder.taint_dis);
             }
         });
     }

@@ -16,6 +16,7 @@ public class DeviceInfo {
     private String brand; //试剂盒Id
     private String result; //试剂盒期望结果
     private String type;//试剂盒检测类型
+    private String location;//取样位置
     private int status ;//状态
 
     public int getStatus() {
@@ -26,17 +27,26 @@ public class DeviceInfo {
         this.status = status;
     }
 
-    @Generated(hash = 624190010)
-    public DeviceInfo(Long id, String brand, String result, String type, int status) {
+    @Generated(hash = 1624509884)
+    public DeviceInfo(Long id, String brand, String result, String type, String location, int status) {
         this.id = id;
         this.brand = brand;
         this.result = result;
         this.type = type;
+        this.location = location;
         this.status = status;
     }
 
     @Generated(hash = 2125166935)
     public DeviceInfo() {
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getBrand() {

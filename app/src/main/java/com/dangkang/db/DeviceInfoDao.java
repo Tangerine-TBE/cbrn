@@ -28,7 +28,8 @@ public class DeviceInfoDao extends AbstractDao<DeviceInfo, Long> {
         public final static Property Brand = new Property(1, String.class, "brand", false, "BRAND");
         public final static Property Result = new Property(2, String.class, "result", false, "RESULT");
         public final static Property Type = new Property(3, String.class, "type", false, "TYPE");
-        public final static Property Status = new Property(4, int.class, "status", false, "STATUS");
+        public final static Property Location = new Property(4, String.class, "location", false, "LOCATION");
+        public final static Property Status = new Property(5, int.class, "status", false, "STATUS");
     }
 
 
@@ -48,7 +49,8 @@ public class DeviceInfoDao extends AbstractDao<DeviceInfo, Long> {
                 "\"BRAND\" TEXT," + // 1: brand
                 "\"RESULT\" TEXT," + // 2: result
                 "\"TYPE\" TEXT," + // 3: type
-                "\"STATUS\" INTEGER NOT NULL );"); // 4: status
+                "\"LOCATION\" TEXT," + // 4: location
+                "\"STATUS\" INTEGER NOT NULL );"); // 5: status
     }
 
     /** Drops the underlying database table. */
@@ -80,7 +82,12 @@ public class DeviceInfoDao extends AbstractDao<DeviceInfo, Long> {
         if (type != null) {
             stmt.bindString(4, type);
         }
-        stmt.bindLong(5, entity.getStatus());
+ 
+        String location = entity.getLocation();
+        if (location != null) {
+            stmt.bindString(5, location);
+        }
+        stmt.bindLong(6, entity.getStatus());
     }
 
     @Override
@@ -106,7 +113,12 @@ public class DeviceInfoDao extends AbstractDao<DeviceInfo, Long> {
         if (type != null) {
             stmt.bindString(4, type);
         }
-        stmt.bindLong(5, entity.getStatus());
+ 
+        String location = entity.getLocation();
+        if (location != null) {
+            stmt.bindString(5, location);
+        }
+        stmt.bindLong(6, entity.getStatus());
     }
 
     @Override
@@ -121,7 +133,8 @@ public class DeviceInfoDao extends AbstractDao<DeviceInfo, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // brand
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // result
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // type
-            cursor.getInt(offset + 4) // status
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // location
+            cursor.getInt(offset + 5) // status
         );
         return entity;
     }
@@ -132,7 +145,8 @@ public class DeviceInfoDao extends AbstractDao<DeviceInfo, Long> {
         entity.setBrand(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setResult(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setType(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setStatus(cursor.getInt(offset + 4));
+        entity.setLocation(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setStatus(cursor.getInt(offset + 5));
      }
     
     @Override

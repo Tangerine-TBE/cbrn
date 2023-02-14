@@ -62,7 +62,7 @@ class RadiationFragment : BaseFragment<ViewBinding>() {
                         binding.measurement.text = value
                         SPUtil.getInstance().putString(Constant.MEASUREMENT,value)
                     }
-                },binding.measurement.text.toString(),ConvertUtils.dp2px(200f)).showPopupWindow(binding.measurement)
+                },binding.measurement.text.toString(),ConvertUtils.dp2px(200f),false).showPopupWindow(binding.measurement)
         }
         val textValue = SPUtil.getInstance().getString(Constant.MEASUREMENT)
         if(!TextUtils.isEmpty(textValue)){

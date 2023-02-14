@@ -26,6 +26,9 @@ public class BiologicsDeviceAdapter extends RecyclerView.Adapter<BiologicsDevice
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_biologics_type, parent,false);
         return new ViewHolder(view);
     }
+    public final List<BleDevice> data(){
+        return values;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull BiologicsDeviceAdapter.ViewHolder holder, int position) {

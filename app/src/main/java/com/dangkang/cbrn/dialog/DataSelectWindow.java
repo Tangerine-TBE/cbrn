@@ -32,25 +32,30 @@ import razerdp.util.animation.TranslationConfig;
  * @date:2023/1/9
  */
 public class DataSelectWindow extends BasePopupWindow {
-    private final List<String > mArrayStrings;
+    private final List<String> mArrayStrings;
     private final String mSelValue;
-    public int gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
     private final OnValueSelected mSelected;
-    public BasePopupWindow.GravityMode gravityMode = BasePopupWindow.GravityMode.RELATIVE_TO_ANCHOR;
     private final int width;
+    private boolean top;
+
     /**
-     *@description 辐射 类型选择 多选一规则
-     *@param  arrayStrings 给定的字符串集合
-     *@return DataSelectWindow
-     *@author tangerine
-     *@time 2023/1/9 17:48
-     *
-     *
+     * @param arrayStrings 给定的字符串集合
+     * @return DataSelectWindow
+     * @description 辐射 类型选择 多选一规则
+     * @author tangerine
+     * @time 2023/1/9 17:48
      */
-    public DataSelectWindow(Context context, List<String> arrayStrings,OnValueSelected selected,String selectedValue,int width) {
+    public DataSelectWindow(Context context, List<String> arrayStrings, OnValueSelected selected, String selectedValue, int width, boolean top) {
         super(context);
         this.mArrayStrings = arrayStrings;
-        setPopupGravity(gravityMode, gravity);//设置吸附规则
+        GravityMode gravityMode = GravityMode.RELATIVE_TO_ANCHOR;
+        if (top) {
+            int topGravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+            setPopupGravity(gravityMode, topGravity);
+        } else {
+            int bottomGravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+            setPopupGravity(gravityMode, bottomGravity);//设置吸附规则
+        }
         hideKeyboardOnShow(true);
         setBlurBackgroundEnable(false); //背景模糊
         setOverlayMask(false);//是否允许蒙层叠加
@@ -58,6 +63,7 @@ public class DataSelectWindow extends BasePopupWindow {
         setOutSideTouchable(false);
         this.mSelected = selected;
         this.mSelValue = selectedValue;
+        this.top = top;
         /**/
         this.width = width;
         /*此处SetContentView必须要在最后才进行视图绑定*/
@@ -71,15 +77,13 @@ public class DataSelectWindow extends BasePopupWindow {
         ScrollView.LayoutParams layoutParams = new ScrollView.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         radioGroup.setLayoutParams(layoutParams);
 
-        ColorStateList colorStateList = new ColorStateList(new int[][]
-                {{-android.R.attr.state_enabled },{android.R.attr.state_enabled}},
-                new int[]{ContextCompat.getColor(getContext(),R.color.blue),ContextCompat.getColor(getContext(),R.color.blue)});
+        ColorStateList colorStateList = new ColorStateList(new int[][]{{-android.R.attr.state_enabled}, {android.R.attr.state_enabled}}, new int[]{ContextCompat.getColor(getContext(), R.color.blue), ContextCompat.getColor(getContext(), R.color.blue)});
         RadioGroup.LayoutParams buttonParams = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        RadioGroup.LayoutParams lineParams = new RadioGroup.LayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT,2);
+        RadioGroup.LayoutParams lineParams = new RadioGroup.LayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, 2);
 
-        for (int i = 0  ; i < mArrayStrings.size(); i ++) {
+        for (int i = 0; i < mArrayStrings.size(); i++) {
             RadioButton radioButton = new RadioButton(getContext());
-            radioButton.setPadding(10,4,10,4);
+            radioButton.setPadding(10, 4, 10, 4);
             radioButton.setText(mArrayStrings.get(i));
             radioButton.setTextSize(18);
             radioButton.setTextColor(Color.WHITE);
@@ -90,38 +94,50 @@ public class DataSelectWindow extends BasePopupWindow {
             radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked){
+                    if (isChecked) {
                         mSelected.valueSelected(mArrayStrings.get((Integer) buttonView.getTag()));
                     }
                 }
             });
             //先后顺序不可以改变
             radioGroup.addView(radioButton);
-            if (i  != mArrayStrings.size() - 1){
+            if (i != mArrayStrings.size() - 1) {
                 View view = new View(getContext());
                 view.setLayoutParams(lineParams);
-                view.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.navigation));
+                view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.navigation));
                 radioGroup.addView(view);
             }
-            if (!TextUtils.isEmpty(mSelValue)){
-                if (mSelValue.equals(mArrayStrings.get(i))){
+            if (!TextUtils.isEmpty(mSelValue)) {
+                if (mSelValue.equals(mArrayStrings.get(i))) {
                     radioGroup.check(radioButton.getId());
                 }
             }
 
         }
     }
-    public interface OnValueSelected{
+
+    public interface OnValueSelected {
         void valueSelected(String value);
     }
 
     @Override
     protected Animation onCreateShowAnimation(int width, int height) {
-        return AnimationHelper.asAnimation().withTranslation(TranslationConfig.FROM_TOP).toShow();
+        if (top) {
+            return AnimationHelper.asAnimation().withTranslation(TranslationConfig.FROM_BOTTOM).toShow();
+
+        } else {
+
+            return AnimationHelper.asAnimation().withTranslation(TranslationConfig.FROM_TOP).toShow();
+        }
     }
 
     @Override
     protected Animation onCreateDismissAnimation(int width, int height) {
-        return AnimationHelper.asAnimation().withTranslation(TranslationConfig.TO_TOP).toDismiss();
+        if (top) {
+            return AnimationHelper.asAnimation().withTranslation(TranslationConfig.TO_BOTTOM).toDismiss();
+
+        } else {
+            return AnimationHelper.asAnimation().withTranslation(TranslationConfig.TO_TOP).toDismiss();
+        }
     }
 }

@@ -1,9 +1,12 @@
 package com.dangkang.cbrn.adapter.setting;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +16,7 @@ import com.dangkang.cbrn.R;
 import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.dialog.DataSelectWindow;
 
+import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,47 +29,65 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
 
     public List<DeviceInfo> deviceBeans = new ArrayList<>();
     public Context mContext;
+    private final List<String> mStrings = new ArrayList<>();
     private DataSelectWindow dataSelectWindow;
-    public BiologicsAdapter( Context context){
+
+    public BiologicsAdapter(Context context) {
         this.mContext = context;
+        this.mStrings.addAll(Arrays.asList(mContext.getResources().getStringArray(R.array.biglogics_type)));
+        this.mStrings.remove(0);
+
     }
+
     @NonNull
     @Override
     public BiologicsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_biologics,parent,false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_biologics, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BiologicsAdapter.ViewHolder holder, int position) {
-
+        holder.editText.setText(deviceBeans.get(position).getLocation());
         holder.id.setText(deviceBeans.get(position).getBrand());
         holder.result.setText(deviceBeans.get(position).getResult());
         holder.whatFor.setText(deviceBeans.get(position).getType());
-        holder.whatFor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dataSelectWindow =   new DataSelectWindow(mContext, Arrays.asList(mContext.getResources().getStringArray(R.array.biglogics_type)), new DataSelectWindow.OnValueSelected() {
-                    @Override
-                    public void valueSelected(String value) {
-                        holder.whatFor.setText(value);
-                        deviceBeans.get(holder.getAdapterPosition()).setType(value);
-                    }
-                }, holder.whatFor.getText().toString(), holder.whatFor.getWidth());
-                dataSelectWindow.showPopupWindow(holder.whatFor);
-            }
+        holder.whatFor.setOnClickListener(v -> {
+            dataSelectWindow = new DataSelectWindow(mContext, mStrings, value -> {
+                holder.whatFor.setText(value);
+                deviceBeans.get(holder.getAdapterPosition()).setType(value);
+            }, holder.whatFor.getText().toString(), holder.whatFor.getWidth(),false);
+            dataSelectWindow.showPopupWindow(holder.whatFor);
         });
-        holder.result.setOnClickListener(new View.OnClickListener() {
+        holder.result.setOnClickListener(v -> {
+            dataSelectWindow = new DataSelectWindow(mContext, Arrays.asList(mContext.getResources().getStringArray(R.array.biglogics_result)), new DataSelectWindow.OnValueSelected() {
+                @Override
+                public void valueSelected(String value) {
+                    holder.result.setText(value);
+                    deviceBeans.get(holder.getAdapterPosition()).setResult(value);
+                }
+            }, holder.result.getText().toString(), holder.result.getWidth(),true);
+            dataSelectWindow.showPopupWindow(holder.result);
+        });
+        holder.id.setOnClickListener(v->{
+            dataSelectWindow = new DataSelectWindow(mContext, new ArrayList<>(), value -> {
+            },holder.id.getText().toString(),holder.id.getWidth(),false);
+            dataSelectWindow.showPopupWindow(holder.id);
+        });
+        holder.editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                dataSelectWindow =    new DataSelectWindow(mContext, Arrays.asList(mContext.getResources().getStringArray(R.array.biglogics_result)), new DataSelectWindow.OnValueSelected() {
-                    @Override
-                    public void valueSelected(String value) {
-                        holder.result.setText(value);
-                        deviceBeans.get(holder.getAdapterPosition()).setResult(value);
-                    }
-                }, holder.result.getText().toString(), holder.result.getWidth());
-                dataSelectWindow .showPopupWindow(holder.result);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                deviceBeans.get(holder.getAdapterPosition()).setLocation(s.toString());
             }
         });
     }
@@ -76,27 +98,32 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
     }
 
 
-    public final void addItem(DeviceInfo deviceBean){
-        if (dataSelectWindow != null){
-            if (dataSelectWindow.isShowing()){
+    public final void addItem(DeviceInfo deviceBean) {
+        if (dataSelectWindow != null) {
+            if (dataSelectWindow.isShowing()) {
                 dataSelectWindow.dismiss();
             }
         }
-        deviceBeans.add(0,deviceBean);
+        deviceBeans.add(0, deviceBean);
         notifyItemInserted(0);
     }
-    public final List<DeviceInfo> data(){
+
+    public final List<DeviceInfo> data() {
         return deviceBeans;
     }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView whatFor;
         TextView id;
         TextView result;
+        EditText editText;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             whatFor = itemView.findViewById(R.id.whatFor);
             id = itemView.findViewById(R.id.id);
             result = itemView.findViewById(R.id.result);
+            editText = itemView.findViewById(R.id.editText);
         }
     }
 }

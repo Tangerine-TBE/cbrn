@@ -11,6 +11,7 @@ import android.content.IntentFilter
 import android.location.LocationManager
 import android.provider.Settings
 import android.text.TextUtils
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +44,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnItemClickListener {
+    private var mScanStop = false
+    private var editTextDialog: EditTextDialog? = null
+
     /*全程生命周期需要:*/
     /*1.动态监听蓝牙启动或关闭广播以达到业务流畅*/
     /*2.动态监听位置定位启动或关闭广播以达到业务流畅*/
@@ -52,10 +56,8 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
     * 3.检测位置服务是否开启
     * 4.打开蓝牙扫描（视图可见开启蓝牙扫描 视图不可见关闭蓝牙扫描）*/
     private var biologicsAdapter: BiologicsAdapter? = null
-    private var mScanStop = false
-    private var editTextDialog: EditTextDialog? = null
-    private var biologicsTypeAdapter :BiologicsTypeAdapter?=null
-    private var biologicsDeviceAdapter:BiologicsDeviceAdapter? = null
+    private var biologicsTypeAdapter: BiologicsTypeAdapter? = null
+    private var biologicsDeviceAdapter: BiologicsDeviceAdapter? = null
     override fun setBindingView(): ViewBinding {
         binding = FragmentSettingsBiologicsBinding.inflate(layoutInflater)
         return initView(binding as FragmentSettingsBiologicsBinding)
@@ -81,13 +83,6 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
 
             @SuppressLint("SetTextI18n")
             override fun onScanning(bleDevice: BleDevice) {
-                //主要是这里添加设备
-                //背景环境：蓝牙查找回来的设备信息，我默认只需要带一个试剂盒Id就行
-                //1.数据库查找这个设备 如果没有设备 添加进数列组，给它一个默认的类型值和结果值
-                //2.如果数据库找到了这个设备，那么就用数据中已经设置好的设备信息
-                //3.添加进数据列表中
-                //4.添加的时候要看看是否有重复添加的现象，去重！
-                //根据名字（名字=试剂盒id）数据库查找
                 if (mScanStop) {
                     return
                 }
@@ -95,25 +90,13 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
                 if (TextUtils.isEmpty(deviceBrand)) {
                     return
                 }
-                var deviceInfo: DeviceInfo? = DaoTool.queryDeviceInfo(deviceBrand)
-                if (deviceInfo == null) {
-                    deviceInfo = DeviceInfo()
-                    deviceInfo.brand = deviceBrand
-                    deviceInfo.result =
-                        resources.getStringArray(R.array.biglogics_result)[0] //附加默认值
-                    deviceInfo.type = resources.getStringArray(R.array.biglogics_type)[0] //附加默认值
-                }
-                for (item in biologicsAdapter?.data()!!) {
-                    if (deviceInfo.brand.equals(item.brand)) {
+                /**增加蓝牙扫描规则*/
+                for (item in biologicsDeviceAdapter?.data()!!) {
+                    if (deviceBrand.equals(item.name)) {
                         return
                     }
                 }
-//                val text = (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text
-//                (binding as FragmentSettingsBiologicsBinding).deviceNameSet.text =
-//                    "${deviceInfo.brand}  $text"
-                biologicsAdapter?.addItem(deviceInfo)
-                biologicsScanner(bleDevice)
-                (binding as FragmentSettingsBiologicsBinding).recyclerView.scrollToPosition(0)
+                biologicsDeviceAdapter?.addItem(bleDevice)
             }
 
             override fun onScanFinished(scanResultList: List<BleDevice>) {
@@ -123,9 +106,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
             }
         })
     }
-    private fun biologicsScanner(bleDevice: BleDevice){
-        biologicsDeviceAdapter?.addItem(bleDevice)
-    }
+
 
     private fun setScanRule() {
         val scanRuleConfig =
@@ -156,11 +137,14 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
          * 3.检测位置服务是否开启
          * 4.打开蓝牙扫描（视图可见开启蓝牙扫描 视图不可见关闭蓝牙扫描）*/
         val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
-        if (!bluetoothAdapter?.isEnabled!!) {
-            Toast.makeText(_mActivity, "请先打开蓝牙", Toast.LENGTH_LONG).show()
-            return
+        if (bluetoothAdapter != null) {
+            if (!bluetoothAdapter.isEnabled) {
+                Toast.makeText(_mActivity, "请先打开蓝牙", Toast.LENGTH_LONG).show()
+                return
+            }
+            startWork()
         }
-        startWork()
+
     }
 
     private fun startWork() {
@@ -229,6 +213,15 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
         binding.deviceRecyclerView.adapter = biologicsDeviceAdapter
         binding.deviceRecyclerView.layoutManager = FlexboxLayoutManager(_mActivity)
         binding.deviceRecyclerView.addItemDecoration(BiologicsDecoration())
+        binding.add.setOnClickListener {
+            val deviceInfo = DeviceInfo()
+            deviceInfo.brand = "未知设备"
+            deviceInfo.type = resources.getStringArray(R.array.biglogics_type)[1]
+            deviceInfo.result = resources.getStringArray(R.array.biglogics_result)[0]
+            deviceInfo.location = ""
+            biologicsAdapter!!.addItem(deviceInfo)
+            binding.recyclerView.scrollToPosition(0)
+        }
         val pagerSnapHelper = PagerSnapHelper()
         val deviceSnapHelper = PagerSnapHelper();
         deviceSnapHelper.attachToRecyclerView(binding.deviceRecyclerView)
@@ -270,13 +263,13 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
                 //0 header 不进行额外处理
                 //从1开始进行添加知道dynamic数组添加完毕 kotlin ArrayList == java ArrayList
                 //最后添加default数组
-                listDefault.addAll(1,listDynamic)
+                listDefault.addAll(1, listDynamic)
 //                listDefault = listDefault.plus(listDynamic) as ArrayList<TypeInfo>
             }
             it.onNext(listDefault.toList())
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            biologicsTypeAdapter = BiologicsTypeAdapter(it,context,this)
-            viewBinding.typeRecyclerView.adapter =biologicsTypeAdapter
+            biologicsTypeAdapter = BiologicsTypeAdapter(it, context, this)
+            viewBinding.typeRecyclerView.adapter = biologicsTypeAdapter
             viewBinding.typeRecyclerView.layoutManager = FlexboxLayoutManager(_mActivity).apply {
                 val pagerSnapHelper = PagerSnapHelper()
                 pagerSnapHelper.attachToRecyclerView(viewBinding.typeRecyclerView)
@@ -327,11 +320,12 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
     override fun onItemClicked(value: Int) {
         if (value == 0) {
             if (editTextDialog == null) {
-                editTextDialog = EditTextDialog(_mActivity,
+                editTextDialog = EditTextDialog(
+                    _mActivity,
                     R.style.DialogStyle,
                     object : EditTextDialog.OnItemSelected {
-                        override fun onSaveItem(value:String) {
-                            if (biologicsTypeAdapter != null){
+                        override fun onSaveItem(value: String) {
+                            if (biologicsTypeAdapter != null) {
                                 biologicsTypeAdapter?.addItem(value)
                             }
                         }

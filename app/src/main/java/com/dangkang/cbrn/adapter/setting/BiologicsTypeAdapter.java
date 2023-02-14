@@ -43,12 +43,7 @@ public class BiologicsTypeAdapter extends RecyclerView.Adapter<BiologicsTypeAdap
             holder.tvValue.setText(values.get(position).getName());
             holder.tvValue.setTextColor(ContextCompat.getColor(mContext,R.color.un_select_color));
         }
-        holder.tvValue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnItemClickListener.onItemClicked(values.get(holder.getAdapterPosition()).getType());
-            }
-        });
+        holder.tvValue.setOnClickListener(v -> mOnItemClickListener.onItemClicked(values.get(holder.getAdapterPosition()).getType()));
     }
     public interface OnItemClickListener{
         void onItemClicked(int value);
