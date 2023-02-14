@@ -15,8 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.clj.fastble.data.BleDevice;
 import com.dangkang.cbrn.R;
+import com.dangkang.cbrn.dao.DaoTool;
 import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.dialog.DataSelectWindow;
+
+import java.lang.invoke.CallSite;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,9 +34,9 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
     public Context mContext;
     private final List<String> mStrings = new ArrayList<>();
     private DataSelectWindow dataSelectWindow;
-    private BiologicsDeviceAdapter adapter;
+    private final BiologicsDeviceAdapter adapter;
 
-    public BiologicsAdapter(Context context,BiologicsDeviceAdapter adapter,List<DeviceInfo> deviceBeans) {
+    public BiologicsAdapter(Context context, BiologicsDeviceAdapter adapter, List<DeviceInfo> deviceBeans) {
         this.mContext = context;
         this.mStrings.addAll(Arrays.asList(mContext.getResources().getStringArray(R.array.biglogics_type)));
         this.mStrings.remove(0);
@@ -55,10 +58,12 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
         holder.result.setText(deviceBeans.get(position).getResult());
         holder.whatFor.setText(deviceBeans.get(position).getType());
         holder.whatFor.setOnClickListener(v -> {
-            dataSelectWindow = new DataSelectWindow(mContext, mStrings, value -> {
+            List<String> strings = DaoTool.queryAllTypeInfoName(1);
+            strings.addAll(mStrings);
+            dataSelectWindow = new DataSelectWindow(mContext, strings, value -> {
                 holder.whatFor.setText(value);
                 deviceBeans.get(holder.getAdapterPosition()).setType(value);
-            }, holder.whatFor.getText().toString(), holder.whatFor.getWidth(),false);
+            }, holder.whatFor.getText().toString(), holder.whatFor.getWidth(), false);
             dataSelectWindow.showPopupWindow(holder.whatFor);
         });
         holder.result.setOnClickListener(v -> {
@@ -68,18 +73,18 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
                     holder.result.setText(value);
                     deviceBeans.get(holder.getAdapterPosition()).setResult(value);
                 }
-            }, holder.result.getText().toString(), holder.result.getWidth(),true);
+            }, holder.result.getText().toString(), holder.result.getWidth(), true);
             dataSelectWindow.showPopupWindow(holder.result);
         });
-        holder.id.setOnClickListener(v->{
+        holder.id.setOnClickListener(v -> {
             ArrayList<String> arrayList = new ArrayList<>();
-            for (BleDevice bleDevice : adapter.data()){
+            for (BleDevice bleDevice : adapter.data()) {
                 arrayList.add(bleDevice.getName());
             }
             dataSelectWindow = new DataSelectWindow(mContext, arrayList, value -> {
                 holder.id.setText(value);
                 deviceBeans.get(holder.getAdapterPosition()).setBrand(value);
-            },holder.id.getText().toString(),holder.id.getWidth(),false);
+            }, holder.id.getText().toString(), holder.id.getWidth(), false);
             dataSelectWindow.showPopupWindow(holder.id);
         });
         holder.editText.addTextChangedListener(new TextWatcher() {
@@ -100,7 +105,7 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
         });
         holder.delete.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();
-            if (pos < 0){
+            if (pos < 0) {
                 return;
             }
             deviceBeans.remove(pos);

@@ -8,9 +8,13 @@
     </string-array>
     <!--模拟污点-->
     <string-array name="radiation_sim">
-        <item>头部</item>
-        <item>脚部</item>
-        <item>腿部</item>
+        <item>RFID 0.5米</item>
+        <item>BLE 50米</item>
+    </string-array>
+    <string-array name="radiation_sim_dis">
+        <item>0.3</item>
+        <item>5</item>
+
     </string-array>
     <!--辐射距离-->
     <string-array name="radiation_dis">
@@ -19,10 +23,27 @@
         <item>300</item>
     </string-array>
     <!--中心峰值单位-->
-    <string-array name="radiation_unit">
+    <!--剂量率-->
+    <string-array name="radiation_unit_1">
         <item>uSv/h</item>
+        <item>mSv/h</item>
+        <item>Sv/h</item>
+    </string-array>
+    <!--计数率-->
+    <string-array name="radiation_unit_2">
         <item>CPS</item>
-        <item>gay</item>
+        <item>CPM</item>
+    </string-array>
+
+
+    <string-array name="radiation_type">
+        <item>添加</item>
+        <item>铯173</item>
+        <item>钴60</item>
+        <item>铱192</item>
+        <item>碘131</item>
+        <item>碘125</item>
+        <item>铀235</item>
     </string-array>
     <!--生物设置-->
     <!--制剂类型显示-->

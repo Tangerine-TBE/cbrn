@@ -72,8 +72,8 @@ class ChemicalFragment :BaseFragment<ViewBinding>() {
                 taintInfo.taint_loc = "未知"
                 taintInfo.taint_max = "300"
                 taintInfo.taint_num = 1144
-                taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
-                taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit)[0]
+//                taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
+//                taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit)[0]
                 taintInfo.create_time = System.currentTimeMillis() / 1000
                 adapter!!.addItem(taintInfo)
                 binding.recyclerView.scrollToPosition(0)

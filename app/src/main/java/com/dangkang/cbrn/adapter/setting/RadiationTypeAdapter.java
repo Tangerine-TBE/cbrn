@@ -16,26 +16,24 @@ import com.dangkang.cbrn.db.TypeInfo;
 
 import java.util.List;
 
-public class BiologicsTypeAdapter extends RecyclerView.Adapter<BiologicsTypeAdapter.ViewHolder> {
+public class RadiationTypeAdapter extends RecyclerView.Adapter<RadiationTypeAdapter.ViewHolder> {
     private final Context mContext;
-    /**
-     * String value was inserted to the list Ui*/
     private final List<TypeInfo> values;
-    private final OnItemClickListener mOnItemClickListener;
-    public BiologicsTypeAdapter(List<TypeInfo> values,Context context,OnItemClickListener onItemClickListener){
+    private final RadiationTypeAdapter.OnItemClickListener mOnItemClickListener;
+    public RadiationTypeAdapter(List<TypeInfo> values, Context context, OnItemClickListener onItemClickListener){
         this.values = values;
         this.mContext = context;
         this.mOnItemClickListener = onItemClickListener;
     }
     @NonNull
     @Override
-    public BiologicsTypeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RadiationTypeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_biologics_type,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BiologicsTypeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RadiationTypeAdapter.ViewHolder holder, int position) {
         if (values.get(holder.getAdapterPosition()).getType() == 0){
             holder.tvValue.setText("添加");
             holder.tvValue.setTextColor(ContextCompat.getColor(mContext,R.color.blue));
@@ -45,20 +43,19 @@ public class BiologicsTypeAdapter extends RecyclerView.Adapter<BiologicsTypeAdap
         }
         holder.tvValue.setOnClickListener(v -> mOnItemClickListener.onItemClicked(values.get(holder.getAdapterPosition()).getType()));
     }
-    public interface OnItemClickListener{
-        void onItemClicked(int value);
-    }
+
     @Override
     public int getItemCount() {
         return values.size();
     }
+    public interface OnItemClickListener{
+        void onItemClicked(int value);
+    }
     public final void addItem(String value){
-        DaoTool.addTypeInfo(1,value,System.currentTimeMillis(),1);
+        DaoTool.addTypeInfo(1,value,System.currentTimeMillis(),2);
         values.add(1,new TypeInfo(1,value));
         notifyItemInserted(1);
     }
-
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvValue;
         public ViewHolder(@NonNull View itemView) {

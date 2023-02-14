@@ -14,12 +14,23 @@ public class TypeInfo {
     private long create_time;
     private int type;
     private String name;
-    @Generated(hash = 497082005)
-    public TypeInfo(long create_time, int type, String name) {
+    private int status;
+    @Generated(hash = 1782066343)
+    public TypeInfo(long create_time, int type, String name, int status) {
         this.create_time = create_time;
         this.type = type;
         this.name = name;
+        this.status = status;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Generated(hash = 1655550078)
     public TypeInfo() {
     }

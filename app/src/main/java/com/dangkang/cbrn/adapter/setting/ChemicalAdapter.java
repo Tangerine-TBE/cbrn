@@ -155,7 +155,7 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
         holder.unit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DataSelectWindow(mContext, Arrays.asList(mContext.getResources().getStringArray(R.array.radiation_unit)), new DataSelectWindow.OnValueSelected() {
+                new DataSelectWindow(mContext, Arrays.asList(mContext.getResources().getStringArray(R.array.radiation_unit_1)), new DataSelectWindow.OnValueSelected() {
                     @Override
                     public void valueSelected(String value) {
                         holder.unit.setText(value);

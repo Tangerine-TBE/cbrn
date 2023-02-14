@@ -1,6 +1,7 @@
 package com.dangkang.cbrn.dao;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.dangkang.cbrn.db.DeviceInfo;
@@ -34,7 +35,7 @@ public class DaoTool {
     }
 
     public static List<TaintInfo> queryRadiationTaintInfo() {
-        return sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Type.eq(1)).build().list();
+        return sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Type.eq(1)).orderDesc(TaintInfoDao.Properties.Taint_num).build().list();
     }
 
     public static List<TaintInfo> queryChemicalTaintInfo() {
@@ -54,13 +55,29 @@ public class DaoTool {
         return sDaoSession.getDeviceInfoDao().queryBuilder().orderDesc(DeviceInfoDao.Properties.Id).list();
     }
 
-    public static List<TypeInfo> queryAllTypeInfo() {
-        List<TypeInfo> typeInfo = sDaoSession.getTypeInfoDao().queryBuilder().orderDesc(TypeInfoDao.Properties.Create_time).list();
+    /*1 生物
+     * 2 化学*/
+    public static List<TypeInfo> queryAllTypeInfo(int status) {
+        List<TypeInfo> typeInfo = sDaoSession.getTypeInfoDao().queryBuilder().where(TypeInfoDao.Properties.Status.eq(status)).orderDesc(TypeInfoDao.Properties.Create_time).list();
         if (typeInfo != null && typeInfo.size() > 0) {
             return typeInfo;
         } else {
             return null;
         }
+    }
+
+    public static List<String> queryAllTypeInfoName(int status) {
+        String sql = "select t.NAME from TYPE_INFO t where t.STATUS == ? order by t.CREATE_TIME desc";
+        Cursor cursor = sDaoSession.getDatabase().rawQuery(sql, new String[]{String.valueOf(status)});
+        List<String> values = new ArrayList<>();
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    values.add(cursor.getString(0));
+                } while (cursor.moveToNext());
+            }
+        }
+        return values;
     }
 
     public static void removeTaintInfo(int taint_num) {
@@ -89,8 +106,12 @@ public class DaoTool {
         sDaoSession.getDeviceInfoDao().insertOrReplaceInTx(deviceInfo);
     }
 
-    public static void addTypeInfo(int type, String name, long create_time) {
-        sDaoSession.getTypeInfoDao().insertOrReplace(new TypeInfo(create_time, type, name));
+    /**
+     * 生物 status==1
+     * 辐射 status==2
+     */
+    public static void addTypeInfo(int type, String name, long create_time, int status) {
+        sDaoSession.getTypeInfoDao().insertOrReplace(new TypeInfo(create_time, type, name, status));
     }
 
 }

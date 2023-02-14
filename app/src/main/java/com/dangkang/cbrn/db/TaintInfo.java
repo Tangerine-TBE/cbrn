@@ -13,6 +13,7 @@ public class TaintInfo {
     private int taint_num; //污点编号
     private String taint_loc; //污点位置
     private String taint_sim; //模拟污点
+    private String taint_sim_dis;//模拟污点距离
     private String taint_dis; //辐射距离 / 核辐射        制剂名称  /  化学
     private String taint_max; // 中心峰值
     private String taint_unit;//单位
@@ -20,22 +21,26 @@ public class TaintInfo {
     @Generated(hash = 1646616816)
     public TaintInfo() {
     }
-
-
-    @Generated(hash = 2081255443)
-    public TaintInfo(Long id, int type, int taint_num, String taint_loc, String taint_sim, String taint_dis, String taint_max, String taint_unit,
-            long create_time) {
+    @Generated(hash = 1287754713)
+    public TaintInfo(Long id, int type, int taint_num, String taint_loc, String taint_sim, String taint_sim_dis, String taint_dis, String taint_max, String taint_unit, long create_time) {
         this.id = id;
         this.type = type;
         this.taint_num = taint_num;
         this.taint_loc = taint_loc;
         this.taint_sim = taint_sim;
+        this.taint_sim_dis = taint_sim_dis;
         this.taint_dis = taint_dis;
         this.taint_max = taint_max;
         this.taint_unit = taint_unit;
         this.create_time = create_time;
     }
+    public String getTaint_sim_dis() {
+        return taint_sim_dis;
+    }
 
+    public void setTaint_sim_dis(String taint_sim_dis) {
+        this.taint_sim_dis = taint_sim_dis;
+    }
 
     public String getTaint_unit() {
         return taint_unit;

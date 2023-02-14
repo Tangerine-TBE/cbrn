@@ -27,6 +27,7 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
         public final static Property Create_time = new Property(0, long.class, "create_time", false, "CREATE_TIME");
         public final static Property Type = new Property(1, int.class, "type", false, "TYPE");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
+        public final static Property Status = new Property(3, int.class, "status", false, "STATUS");
     }
 
 
@@ -44,7 +45,8 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
         db.execSQL("CREATE TABLE " + constraint + "\"TYPE_INFO\" (" + //
                 "\"CREATE_TIME\" INTEGER NOT NULL ," + // 0: create_time
                 "\"TYPE\" INTEGER NOT NULL ," + // 1: type
-                "\"NAME\" TEXT);"); // 2: name
+                "\"NAME\" TEXT," + // 2: name
+                "\"STATUS\" INTEGER NOT NULL );"); // 3: status
     }
 
     /** Drops the underlying database table. */
@@ -63,6 +65,7 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
         if (name != null) {
             stmt.bindString(3, name);
         }
+        stmt.bindLong(4, entity.getStatus());
     }
 
     @Override
@@ -75,6 +78,7 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
         if (name != null) {
             stmt.bindString(3, name);
         }
+        stmt.bindLong(4, entity.getStatus());
     }
 
     @Override
@@ -87,7 +91,8 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
         TypeInfo entity = new TypeInfo( //
             cursor.getLong(offset + 0), // create_time
             cursor.getInt(offset + 1), // type
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // name
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
+            cursor.getInt(offset + 3) // status
         );
         return entity;
     }
@@ -97,6 +102,7 @@ public class TypeInfoDao extends AbstractDao<TypeInfo, Void> {
         entity.setCreate_time(cursor.getLong(offset + 0));
         entity.setType(cursor.getInt(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setStatus(cursor.getInt(offset + 3));
      }
     
     @Override

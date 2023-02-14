@@ -266,7 +266,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
                 }
                 listDefault.add(typeInfo)
             }
-            val listDynamic = DaoTool.queryAllTypeInfo()
+            val listDynamic = DaoTool.queryAllTypeInfo(1)
             if (listDynamic != null && listDynamic.isNotEmpty()) {
                 //这里的添加要进行额外的处理
                 //0 header 不进行额外处理
@@ -337,10 +337,9 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
                                 biologicsTypeAdapter?.addItem(value)
                             }
                         }
-                    })
+                    },"制剂编辑")
             }
             editTextDialog!!.show()
         }
     }
-
 }

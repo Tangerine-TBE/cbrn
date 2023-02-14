@@ -131,8 +131,10 @@
             android:maxLines="1"
             android:singleLine="true"
             android:layout_width="0dp"
+            android:background="@drawable/item_raditation_bg"
+
             android:textSize="18sp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="30dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

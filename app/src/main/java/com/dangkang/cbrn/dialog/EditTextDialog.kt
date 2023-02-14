@@ -16,7 +16,7 @@ import com.dangkang.cbrn.fragment.main.setting.BiologicsFragment
 import com.dangkang.cbrn.utils.ToastUtil
 import me.yokeyword.fragmentation.SupportActivity
 
-class EditTextDialog(context: Context, theme: Int, onItemSelected: OnItemSelected) :
+class EditTextDialog(context: Context, theme: Int, onItemSelected: OnItemSelected, title:String) :
     AppCompatDialog(context, theme) {
     private var mBinding: DialogTypeEditBinding? = null
     private var onItemSelected: OnItemSelected? = null
@@ -48,8 +48,8 @@ class EditTextDialog(context: Context, theme: Int, onItemSelected: OnItemSelecte
             }
             imm.hideSoftInputFromWindow(mBinding?.tv2?.windowToken,InputMethodManager.HIDE_IMPLICIT_ONLY)
             dismiss()
-
         }
+        mBinding!!.tv1.text = title
     }
 
     interface OnItemSelected {

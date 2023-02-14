@@ -72,7 +72,7 @@ class SettingFragment : BaseFragment<ViewBinding>() {
             adapter = viewPagerFragmentStateAdapter
             isUserInputEnabled = false
         }
-        viewBinding.viewPager.offscreenPageLimit = 1
+        viewBinding.viewPager.offscreenPageLimit = 3
         TabLayoutMediator(viewBinding.tabLayout,
             viewBinding.viewPager,
             true

@@ -1,108 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/navigation"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/navigation">
+
     <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
         android:id="@+id/guideline"
-        app:layout_constraintGuide_percent="0.5"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
     <TextView
         android:id="@+id/textIndex1"
-        android:layout_marginStart="40dp"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:text=" | "
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text=" | "
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textIndex2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textIndex1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="单位及类型"
-        android:textSize="18sp"
         android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/textIndex1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/textIndex8"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <androidx.appcompat.widget.LinearLayoutCompat
-        app:layout_constraintStart_toStartOf="@id/textIndex2"
-        android:id="@+id/layout1"
-        app:layout_constraintTop_toBottomOf="@id/textIndex2"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text=" | "
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/textIndex9"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textColor="#D1D1D0"
-            android:id="@+id/textIndex3"
-            android:textSize="18sp"
-            android:text="检测类型选择: "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textColor="@color/white"
-            android:gravity="left|center_vertical"
-            android:paddingStart="20dp"
-            android:textSize="18sp"
-            android:paddingEnd="8dp"
-            android:id="@+id/measurement"
-            android:text="剂量率"
-            android:background="@drawable/item_raditation_bg"
-            app:layout_constraintStart_toEndOf="@id/tv3"
-            app:layout_constraintTop_toTopOf="@id/tv3"
-            app:layout_constraintBottom_toBottomOf="@id/tv3"
-            android:layout_width="200dp"
-            android:layout_marginStart="20dp"
-            android:layout_height="30dp"
-            app:drawableRightCompat="@mipmap/ic_add" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_height="wrap_content"
+        android:text="单位及类型"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/textIndex8"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textIndex10"
+        android:text="环境底噪"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#D1D1D0"
+        app:layout_constraintStart_toStartOf="@id/textIndex9"
+        app:layout_constraintTop_toTopOf="@id/textIndex3"
+       />
 
 
     <TextView
-        android:layout_marginStart="20dp"
+        android:id="@+id/et_value"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/item_raditation_bg"
+        android:gravity="left|center_vertical"
+        android:padding="4dp"
+        android:paddingStart="8dp"
+        android:textColor="#02C3A8"
         android:textSize="18sp"
-        android:textColor="@color/white"
-        android:text=" | "
-        android:id="@+id/textIndex5"
+        app:layout_constraintBottom_toBottomOf="@id/textIndex10"
+        app:layout_constraintStart_toEndOf="@id/textIndex10"
+        app:layout_constraintTop_toTopOf="@id/textIndex10"
+        />
+
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/item_raditation_bg"
+        android:drawableRight="@mipmap/ic_add"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/textIndex10"
+        app:layout_constraintStart_toEndOf="@id/et_value"
+        app:layout_constraintTop_toTopOf="@id/textIndex10" />
+
+    <TextView
+        android:id="@+id/textIndex3"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toStartOf="@id/layout1"
-        app:layout_constraintTop_toBottomOf="@id/layout1"
+        android:text="检测类型选择: "
+        android:textColor="#D1D1D0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/textIndex2"
+        app:layout_constraintTop_toBottomOf="@id/textIndex2" />
+
+    <TextView
+        android:id="@+id/measurement"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/item_raditation_bg"
+        android:gravity="left|center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="8dp"
+        android:text="剂量率"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:drawableRightCompat="@mipmap/ic_add"
+        app:layout_constraintBottom_toBottomOf="@id/textIndex3"
+        app:layout_constraintStart_toEndOf="@id/textIndex3"
+        app:layout_constraintTop_toTopOf="@id/textIndex3" />
+
+    <TextView
+        android:id="@+id/textIndex7"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="核素名称显示:"
+        android:textColor="#D1D1D0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/textIndex3"
+        app:layout_constraintTop_toBottomOf="@id/textIndex3" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/typeRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="@id/add"
+        app:layout_constraintStart_toStartOf="@id/measurement"
+        app:layout_constraintTop_toTopOf="@id/textIndex7" />
+
+
+    <TextView
+        android:id="@+id/textIndex5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text=" | "
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@id/textIndex7"
+        app:layout_constraintTop_toBottomOf="@id/typeRecyclerView" />
 
     <TextView
         android:id="@+id/textIndex6"
-        app:layout_constraintTop_toTopOf="@id/textIndex5"
-        app:layout_constraintStart_toEndOf="@id/textIndex5"
-        android:text="污点设置"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="污点设置"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/textIndex5"
+        app:layout_constraintTop_toTopOf="@id/textIndex5" />
+
     <Button
-        android:layout_marginEnd="40dp"
         android:id="@+id/add"
-        app:layout_constraintTop_toTopOf="@id/textIndex5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
         android:backgroundTint="#178FFF"
-        app:layout_constraintEnd_toEndOf="parent"
         android:drawableLeft="@mipmap/ic_more"
         android:text="创建"
         android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textIndex5" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@id/add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/layout1"
-        app:layout_constraintEnd_toEndOf="@id/add"
         android:layout_width="0dp"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/add"
+        app:layout_constraintStart_toStartOf="@id/textIndex6"
+        app:layout_constraintTop_toBottomOf="@id/add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

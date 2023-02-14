@@ -91,13 +91,13 @@ public class DataSelectWindow extends BasePopupWindow {
             radioButton.setLayoutParams(buttonParams);
             radioButton.setButtonTintList(colorStateList);
             radioButton.setTag(i);
-            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        mSelected.valueSelected(mArrayStrings.get((Integer) buttonView.getTag()));
-                    }
+            radioButton.setOnClickListener(v -> {
+                RadioButton radioButton1 = (RadioButton) v;
+                if (radioButton1.isChecked()){
+                    mSelected.valueSelected(mArrayStrings.get((Integer) radioButton1.getTag()));
+                    dismiss();
                 }
+
             });
             //先后顺序不可以改变
             radioGroup.addView(radioButton);
