@@ -51,6 +51,7 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             typeOneViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
             typeOneViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
             typeOneViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
+            typeOneViewHolder.taint_sim_dis.setText(mList.get(position).getTaint_sim_dis()+"");
             typeOneViewHolder.unit.setText(mList.get(position).getTaint_unit()+"");
         } else if (mViewType == 2) {
             TypeTwoViewHolder typeTwoViewHolder = (TypeTwoViewHolder) holder;
@@ -59,11 +60,12 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             typeTwoViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
             typeTwoViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
             typeTwoViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
+            typeTwoViewHolder.taint_sim_dis.setText(mList.get(position).getTaint_sim_dis()+"");
             typeTwoViewHolder.unit.setText(mList.get(position).getTaint_unit()+"");
-
         } else {
             TypeOneViewHolder typeOneViewHolder = (TypeOneViewHolder) holder;
             typeOneViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
+            typeOneViewHolder.taint_sim_dis.setText(mList.get(position).getTaint_sim_dis()+"");
             typeOneViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
             typeOneViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
             typeOneViewHolder.unit.setText(mList.get(position).getTaint_unit()+"");
@@ -89,7 +91,7 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public static class TypeOneViewHolder extends RecyclerView.ViewHolder {
         TextView taint_loc;
         TextView taint_sim;
-        TextView taint_sim1;
+        TextView taint_sim_dis;
         TextView taint_max;
         TextView unit;
 
@@ -97,7 +99,7 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             super(itemView);
             taint_loc = itemView.findViewById(R.id.taint_loc);
             taint_sim = itemView.findViewById(R.id.taint_sim);
-            taint_sim1 = itemView.findViewById(R.id.taint_sim1);
+            taint_sim_dis = itemView.findViewById(R.id.taint_sim_dis);
             taint_max = itemView.findViewById(R.id.taint_max);
             unit = itemView.findViewById(R.id.unit);
         }
@@ -107,7 +109,7 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         TextView taint_num;
         TextView taint_loc;
         TextView taint_sim;
-        TextView taint_sim1;
+        TextView taint_sim_dis;
         TextView taint_dis;
         TextView taint_max;
         TextView unit;
@@ -117,7 +119,7 @@ public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             taint_num = itemView.findViewById(R.id.taint_num);
             taint_loc = itemView.findViewById(R.id.taint_loc);
             taint_sim = itemView.findViewById(R.id.taint_sim);
-            taint_sim1 = itemView.findViewById(R.id.taint_sim1);
+            taint_sim_dis = itemView.findViewById(R.id.taint_sim_dis);
             taint_dis = itemView.findViewById(R.id.taint_dis);
             taint_max = itemView.findViewById(R.id.taint_max);
             unit = itemView.findViewById(R.id.unit);

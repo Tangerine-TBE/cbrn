@@ -18,6 +18,7 @@ import com.dangkang.cbrn.db.TaintInfo
 import com.dangkang.cbrn.db.TypeInfo
 import com.dangkang.cbrn.dialog.DataSelectWindow
 import com.dangkang.cbrn.dialog.EditTextDialog
+import com.dangkang.cbrn.fragment.main.workSpace.RadiationWSFragment
 import com.dangkang.cbrn.fragment.main.workSpace.WorkSpaceFragment
 import com.dangkang.cbrn.utils.SPUtil
 import com.dangkang.cbrn.utils.ToastUtil
@@ -208,6 +209,8 @@ class RadiationFragment : BaseFragment<ViewBinding>(), RadiationTypeAdapter.OnIt
     }
 
     fun getRadiationInfo(): List<TaintInfo> {
+        SPUtil.getInstance().putString(Constant.ENVIRONMENT_VALUE,(binding as FragmentSettingRadiationBinding).etValue.text.toString())
+        SPUtil.getInstance().putString(Constant.ENVIRONMENT_VALUE_UNIT,(binding as FragmentSettingRadiationBinding).unit.text.toString())
         return adapter?.data() as List<TaintInfo>
     }
 

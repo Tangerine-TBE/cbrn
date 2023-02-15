@@ -10,5 +10,6 @@ class Constant {
         const val ENVIRONMENT_VALUE = "environment_value"//环境底噪
         const val MEASUREMENT_UNIT_1 = "剂量率"
         const val MEASUREMENT_UNIT_2 = "计数率"
+        const val ENVIRONMENT_VALUE_UNIT ="environment_value_unit"//环境底噪单位
     }
 }

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.util.ArrayMap;
 
 import com.dangkang.Constant;
+import com.dangkang.cbrn.R;
 import com.dangkang.cbrn.dao.DaoTool;
 import com.dangkang.cbrn.utils.SPUtil;
 
@@ -50,6 +51,8 @@ public class Configurator {
         String value = SPUtil.getInstance().getString(Constant.MEASUREMENT);
         if (value == null || value.isEmpty()){
             SPUtil.getInstance().putString(Constant.MEASUREMENT,Constant.MEASUREMENT_UNIT_1);
+            SPUtil.getInstance().putString(Constant.ENVIRONMENT_VALUE,context.getResources().getStringArray(R.array.radiation_sim_dis)[0]);
+            SPUtil.getInstance().putString(Constant.ENVIRONMENT_VALUE_UNIT,context.getResources().getStringArray(R.array.radiation_unit_1)[0]);
         }
         return this;
     }

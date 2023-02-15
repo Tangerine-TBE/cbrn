@@ -54,7 +54,7 @@ public class ChemicalWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             typeTwoViewHolder.taint_max.setText(mList.get(position).getTaint_max() + "");
             typeTwoViewHolder.taint_sim.setText(mList.get(position).getTaint_sim() + "");
             typeTwoViewHolder.unit.setText(mList.get(position).getTaint_unit()+"");
-
+            typeTwoViewHolder.taint_sim_dis.setText(mList.get(position).getTaint_sim_dis()+"");
         } else {
             TypeOneViewHolder typeOneViewHolder = (TypeOneViewHolder) holder;
             typeOneViewHolder.taint_loc.setText(mList.get(position).getTaint_loc() + "");
@@ -86,7 +86,6 @@ public class ChemicalWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public TypeOneViewHolder(@NonNull View itemView) {
             super(itemView);
             taint_loc = itemView.findViewById(R.id.taint_loc);
-
             taint_dis = itemView.findViewById(R.id.taint_dis);
             taint_max = itemView.findViewById(R.id.taint_max);
             unit = itemView.findViewById(R.id.unit);
@@ -96,6 +95,7 @@ public class ChemicalWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView taint_num;
         TextView taint_loc;
         TextView taint_sim;
+        TextView taint_sim_dis;
         TextView taint_dis;
         TextView taint_max;
         TextView unit;
@@ -106,6 +106,7 @@ public class ChemicalWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             taint_sim = itemView.findViewById(R.id.taint_sim);
             taint_dis = itemView.findViewById(R.id.taint_dis);
             taint_max = itemView.findViewById(R.id.taint_max);
+            taint_sim_dis = itemView.findViewById(R.id.taint_sim_dis);
             unit = itemView.findViewById(R.id.unit);
         }
     }

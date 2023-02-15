@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewbinding.ViewBinding
+import com.dangkang.Constant
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.activity.MainActivity
 import com.dangkang.cbrn.adapter.workspace.RadiationWSAdapter
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentRadiationWsBinding
 import com.dangkang.cbrn.db.TaintInfo
+import com.dangkang.cbrn.utils.SPUtil
 import com.dangkang.cbrn.utils.ToastUtil
 import com.dangkang.core.fragment.BaseFragment
 import com.dangkang.core.utils.L
@@ -88,6 +90,8 @@ class RadiationWSFragment : BaseFragment<ViewBinding>() {
             val pageSnapHelper = PagerSnapHelper()
             pageSnapHelper.attachToRecyclerView(this)
         }
+        viewBinding.etValue.text = SPUtil.getInstance().getString(Constant.ENVIRONMENT_VALUE)
+        viewBinding.unit.text = SPUtil.getInstance().getString(Constant.ENVIRONMENT_VALUE_UNIT)
         /*这个初始化流程不可以改变 1.*/
         viewBinding.tabLayout.apply {
             addOnTabSelectedListener(object : OnTabSelectedListener {
