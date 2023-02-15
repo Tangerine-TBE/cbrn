@@ -11,10 +11,8 @@ import android.content.IntentFilter
 import android.location.LocationManager
 import android.provider.Settings
 import android.text.TextUtils
-import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.viewbinding.ViewBinding
 import com.clj.fastble.BleManager
@@ -34,14 +32,11 @@ import com.dangkang.cbrn.utils.ToastUtil
 import com.dangkang.cbrn.weight.BiologicsDecoration
 import com.dangkang.core.fragment.BaseFragment
 import com.dangkang.core.utils.L
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.lang.reflect.Type
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 
 class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnItemClickListener {
@@ -91,6 +86,13 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
                 if (TextUtils.isEmpty(deviceBrand)) {
                     return
                 }
+                L.e(bleDevice.name)
+                val pattern = Pattern.compile("^s+[0-9]+[0-9]+[0-9]+[0-9]")
+                val matcher = pattern.matcher(deviceBrand)
+                if (!matcher.matches()) {
+                    return
+                }
+
                 /**增加蓝牙扫描规则*/
                 for (item in biologicsDeviceAdapter?.data()!!) {
                     if (deviceBrand.equals(item.name)) {
@@ -232,8 +234,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
             val deviceSnapHelper = PagerSnapHelper();
             deviceSnapHelper.attachToRecyclerView(binding.deviceRecyclerView)
             pagerSnapHelper.attachToRecyclerView(binding.recyclerView)
-        },
-            { L.e(it.message)})
+        }, { L.e(it.message) })
 
         return binding
     }
@@ -329,15 +330,15 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
     override fun onItemClicked(value: Int) {
         if (value == 0) {
             if (editTextDialog == null) {
-                editTextDialog = EditTextDialog(_mActivity,
-                    R.style.DialogStyle,
-                    object : EditTextDialog.OnItemSelected {
+                editTextDialog = EditTextDialog(
+                    _mActivity, R.style.DialogStyle, object : EditTextDialog.OnItemSelected {
                         override fun onSaveItem(value: String) {
                             if (biologicsTypeAdapter != null) {
                                 biologicsTypeAdapter?.addItem(value)
                             }
                         }
-                    },"制剂编辑")
+                    }, "制剂编辑"
+                )
             }
             editTextDialog!!.show()
         }
