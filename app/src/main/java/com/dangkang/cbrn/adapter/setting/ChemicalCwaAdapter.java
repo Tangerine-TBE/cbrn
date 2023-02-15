@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangkang.cbrn.R;
-import com.dangkang.cbrn.bean.CwaBean;
+import com.dangkang.cbrn.db.ChemicalInfo;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class ChemicalCwaAdapter extends RecyclerView.Adapter<ChemicalCwaAdapter.ViewHolder> {
     private Context mContext;
-    private List<CwaBean> values;
+    private List<ChemicalInfo> values;
 
-    public ChemicalCwaAdapter(Context context, List<CwaBean> values) {
+    public ChemicalCwaAdapter(Context context, List<ChemicalInfo> values) {
         this.values = values;
         this.mContext = context;
     }
@@ -38,17 +38,17 @@ public class ChemicalCwaAdapter extends RecyclerView.Adapter<ChemicalCwaAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ChemicalCwaAdapter.ViewHolder holder, int position) {
-        CwaBean cwaBean = values.get(position);
-        holder.chart.setText(cwaBean.charts);
-       Drawable drawable =  ContextCompat.getDrawable(mContext, cwaBean.icon);
+        ChemicalInfo cwaBean = values.get(position);
+        holder.chart.setText(cwaBean.getCharts());
+       Drawable drawable =  ContextCompat.getDrawable(mContext, cwaBean.getIcon());
         assert drawable != null;
         drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
         holder.icon.setCompoundDrawables(drawable,null,null,null);
-        holder.name.setText(cwaBean.chemicalName);
-        holder.minValue.setText(cwaBean.minValue);
-        holder.midValue.setText(cwaBean.midValue);
-        holder.maxvalue.setText(cwaBean.maxValue);
-        holder.unit.setText(cwaBean.unit);
+        holder.name.setText(cwaBean.getChemicalName());
+        holder.minValue.setText(cwaBean.getMinValue());
+        holder.midValue.setText(cwaBean.getMidValue());
+        holder.maxvalue.setText(cwaBean.getMaxValue());
+        holder.unit.setText(cwaBean.getUnit());
     }
 
     @Override

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">cbrn</string>
-    <!--辐射设置-->
+    <!--辐射设置                                 -->
     <!--检测类型选择-->
     <string-array name="radiation_measurement">
         <item >剂量率</item>
@@ -14,7 +14,6 @@
     <string-array name="radiation_sim_dis">
         <item>0.3</item>
         <item>5</item>
-
     </string-array>
     <!--辐射距离-->
     <string-array name="radiation_dis">
@@ -34,8 +33,6 @@
         <item>CPS</item>
         <item>CPM</item>
     </string-array>
-
-
     <string-array name="radiation_type">
         <item>添加</item>
         <item>铯173</item>
@@ -45,7 +42,7 @@
         <item>碘125</item>
         <item>铀235</item>
     </string-array>
-    <!--生物设置-->
+    <!--生物设置                                 -->
     <!--制剂类型显示-->
     <string-array name="biglogics_type">
         <item>添加</item>
@@ -86,6 +83,22 @@
         <item>阳性</item>
         <item>弱阳</item>
         <item>无效</item>
+    </string-array>
+    <!--化学                                 -->
+    <string-array name="chemical_type">
+        <item>沙林</item>
+        <item>塔崩</item>
+        <item>梭曼</item>
+        <item>尔沙林</item>
+        <item>VX</item>
+        <item>硫芥</item>
+        <item>路易斯气</item>
+        <item>氮芥</item>
+        <item>氰胺酸</item>
+        <item>氯化氢</item>
+        <item>氯</item>
+        <item>氨</item>
+        <item>有害的浓度和化学混合物</item>
     </string-array>
 
 

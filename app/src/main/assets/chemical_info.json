@@ -1,0 +1,145 @@
+[
+  {
+    "charts": "神经",
+    "chemicalName": "沙林",
+    "icon": 2131623955,
+    "maxValue": "0.3",
+    "midValue": "0.2",
+    "minValue": "0.1",
+    "unit": "mg/m^3",
+    "id": 1
+
+  },
+  {
+    "charts": "神经",
+    "chemicalName": "塔崩",
+    "icon": 2131623955,
+    "maxValue": "0.3",
+    "midValue": "0.2",
+    "minValue": "0.1",
+    "unit": "mg/m^3",
+    "id": 2
+
+  },
+  {
+    "charts": "神经",
+    "chemicalName": "梭曼",
+    "icon": 2131623955,
+    "maxValue": "0.3",
+    "midValue": "0.2",
+    "minValue": "0.1",
+    "unit": "mg/m^3",
+    "id": 3
+
+  },
+  {
+    "charts": "神经",
+    "chemicalName": "尔沙林",
+    "icon": 2131623955,
+    "maxValue": "0.3",
+    "midValue": "0.2",
+    "minValue": "0.1",
+    "unit": "mg/m^3",
+    "id": 4
+
+  },
+  {
+    "charts": "神经",
+    "chemicalName": "VX",
+    "icon": 2131623955,
+    "maxValue": "0.3",
+    "midValue": "0.2",
+    "minValue": "0.1",
+    "unit": "mg/m^3",
+    "id": 5
+
+  },
+  {
+    "charts": "皮肤",
+    "chemicalName": "硫芥",
+    "icon": 2131623955,
+    "maxValue": "0.7",
+    "midValue": "0.6",
+    "minValue": "0.5",
+    "unit": "mg/m^3",
+    "id": 6
+
+  },
+  {
+    "charts": "皮肤",
+    "chemicalName": "路易斯气",
+    "icon": 2131623955,
+    "maxValue": "3",
+    "midValue": "2.5",
+    "minValue": "2",
+    "unit": "mg/m^3",
+    "id": 7
+
+  },
+  {
+    "charts": "皮肤",
+    "chemicalName": "氮芥",
+    "icon": 2131623955,
+    "maxValue": "6",
+    "midValue": "5.5",
+    "minValue": "5",
+    "unit": "mg/m^3",
+    "id": 8
+
+  },
+  {
+    "charts": "血液",
+    "chemicalName": "氰胺酸",
+    "icon": 2131623955,
+    "maxValue": "60",
+    "midValue": "55",
+    "minValue": "50",
+    "unit": "mg/m^3",
+    "id": 9
+
+  },
+  {
+    "charts": "血液",
+    "chemicalName": "氯化氢",
+    "icon": 2131623955,
+    "maxValue": "60",
+    "midValue": "55",
+    "minValue": "50",
+    "unit": "mg/m^3",
+    "id": 10
+
+  },
+  {
+    "charts": "有毒工业品",
+    "chemicalName": "氯",
+    "icon": 2131623938,
+    "maxValue": "20",
+    "midValue": "15",
+    "minValue": "10",
+    "unit": "ppm",
+    "id": 11
+
+  },
+  {
+    "charts": "有毒工业品",
+    "chemicalName": "氨",
+    "icon": 2131623938,
+    "maxValue": "200",
+    "midValue": "150",
+    "minValue": "100",
+    "unit": "ppm",
+    "id": 12
+
+  },
+  {
+    "charts": "有毒工业品",
+    "chemicalName": "有害的浓度和化学混合物",
+    "icon": 2131623938,
+    "maxValue": "-",
+    "midValue": "-",
+    "minValue": "-",
+    "unit": "mg/m^3",
+    "id": 13
+
+  }
+]

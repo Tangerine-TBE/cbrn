@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.dangkang.Constant
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.adapter.setting.ChemicalAdapter
 import com.dangkang.cbrn.dao.DaoTool
@@ -68,12 +69,13 @@ class ChemicalFragment :BaseFragment<ViewBinding>() {
             }else{
                 val taintInfo = TaintInfo()
                 taintInfo.type = 2
-                taintInfo.taint_dis = "200"
-                taintInfo.taint_loc = "未知"
+                taintInfo.taint_dis = resources.getStringArray(R.array.chemical_type)[0]
+                taintInfo.taint_loc = ""
                 taintInfo.taint_max = "300"
-                taintInfo.taint_num = 1144
-//                taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
-//                taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit)[0]
+                taintInfo.taint_num = adapter?.itemCount!! + 1
+                taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
+                taintInfo.taint_sim_dis = resources.getStringArray(R.array.radiation_sim_dis)[0]
+                taintInfo.taint_unit = DaoTool.queryUnitFromChemicalInfo(taintInfo.taint_dis)
                 taintInfo.create_time = System.currentTimeMillis() / 1000
                 adapter!!.addItem(taintInfo)
                 binding.recyclerView.scrollToPosition(0)

@@ -16,7 +16,7 @@ import com.dangkang.cbrn.db.TaintInfo;
 import java.util.List;
 
 public class ChemicalWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<TaintInfo> mList;
+    private final List<TaintInfo> mList;
     private int mViewType;/* 1. simple  2. details*/
     public ChemicalWSAdapter(List<TaintInfo> list,int viewType){
         this.mList = list;

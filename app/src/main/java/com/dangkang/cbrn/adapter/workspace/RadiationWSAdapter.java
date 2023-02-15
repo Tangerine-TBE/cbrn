@@ -18,7 +18,7 @@ import com.dangkang.core.utils.L;
 import java.util.List;
 
 public class RadiationWSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<TaintInfo> mList;
+    private final List<TaintInfo> mList;
     private int mViewType; /*1.simple 2.details*/ /*@setViewType can change the type */
 
     /*数据查找数据*/

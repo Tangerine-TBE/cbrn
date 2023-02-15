@@ -8,10 +8,12 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
+import com.dangkang.cbrn.db.ChemicalInfo;
 import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.db.TaintInfo;
 import com.dangkang.cbrn.db.TypeInfo;
 
+import com.dangkang.db.ChemicalInfoDao;
 import com.dangkang.db.DeviceInfoDao;
 import com.dangkang.db.TaintInfoDao;
 import com.dangkang.db.TypeInfoDao;
@@ -25,10 +27,12 @@ import com.dangkang.db.TypeInfoDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig chemicalInfoDaoConfig;
     private final DaoConfig deviceInfoDaoConfig;
     private final DaoConfig taintInfoDaoConfig;
     private final DaoConfig typeInfoDaoConfig;
 
+    private final ChemicalInfoDao chemicalInfoDao;
     private final DeviceInfoDao deviceInfoDao;
     private final TaintInfoDao taintInfoDao;
     private final TypeInfoDao typeInfoDao;
@@ -36,6 +40,9 @@ public class DaoSession extends AbstractDaoSession {
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
+
+        chemicalInfoDaoConfig = daoConfigMap.get(ChemicalInfoDao.class).clone();
+        chemicalInfoDaoConfig.initIdentityScope(type);
 
         deviceInfoDaoConfig = daoConfigMap.get(DeviceInfoDao.class).clone();
         deviceInfoDaoConfig.initIdentityScope(type);
@@ -46,19 +53,26 @@ public class DaoSession extends AbstractDaoSession {
         typeInfoDaoConfig = daoConfigMap.get(TypeInfoDao.class).clone();
         typeInfoDaoConfig.initIdentityScope(type);
 
+        chemicalInfoDao = new ChemicalInfoDao(chemicalInfoDaoConfig, this);
         deviceInfoDao = new DeviceInfoDao(deviceInfoDaoConfig, this);
         taintInfoDao = new TaintInfoDao(taintInfoDaoConfig, this);
         typeInfoDao = new TypeInfoDao(typeInfoDaoConfig, this);
 
+        registerDao(ChemicalInfo.class, chemicalInfoDao);
         registerDao(DeviceInfo.class, deviceInfoDao);
         registerDao(TaintInfo.class, taintInfoDao);
         registerDao(TypeInfo.class, typeInfoDao);
     }
     
     public void clear() {
+        chemicalInfoDaoConfig.clearIdentityScope();
         deviceInfoDaoConfig.clearIdentityScope();
         taintInfoDaoConfig.clearIdentityScope();
         typeInfoDaoConfig.clearIdentityScope();
+    }
+
+    public ChemicalInfoDao getChemicalInfoDao() {
+        return chemicalInfoDao;
     }
 
     public DeviceInfoDao getDeviceInfoDao() {

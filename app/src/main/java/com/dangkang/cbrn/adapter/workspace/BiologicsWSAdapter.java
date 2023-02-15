@@ -24,7 +24,7 @@ import java.util.List;
 public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.ViewHolder> {
     public List<DeviceInfo> deviceBeans = new ArrayList<>();
     public Context mContext;
-    private OnIconClickListener mOnIconClickListener;
+    private final OnIconClickListener mOnIconClickListener;
     public BiologicsWSAdapter(Context context, OnIconClickListener onIconClickListener){
         this.mOnIconClickListener = onIconClickListener;
         this.mContext = context;
@@ -41,6 +41,7 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
         holder.id.setText(deviceBeans.get(position).getBrand());
         holder.result.setText(deviceBeans.get(position).getResult());
         holder.whatFor.setText(deviceBeans.get(position).getType());
+        holder.editText.setText(deviceBeans.get(position).getLocation());
         int status = deviceBeans.get(position).getStatus();
         if (status == 0 ){
             //显示结果，阴性
@@ -91,6 +92,7 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
         TextView whatFor;
         TextView id;
         TextView result;
+        TextView editText;
         ImageView icon;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,6 +100,7 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
             id = itemView.findViewById(R.id.id);
             result = itemView.findViewById(R.id.result);
             icon = itemView.findViewById(R.id.icon);
+            editText = itemView.findViewById(R.id.editText);
         }
     }
 }

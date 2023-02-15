@@ -7,6 +7,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.ArrayMap;
 
+import com.dangkang.Constant;
 import com.dangkang.cbrn.dao.DaoTool;
 import com.dangkang.cbrn.utils.SPUtil;
 
@@ -46,6 +47,10 @@ public class Configurator {
 
     public final Configurator withSp(Context context) {
         SPUtil.init(context);
+        String value = SPUtil.getInstance().getString(Constant.MEASUREMENT);
+        if (value == null || value.isEmpty()){
+            SPUtil.getInstance().putString(Constant.MEASUREMENT,Constant.MEASUREMENT_UNIT_1);
+        }
         return this;
     }
 

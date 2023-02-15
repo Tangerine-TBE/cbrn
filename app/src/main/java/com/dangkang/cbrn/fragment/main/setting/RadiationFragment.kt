@@ -2,6 +2,7 @@ package com.dangkang.cbrn.fragment.main.setting
 
 import android.annotation.SuppressLint
 import android.text.TextUtils
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -80,6 +81,15 @@ class RadiationFragment : BaseFragment<ViewBinding>(), RadiationTypeAdapter.OnIt
                         binding.measurement.text = value
                         SPUtil.getInstance().putString(Constant.MEASUREMENT, value)
                         adapter?.setUniType(value)
+                        if (value == Constant.MEASUREMENT_UNIT_1) {
+                            binding.unit.text =
+                                resources.getStringArray(R.array.radiation_unit_1)[0]
+                            binding.etValue.setText(resources.getStringArray(R.array.radiation_sim_dis)[0])
+                        } else {
+                            binding.unit.text =
+                                resources.getStringArray(R.array.radiation_unit_2)[0]
+                            binding.etValue.setText(resources.getStringArray(R.array.radiation_sim_dis)[1])
+                        }
                     }
                 },
                 binding.measurement.text.toString(),
@@ -90,7 +100,45 @@ class RadiationFragment : BaseFragment<ViewBinding>(), RadiationTypeAdapter.OnIt
         val textValue = SPUtil.getInstance().getString(Constant.MEASUREMENT)
         if (!TextUtils.isEmpty(textValue)) {
             binding.measurement.text = textValue
+            if (textValue == Constant.MEASUREMENT_UNIT_1) {
+                binding.unit.text = resources.getStringArray(R.array.radiation_unit_1)[0]
+                binding.etValue.setText(resources.getStringArray(R.array.radiation_sim_dis)[0])
+            } else {
+                binding.unit.text = resources.getStringArray(R.array.radiation_unit_2)[0]
+                binding.etValue.setText(resources.getStringArray(R.array.radiation_sim_dis)[1])
+            }
         }
+        binding.unit.setOnClickListener {
+            if ( binding.measurement.text == Constant.MEASUREMENT_UNIT_1) {
+                DataSelectWindow(
+                    _mActivity,
+                    resources.getStringArray(R.array.radiation_unit_1).toMutableList(),
+                    { value ->
+                        if (!TextUtils.isEmpty(value)) {
+                            binding.unit.text = value
+                        }
+                    },
+                    binding.unit.text.toString(),
+                    binding.unit.width,
+                    false
+                ).showPopupWindow(binding.unit)
+            } else {
+                DataSelectWindow(
+                    _mActivity,
+                    resources.getStringArray(R.array.radiation_unit_2).toMutableList(),
+                    { value ->
+                        if (!TextUtils.isEmpty(value)) {
+                            binding.unit.text = value
+                        }
+                    },
+                    binding.unit.text.toString(),
+                    binding.unit.width,
+                    false
+                ).showPopupWindow(binding.unit)
+            }
+
+        }
+
         return binding
     }
 
@@ -133,7 +181,7 @@ class RadiationFragment : BaseFragment<ViewBinding>(), RadiationTypeAdapter.OnIt
 
             if (adapter == null) {
                 adapter = RadiationAdapter(
-                    it, _mActivity,value
+                    it, _mActivity, value
                 )
                 binding.recyclerView.adapter = adapter
             } else {
@@ -145,9 +193,9 @@ class RadiationFragment : BaseFragment<ViewBinding>(), RadiationTypeAdapter.OnIt
                 taintInfo.taint_num = adapter?.itemCount!! + 1
                 taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
                 taintInfo.taint_sim_dis = resources.getStringArray(R.array.radiation_sim_dis)[0]
-                if (value == Constant.MEASUREMENT_UNIT_1){
+                if (value == Constant.MEASUREMENT_UNIT_1) {
                     taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit_1)[0]
-                }else{
+                } else {
                     taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit_2)[0]
                 }
                 taintInfo.create_time = System.currentTimeMillis() / 1000

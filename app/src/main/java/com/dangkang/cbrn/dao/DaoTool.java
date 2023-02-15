@@ -4,15 +4,28 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.core.content.ContextCompat;
+
+import com.dangkang.cbrn.db.ChemicalInfo;
 import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.db.TaintInfo;
 import com.dangkang.cbrn.db.TypeInfo;
+import com.dangkang.core.utils.AssetsUtil;
+import com.dangkang.core.utils.GsonUtil;
+import com.dangkang.core.utils.L;
 import com.dangkang.db.DaoMaster;
 import com.dangkang.db.DaoSession;
 import com.dangkang.db.DeviceInfoDao;
 import com.dangkang.db.TaintInfoDao;
 import com.dangkang.db.TypeInfoDao;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,6 +40,7 @@ public class DaoTool {
         SQLiteDatabase db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);
         sDaoSession = daoMaster.newSession();
+        initChemicalInfo(ctx);
     }
 
     public static void clearDataBase() {
@@ -39,7 +53,7 @@ public class DaoTool {
     }
 
     public static List<TaintInfo> queryChemicalTaintInfo() {
-        return sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Type.eq(2)).build().list();
+        return sDaoSession.getTaintInfoDao().queryBuilder().where(TaintInfoDao.Properties.Type.eq(2)).orderDesc(TaintInfoDao.Properties.Taint_num).build().list();
     }
 
     public static DeviceInfo queryDeviceInfo(String name) {
@@ -49,6 +63,17 @@ public class DaoTool {
         } else {
             return null;
         }
+    }
+
+    public static String queryUnitFromChemicalInfo(String chemicalName) {
+        String sql = "select t.unit  from CHEMICAL_INFO t where t.CHEMICAL_NAME == ?";
+        Cursor cursor = sDaoSession.getDatabase().rawQuery(sql, new String[]{chemicalName});
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                return cursor.getString(0);
+            }
+        }
+        return "0.0";
     }
 
     public static List<DeviceInfo> queryAllDeviceInfo() {
@@ -80,6 +105,11 @@ public class DaoTool {
         return values;
     }
 
+    public static List<ChemicalInfo> queryAllChemicalInfo() {
+        return sDaoSession.getChemicalInfoDao().queryBuilder().list();
+    }
+
+
     public static void removeTaintInfo(int taint_num) {
         String sql = "delete from TAINT_INFO where TAINT_NUM = ?";
         sDaoSession.getDatabase().execSQL(sql, new String[]{String.valueOf(taint_num)});
@@ -89,6 +119,12 @@ public class DaoTool {
         String sql = "DELETE from TAINT_INFO where type = ?";
         sDaoSession.getDatabase().execSQL(sql, new String[]{String.valueOf(type)});
         sDaoSession.getTaintInfoDao().insertOrReplaceInTx(taintInfo);
+    }
+
+    private static void initChemicalInfo(Context context) {
+        List<ChemicalInfo> chemicalInfos = GsonUtil.fromJson(AssetsUtil.getAssertString(context, "chemical_info.json"), new TypeToken<ArrayList<ChemicalInfo>>() {
+        }.getType());
+        sDaoSession.getChemicalInfoDao().insertOrReplaceInTx(chemicalInfos);
     }
 
     public static void updateDeviceInfo(List<DeviceInfo> deviceInfo) {

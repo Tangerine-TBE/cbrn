@@ -83,7 +83,7 @@
                 android:paddingRight="10dp"
                 android:id="@+id/taint_sim1"
                 app:layout_constraintHorizontal_weight="10"
-                android:layout_width="70dp"
+                android:layout_width="50dp"
                 app:layout_constraintStart_toEndOf="@id/taint_sim"
                 app:layout_constraintTop_toTopOf="@id/taint_sim"
                 app:layout_constraintBottom_toBottomOf="@id/taint_sim"

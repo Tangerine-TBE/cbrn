@@ -69,7 +69,8 @@ ext {
             "bleCore"              : "com.github.Jasonchenlijian:FastBle:2.4.0",
             "permission"           : "pub.devrel:easypermissions:3.0.0",
             "tabLayout": "q.rorbin:VerticalTabLayout:1.2.5",
-            "flexbox": "com.google.android:flexbox:1.1.0"
+            "flexbox": "com.google.android:flexbox:1.1.0",
+            "gosnCore":     "com.google.code.gson:gson:2.8.5"
 
     ]
 }
