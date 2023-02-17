@@ -133,7 +133,7 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
                 val deviceInfo = DaoTool.queryDeviceInfo(deviceBrand)
                 if (deviceInfo != null) {
                     //匹配到对应设备
-                    val status  = BiologicalDevice().formatData(bleDevice.scanRecord)
+                    val status  = BiologicalDevice().formatData(bleDevice.scanRecord,0)
                     biologicsWsAdapter?.changeItemStatus(deviceInfo,status)
                 }
             }

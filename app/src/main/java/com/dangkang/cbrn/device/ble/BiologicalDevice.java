@@ -1,6 +1,8 @@
 package com.dangkang.cbrn.device.ble;
 
 import com.dangkang.cbrn.device.DataConverter;
+import com.dangkang.core.utils.L;
+import com.dangkang.core.utils.StringUtil;
 
 /**
  * @author:Administrator
@@ -8,17 +10,48 @@ import com.dangkang.cbrn.device.DataConverter;
  */
 public class BiologicalDevice implements DataConverter {
     @Override
-    public int formatData(byte[] data) {
+    public int formatData(byte[] data, int type) {
         /*1.校验数据*/
-        if (data[0] == -36 &&  data[data.length-1] == -51){
-           String status =  String.valueOf(data[6]);
-           return Integer.parseInt(status);
+        if (type == 0) {
+            /*广播解析*/
+            byte[] bytes = new byte[]{data[data.length - 1], data[data.length - 2]};
+            return Integer.parseInt(new String(bytes));
+
+        } else {
+
         }
         return -1;
     }
 
     @Override
-    public byte[] writeData() {
-        return new byte[0];
+    public byte[] getData(int type, int status) {
+        /*指令操作
+         * 1.滴液前状态变更*/
+        byte cmdType;
+        byte cmdStatus;
+        if (type == 0) {
+            cmdType = 0x01;
+            if (status == 0) {
+                cmdStatus = 0x01;
+            } else {
+                cmdStatus = 0x02;
+            }
+        } else {
+            cmdType = 0x02;
+            if (status == 0) {
+                cmdStatus = 0x01;
+            } else if (status == 1) {
+                cmdStatus = 0x02;
+            } else if (status == 2) {
+                cmdStatus = 0x03;
+            } else {
+                cmdStatus = 0x04;
+            }
+        }
+        byte[] cmd = new byte[]{(byte) 0xDC, cmdType, cmdStatus, (byte) 0xCD};
+        L.e(StringUtil.byte2HexStr(cmd));
+        return cmd;
     }
+
+
 }

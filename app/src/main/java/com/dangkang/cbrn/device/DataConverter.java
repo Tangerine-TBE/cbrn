@@ -5,6 +5,6 @@ package com.dangkang.cbrn.device;
  * @date:2023/2/1
  */
 public interface DataConverter {
-    int formatData(byte[] data);
-    byte[] writeData();
+    int formatData(byte[] data,int type);
+    byte[] getData(int type,int status);
 }
