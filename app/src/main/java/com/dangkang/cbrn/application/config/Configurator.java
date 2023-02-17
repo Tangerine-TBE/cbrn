@@ -59,7 +59,7 @@ public class Configurator {
     }
 
     public final Configurator withBle() {
-        BleManager.getInstance().enableLog(true).setReConnectCount(1, 5000).setOperateTimeout(5000);
+        BleManager.getInstance().enableLog(true).setReConnectCount(0, 5000).setOperateTimeout(5000);
         return this;
     }
 

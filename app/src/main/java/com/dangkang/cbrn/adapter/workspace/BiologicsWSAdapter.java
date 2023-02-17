@@ -102,7 +102,7 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
         for (int i = 0; i < deviceBeans.size(); i++) {
             if (deviceInfo.getBrand().equals(deviceBeans.get(i).getBrand())) {
                 deviceBeans.get(i).setStatus(status);
-                notifyItemChanged(i);
+                notifyItemChanged(i,null);
                 break;
             }
         }

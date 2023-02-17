@@ -134,7 +134,6 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
                 if (deviceInfo != null) {
                     //匹配到对应设备
                     val status  = BiologicalDevice().formatData(bleDevice.scanRecord,0)
-
                     biologicsWsAdapter?.changeItemStatus(deviceInfo,status)
                 }
             }
