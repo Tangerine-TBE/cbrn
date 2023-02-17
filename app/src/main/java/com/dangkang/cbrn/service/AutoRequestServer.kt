@@ -24,6 +24,9 @@ class AutoRequestServer : Service() {
         * 2.需要有异常信息收集的*/
         Thread {
             val deviceInfo = DaoTool.queryAllDeviceInfo()
+            if (deviceInfo.isEmpty()){
+                return@Thread
+            }
             val index = 0
             dfs(deviceInfo, index)
         }.start()

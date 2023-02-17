@@ -3,6 +3,7 @@ package com.dangkang.cbrn.db;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * @author:Administrator
@@ -17,26 +18,19 @@ public class DeviceInfo {
     private String result; //试剂盒期望结果
     private String type;//试剂盒检测类型
     private String location;//取样位置
-    private int status ;//状态
     private String bleDevice;
-    @Generated(hash = 482019763)
-    public DeviceInfo(Long id, String brand, String result, String type, String location, int status, String bleDevice) {
+    @Transient
+    public int status;
+    @Generated(hash = 654054048)
+    public DeviceInfo(Long id, String brand, String result, String type, String location, String bleDevice) {
         this.id = id;
         this.brand = brand;
         this.result = result;
         this.type = type;
         this.location = location;
-        this.status = status;
         this.bleDevice = bleDevice;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
     public String getBleDevice() {
         return bleDevice;
@@ -49,6 +43,7 @@ public class DeviceInfo {
     @Generated(hash = 2125166935)
     public DeviceInfo() {
     }
+
 
     public String getLocation() {
         return location;

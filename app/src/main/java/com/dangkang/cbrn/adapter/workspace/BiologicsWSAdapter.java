@@ -22,11 +22,12 @@ import java.util.List;
  * @date:2022/1/31
  */
 public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.ViewHolder> {
-    public List<DeviceInfo> deviceBeans = new ArrayList<>();
+    private final List<DeviceInfo> deviceBeans;
     public Context mContext;
     private final OnIconClickListener mOnIconClickListener;
 
-    public BiologicsWSAdapter(Context context, OnIconClickListener onIconClickListener) {
+    public BiologicsWSAdapter(Context context, OnIconClickListener onIconClickListener, List<DeviceInfo> data) {
+        this.deviceBeans = data;
         this.mOnIconClickListener = onIconClickListener;
         this.mContext = context;
     }
@@ -44,7 +45,7 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
         holder.result.setText(deviceBeans.get(position).getResult());
         holder.whatFor.setText(deviceBeans.get(position).getType());
         holder.editText.setText(deviceBeans.get(position).getLocation());
-        int status = deviceBeans.get(position).getStatus();
+        int status = deviceBeans.get(position).status;
 
         if (status == 1) {
             //显示结果，阴性
@@ -57,7 +58,7 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
             holder.icon.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.vector));
             holder.icon.setTag(2);
         } else if (status == 3) {
-            //尚未测试
+            //弱阳性
             holder.id.setTextColor(ContextCompat.getColor(mContext, R.color.color_37B48B));
             holder.icon.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.ic_before));
             holder.icon.setTag(3);
@@ -93,19 +94,19 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
         void onItemClicked();
     }
 
-    public final void addItem(DeviceInfo deviceBean) {
-        deviceBeans.add(0, deviceBean);
-        notifyItemInserted(0);
+    public final DeviceInfo queryData(String name) {
+        for (DeviceInfo deviceInfo : deviceBeans) {
+            if (deviceInfo.getBrand().equals(name)) {
+                return deviceInfo;
+            }
+        }
+        return null;
     }
 
     public final void changeItemStatus(DeviceInfo deviceInfo, int status) {
-        for (int i = 0; i < deviceBeans.size(); i++) {
-            if (deviceInfo.getBrand().equals(deviceBeans.get(i).getBrand())) {
-                deviceBeans.get(i).setStatus(status);
-                notifyItemChanged(i,null);
-                break;
-            }
-        }
+        int i = deviceBeans.indexOf(deviceInfo);
+        deviceBeans.get(i).status = status;
+        notifyItemChanged(i, null);
 
     }
 

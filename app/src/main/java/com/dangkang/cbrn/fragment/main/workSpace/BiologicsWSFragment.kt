@@ -26,8 +26,10 @@ import com.dangkang.cbrn.adapter.workspace.BiologicsWSAdapter
 import com.dangkang.cbrn.adapter.workspace.BiologicsWSAdapter.OnIconClickListener
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentBiologicsWsBinding
+import com.dangkang.cbrn.db.DeviceInfo
 import com.dangkang.cbrn.device.ble.BiologicalDevice
 import com.dangkang.core.fragment.BaseFragment
+import io.reactivex.Observable
 
 class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
     private var systemListener: SystemListener = SystemListener()
@@ -39,15 +41,12 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
     }
 
     private fun initView(viewBinding: FragmentBiologicsWsBinding): FragmentBiologicsWsBinding {
+        val list = DaoTool.queryAllDeviceInfo();
         biologicsWsAdapter =
             BiologicsWSAdapter(
                 _mActivity,
                 this
-            )
-        val devices = DaoTool.queryAllDeviceInfo()
-        for (item in devices.indices){
-            biologicsWsAdapter?.addItem(devices[item])
-        }
+                        ,list )
         viewBinding.recyclerView.adapter = biologicsWsAdapter
         viewBinding.recyclerView.layoutManager = GridLayoutManager(_mActivity, 2)
         val pagerSnapHelper = PagerSnapHelper()
@@ -130,7 +129,7 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
                 if (TextUtils.isEmpty(deviceBrand)) {
                     return
                 }
-                val deviceInfo = DaoTool.queryDeviceInfo(deviceBrand)
+                val deviceInfo = biologicsWsAdapter?.queryData(deviceBrand)
                 if (deviceInfo != null) {
                     //匹配到对应设备
                     val status  = BiologicalDevice().formatData(bleDevice.scanRecord,0)

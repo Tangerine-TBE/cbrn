@@ -77,7 +77,24 @@ public class DaoTool {
     }
 
     public static List<DeviceInfo> queryAllDeviceInfo() {
-        return sDaoSession.getDeviceInfoDao().queryBuilder().orderDesc(DeviceInfoDao.Properties.Id).list();
+        String sql = "select * from DEVICE_INFO t order by t._id desc";
+        Cursor cursor = sDaoSession.getDatabase().rawQuery(sql,null);
+        List<DeviceInfo> deviceInfos = new ArrayList<>();
+        if (cursor != null){
+            if (cursor.moveToFirst()){
+                do {
+                    DeviceInfo deviceInfo = new DeviceInfo();
+                    deviceInfo.setBrand(cursor.getString(1));
+                    deviceInfo.setResult(cursor.getString(2));
+                    deviceInfo.setType(cursor.getString(3));
+                    deviceInfo.setLocation(cursor.getString(4));
+                    deviceInfo.setBleDevice(cursor.getString(5));
+                    deviceInfos.add(deviceInfo);
+                }while (cursor.moveToNext());
+            }
+        }
+
+        return deviceInfos;
     }
 
     /*1 生物
