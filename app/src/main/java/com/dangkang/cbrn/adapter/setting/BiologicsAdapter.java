@@ -18,6 +18,7 @@ import com.dangkang.cbrn.R;
 import com.dangkang.cbrn.dao.DaoTool;
 import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.dialog.DataSelectWindow;
+import com.dangkang.core.utils.GsonUtil;
 
 import java.lang.invoke.CallSite;
 import java.util.ArrayList;
@@ -83,6 +84,11 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
             }
             dataSelectWindow = new DataSelectWindow(mContext, arrayList, value -> {
                 holder.id.setText(value);
+                for (int i = 0 ;i < adapter.data().size() ; i ++){
+                    if (adapter.data().get(i).getName().equals(value)){
+                        deviceBeans.get(holder.getAdapterPosition()).setBleDevice(adapter.data().get(i).getDevice().getAddress());
+                    }
+                }
                 deviceBeans.get(holder.getAdapterPosition()).setBrand(value);
             }, holder.id.getText().toString(), holder.id.getWidth(), false);
             dataSelectWindow.showPopupWindow(holder.id);

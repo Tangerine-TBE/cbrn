@@ -11,6 +11,7 @@ public class CBRNApplication extends BaseApplication {
         Config.init(this)
                 .withDao(this)
                 .withSp(this)
+                .withBle()
                 .Configure();
     }
 }

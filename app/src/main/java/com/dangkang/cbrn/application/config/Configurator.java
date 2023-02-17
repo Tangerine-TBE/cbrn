@@ -7,6 +7,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.ArrayMap;
 
+import com.clj.fastble.BleManager;
 import com.dangkang.Constant;
 import com.dangkang.cbrn.R;
 import com.dangkang.cbrn.dao.DaoTool;
@@ -49,11 +50,16 @@ public class Configurator {
     public final Configurator withSp(Context context) {
         SPUtil.init(context);
         String value = SPUtil.getInstance().getString(Constant.MEASUREMENT);
-        if (value == null || value.isEmpty()){
-            SPUtil.getInstance().putString(Constant.MEASUREMENT,Constant.MEASUREMENT_UNIT_1);
-            SPUtil.getInstance().putString(Constant.ENVIRONMENT_VALUE,context.getResources().getStringArray(R.array.radiation_sim_dis)[0]);
-            SPUtil.getInstance().putString(Constant.ENVIRONMENT_VALUE_UNIT,context.getResources().getStringArray(R.array.radiation_unit_1)[0]);
+        if (value == null || value.isEmpty()) {
+            SPUtil.getInstance().putString(Constant.MEASUREMENT, Constant.MEASUREMENT_UNIT_1);
+            SPUtil.getInstance().putString(Constant.ENVIRONMENT_VALUE, context.getResources().getStringArray(R.array.radiation_sim_dis)[0]);
+            SPUtil.getInstance().putString(Constant.ENVIRONMENT_VALUE_UNIT, context.getResources().getStringArray(R.array.radiation_unit_1)[0]);
         }
+        return this;
+    }
+
+    public final Configurator withBle() {
+        BleManager.getInstance().enableLog(true).setReConnectCount(1, 5000).setOperateTimeout(5000);
         return this;
     }
 

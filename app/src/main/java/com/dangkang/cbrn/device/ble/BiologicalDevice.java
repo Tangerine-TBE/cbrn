@@ -8,14 +8,13 @@ import com.dangkang.cbrn.device.DataConverter;
  */
 public class BiologicalDevice implements DataConverter {
     @Override
-    public Object formatData(byte[] data) {
+    public int formatData(byte[] data) {
         /*1.校验数据*/
         if (data[0] == -36 &&  data[data.length-1] == -51){
            String status =  String.valueOf(data[6]);
            return Integer.parseInt(status);
-
         }
-        return null;
+        return -1;
     }
 
     @Override

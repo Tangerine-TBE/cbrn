@@ -18,6 +18,17 @@ public class DeviceInfo {
     private String type;//试剂盒检测类型
     private String location;//取样位置
     private int status ;//状态
+    private String bleDevice;
+    @Generated(hash = 482019763)
+    public DeviceInfo(Long id, String brand, String result, String type, String location, int status, String bleDevice) {
+        this.id = id;
+        this.brand = brand;
+        this.result = result;
+        this.type = type;
+        this.location = location;
+        this.status = status;
+        this.bleDevice = bleDevice;
+    }
 
     public int getStatus() {
         return status;
@@ -27,14 +38,12 @@ public class DeviceInfo {
         this.status = status;
     }
 
-    @Generated(hash = 1624509884)
-    public DeviceInfo(Long id, String brand, String result, String type, String location, int status) {
-        this.id = id;
-        this.brand = brand;
-        this.result = result;
-        this.type = type;
-        this.location = location;
-        this.status = status;
+    public String getBleDevice() {
+        return bleDevice;
+    }
+
+    public void setBleDevice(String bleDevice) {
+        this.bleDevice = bleDevice;
     }
 
     @Generated(hash = 2125166935)

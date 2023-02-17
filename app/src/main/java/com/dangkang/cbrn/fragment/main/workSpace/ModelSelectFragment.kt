@@ -19,6 +19,12 @@ class ModelSelectFragment :BaseFragment<ViewBinding>() {
         return initView(binding as FragmentSocketBingBinding)
     }
     private fun initView(viewBinding: FragmentSocketBingBinding): FragmentSocketBingBinding {
+        viewBinding.recyclerView.apply {
+
+
+
+
+        }
         return viewBinding
     }
 }

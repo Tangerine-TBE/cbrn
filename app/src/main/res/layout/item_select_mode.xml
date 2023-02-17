@@ -1,42 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/navigation"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:ignore="MissingDefaultResource">
-    <TextView
-        android:id="@+id/textIndex1"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:textSize="18sp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:text=" | "
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.LinearLayoutCompat
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/textIndex2"
-        app:layout_constraintTop_toTopOf="@id/textIndex1"
-        app:layout_constraintStart_toEndOf="@id/textIndex1"
-        android:text="模块连接"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_marginTop="20dp"
-        android:id="@+id/layout"
-        app:layout_constraintTop_toBottomOf="@id/textIndex1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+        <CheckBox
             android:layout_weight="1"
             android:textColor="@color/white"
             android:text="模块型号"
@@ -68,11 +40,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@id/layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="0dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
