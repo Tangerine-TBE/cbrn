@@ -20,8 +20,7 @@ public class BiologicalDevice implements DataConverter {
             /*广播解析*/
             byte[] bytes = new byte[]{data[13]};
             String value = new String(bytes,Charsets.US_ASCII);
-            L.e(value);
-            return Integer.parseInt(StringUtil.byte2HexStr(bytes));
+            return Integer.parseInt(value);
         } else {
 
         }
