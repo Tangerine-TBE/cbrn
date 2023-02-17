@@ -50,9 +50,19 @@ class AutoRequestServer : Service() {
                 val serUUID = gatt?.services?.get(2)?.uuid.toString()//可用Service特征
                 val wriUUID =
                     gatt?.services?.get(2)?.characteristics?.get(1)?.uuid.toString()//可用写入特征
+                var type = 0
+                if (deviceInfo[index].result.equals("阴性")){
+                    type=1
+                }else if (deviceInfo[index].result.equals("阳性")){
+                    type = 2
+                }else if (deviceInfo[index].result.equals("弱阳")){
+                    type = 3
+                }else{
+                    type =4
+                }
                 val resultCmd = BiologicalDevice().getData(
-                    1, deviceInfo[index].status
-                )
+                    1,
+                    type)
                 BleManager.getInstance()
                     .write(bleDevice, serUUID, wriUUID, resultCmd, object : BleWriteCallback() {
                         override fun onWriteSuccess(

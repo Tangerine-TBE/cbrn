@@ -87,7 +87,7 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
                     return
                 }
                 L.e(bleDevice.name)
-                val pattern = Pattern.compile("^s+[0-9]+[0-9]+[0-9]+[0-9]")
+                val pattern = Pattern.compile("^S+[0-9]+[0-9]+[0-9]+[0-9]")
                 val matcher = pattern.matcher(deviceBrand)
                 if (!matcher.matches()) {
                     return

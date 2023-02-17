@@ -46,13 +46,13 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     override fun setBindingView(): ViewBinding {
         fragmentWorkSpaceBinding = FragmentWorkSpaceBinding.inflate(layoutInflater)
         binding = fragmentWorkSpaceBinding
-       _mActivity.startService(Intent(_mActivity,AutoRequestServer::class.java))
-
         return initView(binding as FragmentWorkSpaceBinding)
     }
 
     private fun initView(fragmentMainBinding: FragmentWorkSpaceBinding): ViewBinding {
-
+        fragmentMainBinding.start.setOnClickListener{
+            _mActivity.startService(Intent(_mActivity,AutoRequestServer::class.java))
+        }
         fragmentMainBinding.titleBar.title.text = "实时操作"
         fragmentMainBinding.titleBar.connectInfo.text = "未连接模块..."
         fragmentMainBinding.titleBar.back.setOnClickListener {

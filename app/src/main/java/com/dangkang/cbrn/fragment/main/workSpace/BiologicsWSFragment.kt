@@ -134,6 +134,7 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
                 if (deviceInfo != null) {
                     //匹配到对应设备
                     val status  = BiologicalDevice().formatData(bleDevice.scanRecord,0)
+
                     biologicsWsAdapter?.changeItemStatus(deviceInfo,status)
                 }
             }
@@ -175,6 +176,18 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
         _mActivity.unregisterReceiver(systemListener)
     }
 
+    /**
+     * onDestroy用于销毁视图的停止*/
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            BleManager.getInstance().cancelScan()
+            mScanStop = true
+            _mActivity.unregisterReceiver(systemListener)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
     override fun onResume() {
         super.onResume()
         /*为什么要在onResume上做这些？因为不想当前fra会在隐藏或者不被用户看到的时候
