@@ -68,8 +68,8 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
             holder.icon.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.ic_after));
             holder.icon.setTag(4);
         } else if (status == 0) {
-            //离线
-            holder.id.setTextColor(ContextCompat.getColor(mContext, R.color.un_select_color));
+            //在线未有状态
+            holder.id.setTextColor(ContextCompat.getColor(mContext, R.color.color_37B48B));
             holder.icon.setImageDrawable(null);
             holder.icon.setTag(0);
         } else if (status == -1) {
@@ -105,6 +105,9 @@ public class BiologicsWSAdapter extends RecyclerView.Adapter<BiologicsWSAdapter.
 
     public final void changeItemStatus(DeviceInfo deviceInfo, int status) {
         int i = deviceBeans.indexOf(deviceInfo);
+        if (deviceBeans.get(i).status == status) {
+            return;
+        }
         deviceBeans.get(i).status = status;
         notifyItemChanged(i, null);
 

@@ -23,6 +23,7 @@ import com.clj.fastble.scan.BleScanRuleConfig
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
+import com.dangkang.cbrn.dialog.BleConfigDialog
 import com.dangkang.cbrn.dialog.SettingBackDialog
 import com.dangkang.cbrn.dialog.WorkBackDialog
 import com.dangkang.cbrn.service.AutoRequestServer
@@ -51,7 +52,7 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
 
     private fun initView(fragmentMainBinding: FragmentWorkSpaceBinding): ViewBinding {
         fragmentMainBinding.start.setOnClickListener{
-            _mActivity.startService(Intent(_mActivity,AutoRequestServer::class.java))
+           BleConfigDialog(_mActivity).showDialog()
         }
         fragmentMainBinding.titleBar.title.text = "实时操作"
         fragmentMainBinding.titleBar.connectInfo.text = "未连接模块..."
