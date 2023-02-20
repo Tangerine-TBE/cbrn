@@ -44,10 +44,8 @@ class SocketServer private constructor(port: Int) {
                     if (socketDevice != null){
                         /*过长时间没有心跳时，当作隐身设备处理*/
                         /**1.计时器处理*/
-
                         /*阻塞的*/
                         connect = device.read()
-                        /**2.计时器到了，没有数据或有数据*/
                         if (!connect){
                             //当连接不可用时，将这个设备移除设备存储区
                             devicesCache.remove(device)

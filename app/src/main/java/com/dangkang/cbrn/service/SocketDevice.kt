@@ -1,5 +1,6 @@
 package com.dangkang.cbrn.service
 
+import com.dangkang.Constant
 import com.dangkang.core.utils.L
 import java.io.BufferedWriter
 import java.io.IOException
@@ -13,14 +14,14 @@ class SocketDevice(socket: Socket) : AbstractDevice {
     private var mInputStream: InputStream
     private var mPrintWriter: PrintWriter
     private var mSocket: Socket? =null
-    private var type:Int = 0
+    private var type:Int = Constant.SOCKET_DISCONNECT_APP
     private var mStop  = true
     private var mCurrentSystemTime :Long =0
     private val mSocketTimerTask:Runnable = Runnable {
         while (mStop){
             val time = System.currentTimeMillis() - mCurrentSystemTime
-            if (time> 1000*10){
-                type= 1
+            if (time> Constant.SOCKET_TIME_OUT){
+                type= Constant.SOCKET_DISCONNECT_DEVICE
                 mSocket!!.close()
                 break
             }
@@ -62,9 +63,9 @@ class SocketDevice(socket: Socket) : AbstractDevice {
             return true
         } catch (e: java.lang.Exception) {
             if (e is SocketException) {
-                if(type == 0){
+                if(type == Constant.SOCKET_DISCONNECT_DEVICE){
                     L.e("下位机主动断开连接")
-                }else{
+                }else if (type == Constant.SOCKET_DISCONNECT_APP){
                     L.e("连接超时，上位机主动断开")
                 }
                 mInputStream.close()
