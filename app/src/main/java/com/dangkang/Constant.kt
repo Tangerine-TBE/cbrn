@@ -11,5 +11,8 @@ class Constant {
         const val MEASUREMENT_UNIT_1 = "剂量率"
         const val MEASUREMENT_UNIT_2 = "计数率"
         const val ENVIRONMENT_VALUE_UNIT ="environment_value_unit"//环境底噪单位
+        /*socket server*/
+
+        const val SOCKET_SERVER_PORT = 8083
     }
 }

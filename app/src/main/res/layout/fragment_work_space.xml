@@ -126,7 +126,7 @@
                     android:padding="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <com.dangkang.cbrn.weight.BatteryView
+                <TextView
                     app:layout_constraintStart_toEndOf="@id/iv2"
                     app:layout_constraintTop_toTopOf="@id/iv2"
                     app:layout_constraintBottom_toBottomOf="@id/iv2"

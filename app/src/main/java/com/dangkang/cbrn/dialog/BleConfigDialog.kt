@@ -6,7 +6,9 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.Window
 import com.alibaba.fastjson.JSONObject
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleGattCallback
@@ -18,22 +20,35 @@ import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.DialogBleConfigBinding
 import com.dangkang.cbrn.db.DeviceInfo
 import com.dangkang.cbrn.device.ble.BiologicalDevice
+import com.dangkang.cbrn.utils.DimenUtil
 import java.lang.ref.WeakReference
 
-class BleConfigDialog(context: Context) {
+class BleConfigDialog(context: Context,mCanceledListener:OnCanceledListener) {
 
     private var mDialog: Dialog? = null
     private var mBind: DialogBleConfigBinding? = null
-    private var myHandler: MyHandler? = null;
+    private var myHandler: MyHandler? = null
+    private var mCanceledListener:OnCanceledListener? = null
 
     init {
         myHandler = MyHandler(this)
         this.mDialog = Dialog(context, R.style.DialogStyle).apply {
             setCancelable(false)
             mBind = DialogBleConfigBinding.inflate(LayoutInflater.from(context))
+            //        取屏幕长宽高
+
+
+
             setContentView(mBind!!.root)
         }
-
+        val deviceWidth: Int = DimenUtil.getScreenWidth()
+        val deviceHeight: Int = DimenUtil.getScreenHeight()
+        val dialogWindow: Window = mDialog?.window!!
+        val layoutParams = dialogWindow.attributes
+        layoutParams.width = deviceWidth / 3 * 2
+        layoutParams.height = deviceHeight /  3 * 2
+        layoutParams.gravity = Gravity.CENTER
+        this.mCanceledListener = mCanceledListener
     }
 
     private fun initView() {
@@ -121,6 +136,7 @@ class BleConfigDialog(context: Context) {
                             BleManager.getInstance().disconnect(bleDevice)
                             jsonObject.clear()
                             jsonObject["currentIndex"] = index+1
+                            jsonObject["rst_devices"] = deviceInfo.size-index-1
                             myHandler?.obtainMessage(2, jsonObject.toJSONString())?.sendToTarget()
                             val next = index + 1
                             if (next == deviceInfo.size) {
@@ -154,6 +170,9 @@ class BleConfigDialog(context: Context) {
             }
         })
     }
+    public interface OnCanceledListener{
+        fun cancel(connectDevices:Int)
+    }
 
     class MyHandler(bleConfigDialog: BleConfigDialog) : Handler(Looper.myLooper()!!) {
         private var weakReference: WeakReference<BleConfigDialog>? = null
@@ -175,6 +194,7 @@ class BleConfigDialog(context: Context) {
                     //当前第几个设备
                     val jsonObject = JSONObject.parseObject(msg.obj.toString())
                     bleConfigDialog.mBind?.progress?.progress = jsonObject.getInteger("currentIndex")
+                    bleConfigDialog.mBind?.deviceSetNum?.text =  jsonObject.getInteger("rst_devices").toString()
                 }
                 3 -> {
                     val jsonObject = JSONObject.parseObject(msg.obj.toString())
@@ -188,6 +208,7 @@ class BleConfigDialog(context: Context) {
                 5->{
                     postDelayed({
                         bleConfigDialog.cancelDialog()
+                        bleConfigDialog.mCanceledListener
                     },1000)
                 }
             }
