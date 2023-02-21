@@ -56,7 +56,10 @@ class SocketDevice(socket: Socket) : AbstractDevice {
                 mCurrentSystemTime = System.currentTimeMillis()
                 receiveStr += String(buffer, 0, len, Charsets.UTF_8)
                 if (len < 1024) {
-                    L.e(receiveStr)
+                    /*接收到数据开始解析*/
+                    /*心跳包解析主要是电量，设备名称*/
+                    power = 0
+                    L.e("ip:${mSocket!!.inetAddress.hostAddress} 消息:${receiveStr}")
                     receiveStr = ""
                 }
             }
@@ -79,4 +82,12 @@ class SocketDevice(socket: Socket) : AbstractDevice {
 
 
     }
+
+    override fun close() {
+        mInputStream.close()
+        mSocket!!.close()
+        mStop = false
+    }
+
+    override var power: Int =0
 }

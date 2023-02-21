@@ -9,6 +9,7 @@ import com.dangkang.cbrn.dialog.BleConfigDialog
 import com.dangkang.cbrn.dialog.WorkBackDialog
 import com.dangkang.cbrn.service.SocketServer
 import com.dangkang.core.fragment.BaseFragment
+import java.net.ServerSocket
 
 class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     private var viewPagerWsStateAdapter: ViewPagerWsStateAdapter? = null
@@ -30,19 +31,18 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     }
 
     private fun initView(fragmentMainBinding: FragmentWorkSpaceBinding): ViewBinding {
-        fragmentMainBinding.start.setOnClickListener{
-           BleConfigDialog(_mActivity,object :BleConfigDialog.OnCanceledListener{
-               override fun cancel(connectDevices:Int) {
+        fragmentMainBinding.start.setOnClickListener {
+            BleConfigDialog(_mActivity, object : BleConfigDialog.OnCanceledListener {
+                override fun cancel(connectDevices: Int) {
 
-               }
-           }).showDialog()
+                }
+            }).showDialog()
         }
         fragmentMainBinding.titleBar.title.text = "实时操作"
         fragmentMainBinding.titleBar.connectInfo.text = "未连接模块..."
         fragmentMainBinding.titleBar.back.setOnClickListener {
             if (workBackDialog == null) {
-                workBackDialog = WorkBackDialog(
-                    _mActivity,
+                workBackDialog = WorkBackDialog(_mActivity,
                     R.style.DialogStyle,
                     object : WorkBackDialog.OnItemSelected {
                         override fun onSaveItem() {
@@ -73,13 +73,13 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
 
     override fun onDestroy() {
         viewPagerWsStateAdapter?.destroyAllItem()
+        SocketServer.instance.destroyServer()
         super.onDestroy()
     }
 
     override fun onBackPressedSupport(): Boolean {
         if (workBackDialog == null) {
-            workBackDialog = WorkBackDialog(
-                _mActivity,
+            workBackDialog = WorkBackDialog(_mActivity,
                 R.style.DialogStyle,
                 object : WorkBackDialog.OnItemSelected {
                     override fun onSaveItem() {
