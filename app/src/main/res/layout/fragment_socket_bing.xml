@@ -1,78 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/navigation"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
+
     <TextView
         android:id="@+id/textIndex1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:textSize="18sp"
         android:gravity="center"
-        android:textColor="@color/white"
         android:text=" | "
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textIndex2"
-        app:layout_constraintTop_toTopOf="@id/textIndex1"
-        app:layout_constraintStart_toEndOf="@id/textIndex1"
+        android:layout_width="100dp"
+        android:gravity="left|center_vertical"
+        android:layout_height="wrap_content"
         android:text="模块连接"
-        android:textSize="18sp"
         android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintStart_toEndOf="@id/textIndex1"
+        app:layout_constraintTop_toTopOf="@id/textIndex1" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+
+    <TextView
+        android:layout_marginStart="40dp"
+        android:id="@+id/tvMac"
+        android:layout_width="100dp"
+        android:gravity="left|center_vertical"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:id="@+id/layout"
-        app:layout_constraintTop_toBottomOf="@id/textIndex1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:text="模块型号"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:text="模块名称"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:gravity="center"
+        android:text="模块型号"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/tvName"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textIndex1" />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:text="电池电量"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:gravity="center"
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="100dp"
+        android:gravity="left|center_vertical"
+        android:layout_height="wrap_content"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:text="连接方式"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:gravity="center"
+        android:text="模块名称"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvMac"
+        app:layout_constraintEnd_toStartOf="@id/tvPower"
+        app:layout_constraintStart_toEndOf="@id/tvMac"
+        app:layout_constraintTop_toTopOf="@id/tvMac" />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    <TextView
+        android:id="@+id/tvPower"
+        android:layout_width="100dp"
+        android:gravity="left|center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="电池电量"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvName"
+        app:layout_constraintEnd_toStartOf="@id/connect_type"
+
+        app:layout_constraintStart_toEndOf="@id/tvName"
+        app:layout_constraintTop_toTopOf="@id/tvName" />
+
+    <TextView
+        android:id="@+id/connect_type"
+        android:layout_width="100dp"
+        android:gravity="left|center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="连接方式"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvPower"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toEndOf="@id/tvPower"
+        app:layout_constraintTop_toTopOf="@id/tvPower" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/recyclerView"
-        app:layout_constraintTop_toBottomOf="@id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="0dp"/>
+        app:layout_constraintTop_toBottomOf="@id/tvPower" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,6 +51,7 @@ class SocketDevice(socket: Socket) : AbstractDevice {
         Thread{
              mSocketTimerTask.run()
          }.start()
+        ip = mSocket!!.inetAddress.hostAddress as String
         try {
             while (mInputStream.read(buffer).also { len = it } != -1 && !mSocket!!.isClosed) {
                 mCurrentSystemTime = System.currentTimeMillis()
@@ -67,9 +68,9 @@ class SocketDevice(socket: Socket) : AbstractDevice {
         } catch (e: java.lang.Exception) {
             if (e is SocketException) {
                 if(type == Constant.SOCKET_DISCONNECT_DEVICE){
-                    L.e("下位机主动断开连接")
+                    L.e("${mSocket!!.inetAddress.hostAddress}:下位机主动断开连接")
                 }else if (type == Constant.SOCKET_DISCONNECT_APP){
-                    L.e("连接超时，上位机主动断开")
+                    L.e("${mSocket!!.inetAddress.hostAddress}:连接超时，上位机主动断开")
                 }
                 mInputStream.close()
                 mSocket!!.close()
@@ -88,6 +89,7 @@ class SocketDevice(socket: Socket) : AbstractDevice {
         mSocket!!.close()
         mStop = false
     }
+    override var ip:String = ""
 
     override var power: Int =0
 }

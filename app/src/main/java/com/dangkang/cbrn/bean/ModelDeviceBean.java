@@ -4,9 +4,10 @@ public class ModelDeviceBean {
     private int model;// 1 = 化学 2 = 生物 3 = 辐射
     private String modelName;//
     private int power;//对于化学，辐射这里是电池电量 对于生物这里是可用试剂盒数量
-    private int connect_way;//连接方式
+    private String connect_way;//连接方式
+    private String ip;
 
-    public ModelDeviceBean(int model, int power, int connect_way) {
+    public ModelDeviceBean(int model, int power, String connect_way,String ip) {
         this.model = model;
         if (model == 1){
             this.modelName = "化学制剂模拟检测仪";
@@ -17,6 +18,15 @@ public class ModelDeviceBean {
         }
         this.power = power;
         this.connect_way = connect_way;
+        this.ip = ip;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public int getModel() {
@@ -38,10 +48,10 @@ public class ModelDeviceBean {
     public void setPower(int power) {
         this.power = power;
     }
-    public int getConnect_way() {
+    public String getConnect_way() {
         return connect_way;
     }
-    public void setConnect_way(int connect_way) {
+    public void setConnect_way(String connect_way) {
         this.connect_way = connect_way;
     }
 }

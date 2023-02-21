@@ -40,16 +40,16 @@ class SocketServer private constructor() {
                     val socketDevice = serverSocket!!.accept()
                     val device = SocketDevice(socketDevice)
                     /*拟定一个设备为可用设备*/
+                    /*discover and connect*/
+                    L.e("${socketDevice!!.inetAddress.hostAddress}:正在连接")
                     devicesCache.add(device)
                     Thread{
                         while (connect && close) {
-                            if (socketDevice != null) {
-                                /*阻塞的*/
-                                connect = device.read()
-                                if (!connect) {
-                                    //当连接不可用时，将这个设备移除设备存储区
-                                    devicesCache.remove(device)
-                                }
+                            connect = device.read()
+                            if (!connect) {
+                                //当连接不可用时，将这个设备移除设备存储区
+                                /*disconnect*/
+                                devicesCache.remove(device)
                             }
                         }
                         connect = true

@@ -5,4 +5,5 @@ interface AbstractDevice {
     fun read(): Boolean
     fun close()
     var power: Int
+    var ip:String
 }
