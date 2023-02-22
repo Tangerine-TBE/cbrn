@@ -7,4 +7,8 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/un_select_color</item>
     </style>
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/un_select_color</item>
+        <item name="colorControlActivated">@color/color_37B48B</item>
+    </style>
 </resources>

@@ -1,13 +1,14 @@
 package com.dangkang.cbrn.fragment.main.workSpace
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
+import com.dangkang.cbrn.adapter.workspace.ModelSelectAdapter
 import com.dangkang.cbrn.bean.ModelDeviceBean
 import com.dangkang.cbrn.databinding.FragmentSocketBingBinding
-import com.dangkang.cbrn.service.AbstractDevice
-import com.dangkang.cbrn.service.SocketServer
+import com.dangkang.cbrn.weight.SimplePaddingDecoration
 import com.dangkang.core.fragment.BaseFragment
 
-class ModelSelectFragment : BaseFragment<ViewBinding>() {
+class ModelSelectFragment : BaseFragment<ViewBinding>(),ModelSelectAdapter.OnModelSelected {
     override fun onBackPressedSupport(): Boolean {
         val fragment = findFragment(WorkSpaceFragment::class.java)
         return if (fragment != null) {
@@ -28,23 +29,19 @@ class ModelSelectFragment : BaseFragment<ViewBinding>() {
             /*获取设备的抽象*/
             /*抽象有设备对应的mac 设备名称 设备型号 设备当前电量*/
             /*一个设备代表两个item 化学和核辐射*/
-            val list: ArrayList<AbstractDevice> = SocketServer.instance.devicesCache()
-            //获取设备个
-            val modelDevices = ArrayList<ModelDeviceBean>()
-            if (list.isNotEmpty()) {
-                for (i in 0 until list.size) {
-                    val ip = list[i].ip
-                    val power = list[i].power
-                    val modelDevice1 = ModelDeviceBean(1, power, "WIFI", ip)
-                    val modelDevice2 = ModelDeviceBean(2, power, "WIFI", ip)
-                    modelDevices.add(modelDevice1)
-                    modelDevices.add(modelDevice2)
-                }
-            }
-            modelDevices.add(ModelDeviceBean(3, 0, "蓝牙", ""))
-
-
+            val modelDeviceInfo = ModelDeviceBean(3,0,"蓝牙","无")
+            val list = listOf(modelDeviceInfo)
+            adapter = ModelSelectAdapter(list,_mActivity,this@ModelSelectFragment)
+            layoutManager = LinearLayoutManager(_mActivity)
+            addItemDecoration(SimplePaddingDecoration(_mActivity))
         }
         return viewBinding
+    }
+
+    override fun onSelected(modelDeviceBean: ModelDeviceBean?) {
+        if (modelDeviceBean?.model == 3){
+            val workSpaceFragment = findFragment(WorkSpaceFragment::class.java)
+
+        }
     }
 }

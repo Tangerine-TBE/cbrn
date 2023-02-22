@@ -10,13 +10,14 @@ import java.io.PrintWriter
 import java.net.Socket
 import java.net.SocketException
 
-class SocketDevice(socket: Socket) : AbstractDevice {
+class SocketDevice(socket: Socket,socketHandler: SocketHandler) : AbstractDevice {
     private var mInputStream: InputStream
     private var mPrintWriter: PrintWriter
     private var mSocket: Socket? =null
     private var type:Int = Constant.SOCKET_DISCONNECT_APP
     private var mStop  = true
     private var mCurrentSystemTime :Long =0
+    private var mSocketHandler:SocketHandler
     private val mSocketTimerTask:Runnable = Runnable {
         while (mStop){
             val time = System.currentTimeMillis() - mCurrentSystemTime
@@ -30,6 +31,7 @@ class SocketDevice(socket: Socket) : AbstractDevice {
     init {
         this.mSocket = socket
         this.mInputStream = socket.getInputStream()
+        this.mSocketHandler = socketHandler
         this.mPrintWriter = PrintWriter(
             BufferedWriter(
                 OutputStreamWriter(
@@ -57,10 +59,8 @@ class SocketDevice(socket: Socket) : AbstractDevice {
                 mCurrentSystemTime = System.currentTimeMillis()
                 receiveStr += String(buffer, 0, len, Charsets.UTF_8)
                 if (len < 1024) {
-                    /*接收到数据开始解析*/
-                    /*心跳包解析主要是电量，设备名称*/
                     power = 0
-                    L.e("ip:${mSocket!!.inetAddress.hostAddress} 消息:${receiveStr}")
+                    mSocketHandler.obtainMessage(SocketHandler.RECEIVER,receiveStr).sendToTarget()
                     receiveStr = ""
                 }
             }
@@ -68,9 +68,9 @@ class SocketDevice(socket: Socket) : AbstractDevice {
         } catch (e: java.lang.Exception) {
             if (e is SocketException) {
                 if(type == Constant.SOCKET_DISCONNECT_DEVICE){
-                    L.e("${mSocket!!.inetAddress.hostAddress}:下位机主动断开连接")
+                    mSocketHandler.obtainMessage(SocketHandler.DISCONNECT,1).sendToTarget()
                 }else if (type == Constant.SOCKET_DISCONNECT_APP){
-                    L.e("${mSocket!!.inetAddress.hostAddress}:连接超时，上位机主动断开")
+                    mSocketHandler.obtainMessage(SocketHandler.DISCONNECT,2).sendToTarget()
                 }
                 mInputStream.close()
                 mSocket!!.close()

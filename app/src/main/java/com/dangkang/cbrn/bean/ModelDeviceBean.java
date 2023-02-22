@@ -6,6 +6,7 @@ public class ModelDeviceBean {
     private int power;//对于化学，辐射这里是电池电量 对于生物这里是可用试剂盒数量
     private String connect_way;//连接方式
     private String ip;
+    public boolean selected;
 
     public ModelDeviceBean(int model, int power, String connect_way,String ip) {
         this.model = model;

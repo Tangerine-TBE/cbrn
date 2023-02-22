@@ -141,7 +141,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
+        <View
+            android:layout_width="3dp"
+            android:layout_height="match_parent"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/fragment_replace"

@@ -7,8 +7,10 @@ import com.dangkang.cbrn.R
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
 import com.dangkang.cbrn.dialog.BleConfigDialog
 import com.dangkang.cbrn.dialog.WorkBackDialog
+import com.dangkang.cbrn.service.SocketCallBack
 import com.dangkang.cbrn.service.SocketServer
 import com.dangkang.core.fragment.BaseFragment
+import com.dangkang.core.utils.L
 import java.net.ServerSocket
 
 class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
@@ -24,10 +26,27 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     }
 
     override fun setBindingView(): ViewBinding {
-        SocketServer.instance.start()
+        SocketServer.instance.start(object :SocketCallBack{
+            override fun disconnect() {
+                L.e("disconnect")
+            }
+
+            override fun receiver(data: String?) {
+                L.e(data)
+            }
+        })
         fragmentWorkSpaceBinding = FragmentWorkSpaceBinding.inflate(layoutInflater)
         binding = fragmentWorkSpaceBinding
         return initView(binding as FragmentWorkSpaceBinding)
+    }
+    public fun changeItemStatus(model:Int){
+        if(model == 1){
+
+        }else if (model == 2){
+
+        }else if (model == 3){
+
+        }
     }
 
     private fun initView(fragmentMainBinding: FragmentWorkSpaceBinding): ViewBinding {

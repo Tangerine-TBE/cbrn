@@ -30,25 +30,20 @@ class SocketServer private constructor() {
 
     /*初始化设置*/
     /*打开socket端口*/
-    fun start() {
+    fun start(socketCallBack: SocketCallBack) {
         close = true
         serverSocket = ServerSocket(Constant.SOCKET_SERVER_PORT)
+        val socketHandler = SocketHandler(socketCallBack)
         Thread {
             try {
                 while (close) {
-                    /*过长时间没有设备连入时*/
                     val socketDevice = serverSocket!!.accept()
-                    val device = SocketDevice(socketDevice)
-                    /*拟定一个设备为可用设备*/
-                    /*discover and connect*/
-                    L.e("${socketDevice!!.inetAddress.hostAddress}:正在连接")
+                    val device = SocketDevice(socketDevice,socketHandler)
                     devicesCache.add(device)
                     Thread{
                         while (connect && close) {
                             connect = device.read()
                             if (!connect) {
-                                //当连接不可用时，将这个设备移除设备存储区
-                                /*disconnect*/
                                 devicesCache.remove(device)
                             }
                         }
