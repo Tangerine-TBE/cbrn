@@ -1,4 +1,4 @@
-package com.dangkang.cbrn.service;
+package com.dangkang.cbrn.socket;
 
 import android.os.Handler;
 import android.os.Looper;

@@ -7,11 +7,9 @@ import com.dangkang.cbrn.R
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
 import com.dangkang.cbrn.dialog.BleConfigDialog
 import com.dangkang.cbrn.dialog.WorkBackDialog
-import com.dangkang.cbrn.service.SocketCallBack
-import com.dangkang.cbrn.service.SocketServer
+import com.dangkang.cbrn.socket.SocketCallBack
+import com.dangkang.cbrn.socket.SocketServer
 import com.dangkang.core.fragment.BaseFragment
-import com.dangkang.core.utils.L
-import java.net.ServerSocket
 
 class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     private var viewPagerWsStateAdapter: ViewPagerWsStateAdapter? = null
@@ -28,11 +26,12 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     override fun setBindingView(): ViewBinding {
         SocketServer.instance.start(object :SocketCallBack{
             override fun disconnect() {
-                L.e("disconnect")
+                /*断开时需要处理的东西*/
             }
 
             override fun receiver(data: String?) {
-                L.e(data)
+                /*接收到消息 设备+1*/
+
             }
         })
         fragmentWorkSpaceBinding = FragmentWorkSpaceBinding.inflate(layoutInflater)

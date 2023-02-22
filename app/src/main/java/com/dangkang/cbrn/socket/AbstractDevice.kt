@@ -1,9 +1,7 @@
-package com.dangkang.cbrn.service
+package com.dangkang.cbrn.socket
 
 interface AbstractDevice {
     fun write()
     fun read(): Boolean
     fun close()
-    var power: Int
-    var ip:String
 }

@@ -67,18 +67,21 @@ class ChemicalFragment :BaseFragment<ViewBinding>() {
                 )
                 binding.recyclerView.adapter = adapter
             }else{
-                val taintInfo = TaintInfo()
-                taintInfo.type = 2
-                taintInfo.taint_dis = resources.getStringArray(R.array.chemical_type)[0]
-                taintInfo.taint_loc = ""
-                taintInfo.taint_max = "300"
-                taintInfo.taint_num = adapter?.itemCount!! + 1
-                taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
-                taintInfo.taint_sim_dis = resources.getStringArray(R.array.radiation_sim_dis)[0]
-                taintInfo.taint_unit = DaoTool.queryUnitFromChemicalInfo(taintInfo.taint_dis)
-                taintInfo.create_time = System.currentTimeMillis() / 1000
-                adapter!!.addItem(taintInfo)
-                binding.recyclerView.scrollToPosition(0)
+                if (adapter!!.data().isEmpty()){
+                    val taintInfo = TaintInfo()
+                    taintInfo.type = 2
+                    taintInfo.taint_dis = resources.getStringArray(R.array.chemical_type)[0]
+                    taintInfo.taint_loc = ""
+                    taintInfo.taint_max = "300"
+                    taintInfo.taint_num = adapter?.itemCount!! + 1
+                    taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
+                    taintInfo.taint_sim_dis = resources.getStringArray(R.array.radiation_sim_dis)[0]
+                    taintInfo.taint_unit = DaoTool.queryUnitFromChemicalInfo(taintInfo.taint_dis)
+                    taintInfo.create_time = System.currentTimeMillis() / 1000
+                    adapter!!.addItem(taintInfo)
+                    binding.recyclerView.scrollToPosition(0)
+                }
+
             }
         }, { L.e(it.message) })
     }

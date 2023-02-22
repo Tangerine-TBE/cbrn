@@ -1,12 +1,8 @@
-package com.dangkang.cbrn.service
+package com.dangkang.cbrn.socket
 
 import com.dangkang.Constant
 import com.dangkang.core.utils.L
 import java.net.ServerSocket
-import java.net.Socket
-import java.sql.Time
-import java.util.Timer
-import java.util.TimerTask
 
 /**
  * handler 画面更新

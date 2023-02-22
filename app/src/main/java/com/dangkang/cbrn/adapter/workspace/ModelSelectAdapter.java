@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangkang.cbrn.R;
 import com.dangkang.cbrn.bean.ModelDeviceBean;
-import com.dangkang.cbrn.service.AbstractDevice;
 
 import java.util.List;
 

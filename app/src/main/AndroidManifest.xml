@@ -45,7 +45,7 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
-        <service android:name=".service.AutoRequestServer" />
+        <service android:name=".socket.AutoRequestServer" />
     </application>
 
 </manifest>

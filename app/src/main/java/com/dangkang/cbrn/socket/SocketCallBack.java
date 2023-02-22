@@ -1,4 +1,4 @@
-package com.dangkang.cbrn.service;
+package com.dangkang.cbrn.socket;
 
 public interface SocketCallBack {
         void disconnect();

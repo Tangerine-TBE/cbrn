@@ -1,4 +1,4 @@
-package com.dangkang.cbrn.service
+package com.dangkang.cbrn.socket
 
 import com.dangkang.Constant
 import com.dangkang.core.utils.L
@@ -53,13 +53,12 @@ class SocketDevice(socket: Socket,socketHandler: SocketHandler) : AbstractDevice
         Thread{
              mSocketTimerTask.run()
          }.start()
-        ip = mSocket!!.inetAddress.hostAddress as String
+//        ip = mSocket!!.inetAddress.hostAddress as String
         try {
             while (mInputStream.read(buffer).also { len = it } != -1 && !mSocket!!.isClosed) {
                 mCurrentSystemTime = System.currentTimeMillis()
                 receiveStr += String(buffer, 0, len, Charsets.UTF_8)
                 if (len < 1024) {
-                    power = 0
                     mSocketHandler.obtainMessage(SocketHandler.RECEIVER,receiveStr).sendToTarget()
                     receiveStr = ""
                 }
@@ -89,7 +88,4 @@ class SocketDevice(socket: Socket,socketHandler: SocketHandler) : AbstractDevice
         mSocket!!.close()
         mStop = false
     }
-    override var ip:String = ""
-
-    override var power: Int =0
 }

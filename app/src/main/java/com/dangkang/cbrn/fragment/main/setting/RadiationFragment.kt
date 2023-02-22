@@ -186,22 +186,25 @@ class RadiationFragment : BaseFragment<ViewBinding>(), RadiationTypeAdapter.OnIt
                 )
                 binding.recyclerView.adapter = adapter
             } else {
-                val taintInfo = TaintInfo()
-                taintInfo.type = 1
-                taintInfo.taint_dis = resources.getStringArray(R.array.radiation_type)[1]
-                taintInfo.taint_loc = ""
-                taintInfo.taint_max = "300"
-                taintInfo.taint_num = adapter?.itemCount!! + 1
-                taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
-                taintInfo.taint_sim_dis = resources.getStringArray(R.array.radiation_sim_dis)[0]
-                if (value == Constant.MEASUREMENT_UNIT_1) {
-                    taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit_1)[0]
-                } else {
-                    taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit_2)[0]
+                if (adapter?.data()?.isEmpty()!!){
+                    val taintInfo = TaintInfo()
+                    taintInfo.type = 1
+                    taintInfo.taint_dis = resources.getStringArray(R.array.radiation_type)[1]
+                    taintInfo.taint_loc = ""
+                    taintInfo.taint_max = "300"
+                    taintInfo.taint_num = adapter?.itemCount!! + 1
+                    taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
+                    taintInfo.taint_sim_dis = resources.getStringArray(R.array.radiation_sim_dis)[0]
+                    if (value == Constant.MEASUREMENT_UNIT_1) {
+                        taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit_1)[0]
+                    } else {
+                        taintInfo.taint_unit = resources.getStringArray(R.array.radiation_unit_2)[0]
+                    }
+                    taintInfo.create_time = System.currentTimeMillis() / 1000
+                    adapter!!.addItem(taintInfo)
+                    binding.recyclerView.scrollToPosition(0)
                 }
-                taintInfo.create_time = System.currentTimeMillis() / 1000
-                adapter!!.addItem(taintInfo)
-                binding.recyclerView.scrollToPosition(0)
+
             }
         }, {
             L.e(it.message)

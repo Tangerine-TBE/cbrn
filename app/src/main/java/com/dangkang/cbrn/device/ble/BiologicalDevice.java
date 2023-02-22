@@ -12,8 +12,7 @@ import kotlin.text.Charsets;
  * @author:Administrator
  * @date:2023/2/1
  */
-public class BiologicalDevice implements DataConverter {
-    @Override
+public class BiologicalDevice  {
     public int formatData(byte[] data, int type) {
         /*1.校验数据*/
         if (type == 0) {
@@ -27,7 +26,6 @@ public class BiologicalDevice implements DataConverter {
         return -1;
     }
 
-    @Override
     public byte[] getData(int type, int status) {
         /*指令操作
          * 1.滴液前状态变更*/
