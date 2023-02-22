@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.clj.fastble.data.BleDevice;
 import com.dangkang.cbrn.R;
+import com.dangkang.cbrn.bean.BleDeviceBean;
 import com.dangkang.cbrn.dao.DaoTool;
 import com.dangkang.cbrn.db.DeviceInfo;
 import com.dangkang.cbrn.dialog.DataSelectWindow;
@@ -79,14 +80,17 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
         });
         holder.id.setOnClickListener(v -> {
             ArrayList<String> arrayList = new ArrayList<>();
-            for (BleDevice bleDevice : adapter.data()) {
-                arrayList.add(bleDevice.getName());
+            for (BleDeviceBean bleDevice : adapter.data()) {
+                if (!bleDevice.isSelected) {
+                    arrayList.add(bleDevice.getName());
+                }
             }
             dataSelectWindow = new DataSelectWindow(mContext, arrayList, value -> {
                 holder.id.setText(value);
-                for (int i = 0 ;i < adapter.data().size() ; i ++){
-                    if (adapter.data().get(i).getName().equals(value)){
+                for (int i = 0; i < adapter.data().size(); i++) {
+                    if (adapter.data().get(i).getName().equals(value)) {
                         deviceBeans.get(holder.getAdapterPosition()).setBleDevice(adapter.data().get(i).getDevice().getAddress());
+                        adapter.data().get(i).isSelected = true;
                     }
                 }
                 deviceBeans.get(holder.getAdapterPosition()).setBrand(value);
@@ -114,6 +118,13 @@ public class BiologicsAdapter extends RecyclerView.Adapter<BiologicsAdapter.View
             if (pos < 0) {
                 return;
             }
+            DeviceInfo deviceInfo = deviceBeans.get(pos);
+            for (BleDeviceBean bleDevice : adapter.data()) {
+                if (bleDevice.getName().equals(deviceInfo.getBrand())) {
+                    bleDevice.isSelected = false;
+                }
+            }
+
             deviceBeans.remove(pos);
             notifyItemRemoved(pos);
         });

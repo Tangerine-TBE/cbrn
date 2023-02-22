@@ -23,6 +23,7 @@ import com.dangkang.cbrn.R
 import com.dangkang.cbrn.adapter.setting.BiologicsAdapter
 import com.dangkang.cbrn.adapter.setting.BiologicsDeviceAdapter
 import com.dangkang.cbrn.adapter.setting.BiologicsTypeAdapter
+import com.dangkang.cbrn.bean.BleDeviceBean
 import com.dangkang.cbrn.dao.DaoTool
 import com.dangkang.cbrn.databinding.FragmentSettingsBiologicsBinding
 import com.dangkang.cbrn.db.DeviceInfo
@@ -99,7 +100,16 @@ class BiologicsFragment : BaseFragment<ViewBinding>(), BiologicsTypeAdapter.OnIt
                         return
                     }
                 }
-                biologicsDeviceAdapter?.addItem(bleDevice)
+                val list = biologicsAdapter!!.data()
+                val bleDeviceBean = BleDeviceBean(bleDevice.device,bleDevice.rssi,bleDevice.scanRecord,bleDevice.timestampNanos)
+                for (i in 0 until list.size){
+                    val deviceInfo = list[i]
+                    if (deviceInfo.brand.equals(bleDevice.name)){
+                        bleDeviceBean.isSelected = true
+                        break
+                    }
+                }
+                biologicsDeviceAdapter?.addItem(bleDeviceBean)
             }
 
             override fun onScanFinished(scanResultList: List<BleDevice>) {

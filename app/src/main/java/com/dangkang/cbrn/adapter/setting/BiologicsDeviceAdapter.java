@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.clj.fastble.data.BleDevice;
 import com.dangkang.cbrn.R;
+import com.dangkang.cbrn.bean.BleDeviceBean;
 import com.dangkang.cbrn.db.DeviceInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BiologicsDeviceAdapter extends RecyclerView.Adapter<BiologicsDeviceAdapter.ViewHolder> {
-    private final List<BleDevice> values  =new ArrayList<>();
+    private final List<BleDeviceBean> values  =new ArrayList<>();
     public  BiologicsDeviceAdapter(){
     }
 
@@ -26,7 +27,7 @@ public class BiologicsDeviceAdapter extends RecyclerView.Adapter<BiologicsDevice
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_biologics_type, parent,false);
         return new ViewHolder(view);
     }
-    public final List<BleDevice> data(){
+    public final List<BleDeviceBean> data(){
         return values;
     }
 
@@ -43,7 +44,7 @@ public class BiologicsDeviceAdapter extends RecyclerView.Adapter<BiologicsDevice
     public int getItemCount() {
         return values.size();
     }
-    public final void addItem(BleDevice bleDevice){
+    public final void addItem(BleDeviceBean bleDevice){
         values.add(0,bleDevice);
         notifyItemInserted(0);
     }
