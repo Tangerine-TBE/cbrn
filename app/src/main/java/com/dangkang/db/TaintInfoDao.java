@@ -26,7 +26,7 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Type = new Property(1, int.class, "type", false, "TYPE");
-        public final static Property Taint_num = new Property(2, int.class, "taint_num", false, "TAINT_NUM");
+        public final static Property Taint_num = new Property(2, String.class, "taint_num", false, "TAINT_NUM");
         public final static Property Taint_loc = new Property(3, String.class, "taint_loc", false, "TAINT_LOC");
         public final static Property Taint_sim = new Property(4, String.class, "taint_sim", false, "TAINT_SIM");
         public final static Property Taint_sim_dis = new Property(5, String.class, "taint_sim_dis", false, "TAINT_SIM_DIS");
@@ -34,6 +34,7 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
         public final static Property Taint_max = new Property(7, String.class, "taint_max", false, "TAINT_MAX");
         public final static Property Taint_unit = new Property(8, String.class, "taint_unit", false, "TAINT_UNIT");
         public final static Property Create_time = new Property(9, long.class, "create_time", false, "CREATE_TIME");
+        public final static Property Normal = new Property(10, boolean.class, "normal", false, "NORMAL");
     }
 
 
@@ -51,14 +52,15 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"TAINT_INFO\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"TYPE\" INTEGER NOT NULL ," + // 1: type
-                "\"TAINT_NUM\" INTEGER NOT NULL ," + // 2: taint_num
+                "\"TAINT_NUM\" TEXT," + // 2: taint_num
                 "\"TAINT_LOC\" TEXT," + // 3: taint_loc
                 "\"TAINT_SIM\" TEXT," + // 4: taint_sim
                 "\"TAINT_SIM_DIS\" TEXT," + // 5: taint_sim_dis
                 "\"TAINT_DIS\" TEXT," + // 6: taint_dis
                 "\"TAINT_MAX\" TEXT," + // 7: taint_max
                 "\"TAINT_UNIT\" TEXT," + // 8: taint_unit
-                "\"CREATE_TIME\" INTEGER NOT NULL );"); // 9: create_time
+                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 9: create_time
+                "\"NORMAL\" INTEGER NOT NULL );"); // 10: normal
     }
 
     /** Drops the underlying database table. */
@@ -76,7 +78,11 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindLong(2, entity.getType());
-        stmt.bindLong(3, entity.getTaint_num());
+ 
+        String taint_num = entity.getTaint_num();
+        if (taint_num != null) {
+            stmt.bindString(3, taint_num);
+        }
  
         String taint_loc = entity.getTaint_loc();
         if (taint_loc != null) {
@@ -108,6 +114,7 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
             stmt.bindString(9, taint_unit);
         }
         stmt.bindLong(10, entity.getCreate_time());
+        stmt.bindLong(11, entity.getNormal() ? 1L: 0L);
     }
 
     @Override
@@ -119,7 +126,11 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindLong(2, entity.getType());
-        stmt.bindLong(3, entity.getTaint_num());
+ 
+        String taint_num = entity.getTaint_num();
+        if (taint_num != null) {
+            stmt.bindString(3, taint_num);
+        }
  
         String taint_loc = entity.getTaint_loc();
         if (taint_loc != null) {
@@ -151,6 +162,7 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
             stmt.bindString(9, taint_unit);
         }
         stmt.bindLong(10, entity.getCreate_time());
+        stmt.bindLong(11, entity.getNormal() ? 1L: 0L);
     }
 
     @Override
@@ -163,14 +175,15 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
         TaintInfo entity = new TaintInfo( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getInt(offset + 1), // type
-            cursor.getInt(offset + 2), // taint_num
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // taint_num
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // taint_loc
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // taint_sim
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // taint_sim_dis
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // taint_dis
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // taint_max
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // taint_unit
-            cursor.getLong(offset + 9) // create_time
+            cursor.getLong(offset + 9), // create_time
+            cursor.getShort(offset + 10) != 0 // normal
         );
         return entity;
     }
@@ -179,7 +192,7 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
     public void readEntity(Cursor cursor, TaintInfo entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setType(cursor.getInt(offset + 1));
-        entity.setTaint_num(cursor.getInt(offset + 2));
+        entity.setTaint_num(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setTaint_loc(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setTaint_sim(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setTaint_sim_dis(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
@@ -187,6 +200,7 @@ public class TaintInfoDao extends AbstractDao<TaintInfo, Long> {
         entity.setTaint_max(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setTaint_unit(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setCreate_time(cursor.getLong(offset + 9));
+        entity.setNormal(cursor.getShort(offset + 10) != 0);
      }
     
     @Override

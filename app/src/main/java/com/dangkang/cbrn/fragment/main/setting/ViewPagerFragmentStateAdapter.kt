@@ -6,13 +6,21 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.dangkang.cbrn.dao.DaoTool
+import com.dangkang.cbrn.db.TaintInfo
+import com.dangkang.cbrn.utils.ToastUtil
 import com.dangkang.core.fragment.BaseFragment
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.regex.Pattern
 
 class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     private var radiationFragment: BaseFragment<ViewBinding>? = null
     private var chemicalFragment: BaseFragment<ViewBinding>? = null
     private var biologicsFragment: BaseFragment<ViewBinding>? = null
+    private var mDisposable: Disposable? = null
     override fun getItemCount(): Int {
         return 3
     }
@@ -37,23 +45,76 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle:
             }
         }
     }
-    fun destroyAllItem(){
+
+    fun destroyAllItem() {
         radiationFragment?.onDestroy()
         chemicalFragment?.onDestroy()
         biologicsFragment?.onDestroy()
-
+        if (mDisposable != null) {
+            if (!mDisposable!!.isDisposed) {
+                mDisposable!!.dispose()
+            }
+        }
     }
 
 
+    fun save(settingFragment: SettingFragment) {
+        /*检测*/
+        val pattern = Pattern.compile("^BL+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]")
+        var hasValue = true
+        mDisposable = Observable.create<Boolean> {
+            val radiationTaintInfoList = (radiationFragment as RadiationFragment).getRadiationInfo()
+            val chemicalTaintInfoList = (chemicalFragment as ChemicalFragment).getRadiationInfo()
+            if (radiationTaintInfoList.isNotEmpty()) {
+                for (item in radiationTaintInfoList) {
+                    val value = item.taint_num
+                    val matcher = pattern.matcher(value)
+                    if (!matcher.matches()) {
+                        item.normal = true
+                        hasValue = false
+                    }else{
+                        item.normal = false
+                    }
+                }
+            }
+            if (chemicalTaintInfoList.isNotEmpty()) {
+                for (item in chemicalTaintInfoList) {
+                    val value = item.taint_num
+                    val matcher = pattern.matcher(value)
+                    if (!matcher.matches()) {
+                        item.normal = true
+                        hasValue = false
+                    }else{
+                        item.normal = false
+                    }
+                }
+            }
+            if (hasValue) {
+                DaoTool.updateTaintInfo(
+                    (radiationFragment as RadiationFragment).getRadiationInfo(), 1
+                )
+                DaoTool.updateTaintInfo(
+                    (chemicalFragment as ChemicalFragment).getRadiationInfo(), 2
+                )
+                DaoTool.updateDeviceInfo(
+                    (biologicsFragment as BiologicsFragment).getRadiationInfo()
+                )
+            }
+            it.onNext(hasValue)
 
-    fun save() {
-        DaoTool.updateTaintInfo(
-            (radiationFragment as RadiationFragment).getRadiationInfo(), 1)
-        DaoTool.updateTaintInfo(
-            (chemicalFragment as ChemicalFragment).getRadiationInfo(), 2)
-        DaoTool.updateDeviceInfo(
-            (biologicsFragment as BiologicsFragment).getRadiationInfo()
-        )
+        }.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe {
+
+            if (hasValue) {
+                ToastUtil.showCenterToast("保存成功")
+                settingFragment.pop()
+            } else {
+                ToastUtil.showCenterToast("保存失败")
+                (radiationFragment as RadiationFragment).adapter!!.notifyDataSetChanged()
+                (chemicalFragment as ChemicalFragment).adapter!!.notifyDataSetChanged()
+            }
+
+        }
+
     }
 
 }

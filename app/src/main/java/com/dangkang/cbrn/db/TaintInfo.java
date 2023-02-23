@@ -10,7 +10,7 @@ public class TaintInfo {
     @Id(autoincrement = true)
     private Long id;
     private int type; //化学，核辐射
-    private int taint_num; //污点编号
+    private String taint_num; //污点编号
     private String taint_loc; //污点位置
     private String taint_sim; //模拟污点
     private String taint_sim_dis;//模拟污点距离
@@ -18,11 +18,13 @@ public class TaintInfo {
     private String taint_max; // 中心峰值
     private String taint_unit;//单位
     private long create_time;//创建时间
+    public boolean normal;
     @Generated(hash = 1646616816)
     public TaintInfo() {
     }
-    @Generated(hash = 1287754713)
-    public TaintInfo(Long id, int type, int taint_num, String taint_loc, String taint_sim, String taint_sim_dis, String taint_dis, String taint_max, String taint_unit, long create_time) {
+    @Generated(hash = 1522749848)
+    public TaintInfo(Long id, int type, String taint_num, String taint_loc, String taint_sim, String taint_sim_dis, String taint_dis, String taint_max, String taint_unit, long create_time,
+            boolean normal) {
         this.id = id;
         this.type = type;
         this.taint_num = taint_num;
@@ -33,6 +35,7 @@ public class TaintInfo {
         this.taint_max = taint_max;
         this.taint_unit = taint_unit;
         this.create_time = create_time;
+        this.normal = normal;
     }
     public String getTaint_sim_dis() {
         return taint_sim_dis;
@@ -66,11 +69,11 @@ public class TaintInfo {
         this.id = id;
     }
 
-    public int getTaint_num() {
+    public String getTaint_num() {
         return taint_num;
     }
 
-    public void setTaint_num(int taint_num) {
+    public void setTaint_num(String taint_num) {
         this.taint_num = taint_num;
     }
 
@@ -111,5 +114,11 @@ public class TaintInfo {
 
     public void setTaint_max(String taint_max) {
         this.taint_max = taint_max;
+    }
+    public boolean getNormal() {
+        return this.normal;
+    }
+    public void setNormal(boolean normal) {
+        this.normal = normal;
     }
 }

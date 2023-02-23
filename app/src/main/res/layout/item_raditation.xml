@@ -9,6 +9,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/item_normal"
+        android:id="@+id/layout"
         android:padding="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -30,11 +32,17 @@
             android:textColor="@color/un_select_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <TextView
+        <EditText
             android:gravity="center|left"
             android:paddingStart="10dp"
             android:textColor="@color/white"
             android:id="@+id/taint_num"
+            android:hint="BL00000~BL99999"
+            android:maxEms="7"
+            android:maxLength="7"
+            android:inputType="text"
+            android:digits="blBL0123456789"
+            android:textColorHint="@color/gray"
             android:background="@drawable/item_raditation_bg"
             app:layout_constraintStart_toEndOf="@id/tv1"
             app:layout_constraintTop_toTopOf="@id/tv1"

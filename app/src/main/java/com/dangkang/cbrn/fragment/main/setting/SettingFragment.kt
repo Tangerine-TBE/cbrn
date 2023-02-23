@@ -3,6 +3,7 @@ package com.dangkang.cbrn.fragment.main.setting
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.widget.TextView
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
@@ -38,8 +39,7 @@ class SettingFragment : BaseFragment<ViewBinding>() {
         if (settingBackDialog == null){
             settingBackDialog = SettingBackDialog(_mActivity,R.style.DialogStyle,object :SettingBackDialog.OnItemSelected{
                 override fun onSaveItem() {
-                    viewPagerFragmentStateAdapter?.save()
-                    pop()
+                    viewPagerFragmentStateAdapter!!.save(this@SettingFragment)
                 }
 
                 override fun onUnSaveItem() {
@@ -90,8 +90,7 @@ class SettingFragment : BaseFragment<ViewBinding>() {
             if (settingBackDialog == null){
                 settingBackDialog = SettingBackDialog(_mActivity,R.style.DialogStyle,object :SettingBackDialog.OnItemSelected{
                     override fun onSaveItem() {
-                        viewPagerFragmentStateAdapter?.save()
-                        pop()
+                        viewPagerFragmentStateAdapter?.save(this@SettingFragment)
                     }
 
                     override fun onUnSaveItem() {

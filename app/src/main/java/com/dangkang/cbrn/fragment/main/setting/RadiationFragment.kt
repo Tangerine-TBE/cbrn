@@ -32,7 +32,7 @@ import io.reactivex.schedulers.Schedulers
 import java.lang.reflect.Type
 
 class RadiationFragment : BaseFragment<ViewBinding>(), RadiationTypeAdapter.OnItemClickListener {
-    private var adapter: RadiationAdapter? = null
+    public var adapter: RadiationAdapter? = null
     private var typeAdapter: RadiationTypeAdapter? = null
     private var editTextDialog: EditTextDialog? = null
     override fun setBindingView(): ViewBinding {
@@ -192,7 +192,7 @@ class RadiationFragment : BaseFragment<ViewBinding>(), RadiationTypeAdapter.OnIt
                     taintInfo.taint_dis = resources.getStringArray(R.array.radiation_type)[1]
                     taintInfo.taint_loc = ""
                     taintInfo.taint_max = "300"
-                    taintInfo.taint_num = adapter?.itemCount!! + 1
+                    taintInfo.taint_num = ""
                     taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
                     taintInfo.taint_sim_dis = resources.getStringArray(R.array.radiation_sim_dis)[0]
                     if (value == Constant.MEASUREMENT_UNIT_1) {

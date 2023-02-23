@@ -19,7 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class ChemicalFragment :BaseFragment<ViewBinding>() {
-    private var adapter: ChemicalAdapter? = null
+    public var adapter: ChemicalAdapter? = null
     override fun setBindingView() : ViewBinding {
         binding  = FragmentSettingChemicalBinding.inflate(layoutInflater)
         return initView(binding as FragmentSettingChemicalBinding)
@@ -73,7 +73,7 @@ class ChemicalFragment :BaseFragment<ViewBinding>() {
                     taintInfo.taint_dis = resources.getStringArray(R.array.chemical_type)[0]
                     taintInfo.taint_loc = ""
                     taintInfo.taint_max = "300"
-                    taintInfo.taint_num = adapter?.itemCount!! + 1
+                    taintInfo.taint_num = ""
                     taintInfo.taint_sim = resources.getStringArray(R.array.radiation_sim)[0]
                     taintInfo.taint_sim_dis = resources.getStringArray(R.array.radiation_sim_dis)[0]
                     taintInfo.taint_unit = DaoTool.queryUnitFromChemicalInfo(taintInfo.taint_dis)

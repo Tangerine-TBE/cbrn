@@ -73,7 +73,7 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
             @Override
             public void afterTextChanged(Editable s) {
                 L.e(s.toString());
-                data.get(holder.getAdapterPosition()).setTaint_num(Integer.parseInt(s.toString()));
+                data.get(holder.getAdapterPosition()).setTaint_num(s.toString());
             }
         });
         holder.taint_dis.addTextChangedListener(new TextWatcher() {
