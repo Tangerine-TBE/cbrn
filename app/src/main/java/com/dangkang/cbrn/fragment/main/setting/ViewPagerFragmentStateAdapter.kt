@@ -60,7 +60,8 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle:
 
     fun save(settingFragment: SettingFragment) {
         /*检测*/
-        val pattern = Pattern.compile("^BL+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]")
+        val pattern1 = Pattern.compile("^BL+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]")
+        val pattern2 = Pattern.compile("^RF+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]")
         var hasValue = true
         mDisposable = Observable.create<Boolean> {
             val radiationTaintInfoList = (radiationFragment as RadiationFragment).getRadiationInfo()
@@ -68,8 +69,9 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle:
             if (radiationTaintInfoList.isNotEmpty()) {
                 for (item in radiationTaintInfoList) {
                     val value = item.taint_num
-                    val matcher = pattern.matcher(value)
-                    if (!matcher.matches()) {
+                    val matcher1 = pattern1.matcher(value)
+                    val matcher2 = pattern2.matcher(value)
+                    if (!matcher1.matches() || !matcher2.matches()) {
                         item.normal = true
                         hasValue = false
                     }else{
@@ -80,8 +82,9 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle:
             if (chemicalTaintInfoList.isNotEmpty()) {
                 for (item in chemicalTaintInfoList) {
                     val value = item.taint_num
-                    val matcher = pattern.matcher(value)
-                    if (!matcher.matches()) {
+                    val matcher1 = pattern1.matcher(value)
+                    val matcher2 = pattern2.matcher(value)
+                    if (!matcher1.matches() || !matcher2.matches()) {
                         item.normal = true
                         hasValue = false
                     }else{

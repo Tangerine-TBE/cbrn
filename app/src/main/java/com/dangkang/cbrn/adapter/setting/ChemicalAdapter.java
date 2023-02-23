@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangkang.cbrn.R;
@@ -44,6 +46,12 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ChemicalAdapter.ViewHolder holder, int position) {
+        if (data.get(position).normal){
+            holder.layout.setBackground(ContextCompat.getDrawable(mContext,R.drawable.item_wrong));
+
+        }else{
+            holder.layout.setBackground(ContextCompat.getDrawable(mContext,R.drawable.item_normal));
+        }
         holder.taint_num.setText(data.get(position).getTaint_num() + "");
         holder.taint_dis.setText(data.get(position).getTaint_dis() + "");
         holder.taint_loc.setText(data.get(position).getTaint_loc() + "");
@@ -73,7 +81,7 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
             @Override
             public void afterTextChanged(Editable s) {
                 L.e(s.toString());
-                data.get(holder.getAdapterPosition()).setTaint_num(s.toString());
+                data.get(holder.getAdapterPosition()).setTaint_num(s.toString().toUpperCase());
             }
         });
         holder.taint_dis.addTextChangedListener(new TextWatcher() {
@@ -205,9 +213,10 @@ public class ChemicalAdapter extends RecyclerView.Adapter<ChemicalAdapter.ViewHo
         TextView unit;
         ImageView delete;
         EditText taint_sim_dis;
-
+        ConstraintLayout layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            layout = itemView.findViewById(R.id.layout);
             taint_num = itemView.findViewById(R.id.taint_num);
             taint_loc = itemView.findViewById(R.id.taint_loc);
             taint_sim = itemView.findViewById(R.id.taint_sim);

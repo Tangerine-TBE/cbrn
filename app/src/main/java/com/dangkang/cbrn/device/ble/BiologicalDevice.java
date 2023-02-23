@@ -29,26 +29,30 @@ public class BiologicalDevice  {
     public byte[] getData(int type, int status) {
         /*指令操作
          * 1.滴液前状态变更*/
+        /*复位指令*/
         byte cmdType;
         byte cmdStatus;
         if (type == 0) {
             cmdType = 0x01;
             if (status == 0) {
-                cmdStatus = 0x01;
+                cmdStatus = 0x01;//未滴液
             } else {
-                cmdStatus = 0x02;
+                cmdStatus = 0x02;//滴液后
             }
-        } else {
+        } else if (type == 1){
             cmdType = 0x02;
             if (status == 1) {
-                cmdStatus = 0x01;
+                cmdStatus = 0x01;//阴性
             } else if (status == 2) {
-                cmdStatus = 0x02;
+                cmdStatus = 0x02;//阳性
             } else if (status == 3) {
-                cmdStatus = 0x03;
+                cmdStatus = 0x03;//弱阳性
             } else {
-                cmdStatus = 0x04;
+                cmdStatus = 0x04;//无效
             }
+        }else{
+            cmdType =0x00; //重置
+            cmdStatus = 0x00;
         }
         byte[] cmd = new byte[]{(byte) 0xDC, cmdType, cmdStatus, (byte) 0xCD};
         L.e(StringUtil.byte2HexStr(cmd));

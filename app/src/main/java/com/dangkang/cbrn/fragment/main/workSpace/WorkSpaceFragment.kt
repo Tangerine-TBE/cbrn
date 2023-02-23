@@ -5,7 +5,7 @@ import android.view.View
 import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
-import com.dangkang.cbrn.dialog.BleConfigDialog
+import com.dangkang.cbrn.dialog.BleDialog
 import com.dangkang.cbrn.dialog.WorkBackDialog
 import com.dangkang.cbrn.socket.SocketCallBack
 import com.dangkang.cbrn.socket.SocketServer
@@ -50,7 +50,7 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
 
     private fun initView(fragmentMainBinding: FragmentWorkSpaceBinding): ViewBinding {
         fragmentMainBinding.start.setOnClickListener {
-            BleConfigDialog(_mActivity, object : BleConfigDialog.OnCanceledListener {
+            BleDialog(_mActivity, object : BleDialog.OnCanceledListener {
                 override fun cancel(connectDevices: Int) {
 
                 }

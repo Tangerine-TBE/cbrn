@@ -23,7 +23,7 @@ import com.dangkang.cbrn.device.ble.BiologicalDevice
 import com.dangkang.cbrn.utils.DimenUtil
 import java.lang.ref.WeakReference
 
-class BleConfigDialog(context: Context,mCanceledListener:OnCanceledListener) {
+class BleDialog(context: Context, mCanceledListener:OnCanceledListener) {
 
     private var mDialog: Dialog? = null
     private var mBind: DialogBleConfigBinding? = null
@@ -36,9 +36,6 @@ class BleConfigDialog(context: Context,mCanceledListener:OnCanceledListener) {
             setCancelable(false)
             mBind = DialogBleConfigBinding.inflate(LayoutInflater.from(context))
             //        取屏幕长宽高
-
-
-
             setContentView(mBind!!.root)
         }
         val deviceWidth: Int = DimenUtil.getScreenWidth()
@@ -67,7 +64,7 @@ class BleConfigDialog(context: Context,mCanceledListener:OnCanceledListener) {
             }.start()
         }, 1000)
     }
-    public fun showDialog(){
+    fun showDialog(){
         mDialog?.show()
         initView()
     }
@@ -126,7 +123,7 @@ class BleConfigDialog(context: Context,mCanceledListener:OnCanceledListener) {
                     4
                 }
                 val resultCmd = BiologicalDevice().getData(
-                    1, type
+                    2, type
                 )
                 BleManager.getInstance()
                     .write(bleDevice, serUUID, wriUUID, resultCmd, object : BleWriteCallback() {
@@ -174,11 +171,11 @@ class BleConfigDialog(context: Context,mCanceledListener:OnCanceledListener) {
         fun cancel(connectDevices:Int)
     }
 
-    class MyHandler(bleConfigDialog: BleConfigDialog) : Handler(Looper.myLooper()!!) {
-        private var weakReference: WeakReference<BleConfigDialog>? = null
+    class MyHandler(bleDialog: BleDialog) : Handler(Looper.myLooper()!!) {
+        private var weakReference: WeakReference<BleDialog>? = null
 
         init {
-            weakReference = WeakReference(bleConfigDialog)
+            weakReference = WeakReference(bleDialog)
         }
 
         override fun handleMessage(msg: Message) {
