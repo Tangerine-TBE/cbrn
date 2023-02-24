@@ -20,6 +20,7 @@ class SocketDevice(socket: Socket, socketCallBack: SocketCallBack) : AbstractDev
     private var type: Int = Constant.SOCKET_DISCONNECT_APP
     private var mStop = true
     private var mCurrentSystemTime: Long = 0
+    override var ip: String =""
     private var mSocketCallBack: SocketCallBack
     private val mSocketTimerTask: Runnable = Runnable {
         while (mStop) {
@@ -46,7 +47,7 @@ class SocketDevice(socket: Socket, socketCallBack: SocketCallBack) : AbstractDev
         Thread {
             mSocketTimerTask.run()
         }.start()
-        val ip = mSocket!!.inetAddress.hostAddress as String
+        ip = mSocket!!.inetAddress.hostAddress as String
         try {
             while (mInputStream.read(buffer).also { len = it } != -1 && !mSocket!!.isClosed) {
                 mCurrentSystemTime = System.currentTimeMillis()

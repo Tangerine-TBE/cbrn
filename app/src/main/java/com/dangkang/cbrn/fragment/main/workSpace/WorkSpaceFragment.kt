@@ -7,7 +7,9 @@ import com.dangkang.cbrn.R
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
 import com.dangkang.cbrn.dialog.BleDialog
 import com.dangkang.cbrn.dialog.WorkBackDialog
+import com.dangkang.cbrn.socket.AbstractDevice
 import com.dangkang.cbrn.socket.SocketCallBack
+import com.dangkang.cbrn.socket.SocketDevice
 import com.dangkang.cbrn.socket.SocketServer
 import com.dangkang.core.fragment.BaseFragment
 import com.dangkang.core.utils.L
@@ -40,10 +42,15 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
 
             override fun receiver(data: String?,ip:String?) {
                 L.e("${data}；ip${ip}")
+               val abstractDevice =  SocketServer.instance.findDeviceByIp(ip!!)
+                abstractDevice!!.write(byteArrayOf(0x23))
+
+
+
             }
 
             override fun write(outputStream: OutputStream?) {
-                outputStream!!.write(byteArrayOf(0x23))
+//                outputStream!!.write(byteArrayOf(0x23))
 
             }
         })

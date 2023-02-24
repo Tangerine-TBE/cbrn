@@ -33,9 +33,9 @@ class SocketServer private constructor() {
             try {
                 while (close) {
                     val socketDevice = serverSocket!!.accept()
-                    val device = SocketDevice(socketDevice,socketCallBack)
+                    val device = SocketDevice(socketDevice, socketCallBack)
                     devicesCache.add(device)
-                    Thread{
+                    Thread {
                         while (connect && close) {
                             connect = device.read()
                             if (!connect) {
@@ -63,6 +63,16 @@ class SocketServer private constructor() {
             devicesCache[i].close()
         }
         devicesCache.clear()
+    }
+
+    fun findDeviceByIp(ip: String):AbstractDevice? {
+
+        for (item in devicesCache) {
+           if (item.ip == ip) {
+               return item
+           }
+        }
+        return null
     }
 
     fun devicesCache(): ArrayList<AbstractDevice> {
