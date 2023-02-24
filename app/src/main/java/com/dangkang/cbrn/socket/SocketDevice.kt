@@ -1,15 +1,11 @@
 package com.dangkang.cbrn.socket
 
-import com.blankj.utilcode.util.StringUtils
 import com.dangkang.Constant
 import com.dangkang.core.utils.L
 import com.dangkang.core.utils.StringUtil
-import java.io.BufferedWriter
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-import java.io.OutputStreamWriter
-import java.io.PrintWriter
 import java.net.Socket
 import java.net.SocketException
 
