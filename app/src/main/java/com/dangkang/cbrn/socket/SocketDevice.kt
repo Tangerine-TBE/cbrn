@@ -38,11 +38,6 @@ class SocketDevice(socket: Socket, socketCallBack: SocketCallBack) : AbstractDev
         this.mSocketCallBack = socketCallBack
         this.mOutputStream = socket.getOutputStream()
     }
-
-    fun write() {
-        mOutputStream.write(byteArrayOf(0x23, 0x01))
-    }
-
     override fun read(): Boolean {
         val buffer = ByteArray(1024)
         var len: Int
@@ -84,15 +79,21 @@ class SocketDevice(socket: Socket, socketCallBack: SocketCallBack) : AbstractDev
 
     }
 
-    override fun write(byteArray: ByteArray) {
-        L.e(StringUtil.byte2HexStr(byteArray))
-        mOutputStream.write(byteArray)
+    override fun write(byteArray: ByteArray):Boolean {
+        return if (mStop){
+            L.e(StringUtil.byte2HexStr(byteArray))
+            mOutputStream.write(byteArray)
+            true
+        }else{
+            false
+        }
     }
 
     override fun close() {
+        mStop = false
+        mOutputStream.close()
         mInputStream.close()
         mSocket!!.close()
-        mStop = false
     }
 
 
