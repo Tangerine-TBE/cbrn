@@ -1,48 +1,46 @@
 package com.dangkang.cbrn.socket
 
+import com.blankj.utilcode.util.StringUtils
 import com.dangkang.Constant
 import com.dangkang.core.utils.L
+import com.dangkang.core.utils.StringUtil
 import java.io.BufferedWriter
 import java.io.IOException
 import java.io.InputStream
+import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.io.PrintWriter
 import java.net.Socket
 import java.net.SocketException
 
-class SocketDevice(socket: Socket,socketHandler: SocketHandler) : AbstractDevice {
+class SocketDevice(socket: Socket, socketCallBack: SocketCallBack) : AbstractDevice {
     private var mInputStream: InputStream
-    private var mPrintWriter: PrintWriter
-    private var mSocket: Socket? =null
-    private var type:Int = Constant.SOCKET_DISCONNECT_APP
-    private var mStop  = true
-    private var mCurrentSystemTime :Long =0
-    private var mSocketHandler:SocketHandler
-    private val mSocketTimerTask:Runnable = Runnable {
-        while (mStop){
+    private var mOutputStream: OutputStream
+    private var mSocket: Socket? = null
+    private var type: Int = Constant.SOCKET_DISCONNECT_APP
+    private var mStop = true
+    private var mCurrentSystemTime: Long = 0
+    private var mSocketCallBack: SocketCallBack
+    private val mSocketTimerTask: Runnable = Runnable {
+        while (mStop) {
             val time = System.currentTimeMillis() - mCurrentSystemTime
-            if (time> Constant.SOCKET_TIME_OUT){
-                type= Constant.SOCKET_DISCONNECT_DEVICE
+            if (time > Constant.SOCKET_TIME_OUT) {
+                type = Constant.SOCKET_DISCONNECT_DEVICE
                 mSocket!!.close()
                 break
             }
         }
     }
+
     init {
         this.mSocket = socket
         this.mInputStream = socket.getInputStream()
-        this.mSocketHandler = socketHandler
-        this.mPrintWriter = PrintWriter(
-            BufferedWriter(
-                OutputStreamWriter(
-                    mSocket!!.getOutputStream(), Charsets.UTF_8
-                )
-            )
-        )
+        this.mSocketCallBack = socketCallBack
+        this.mOutputStream = socket.getOutputStream()
     }
 
-    override fun write() {
-        mPrintWriter.println("11111")
+    fun write() {
+        mOutputStream.write(byteArrayOf(0x23, 0x01))
     }
 
     override fun read(): Boolean {
@@ -50,27 +48,30 @@ class SocketDevice(socket: Socket,socketHandler: SocketHandler) : AbstractDevice
         var len: Int
         var receiveStr = ""
         mCurrentSystemTime = System.currentTimeMillis()
-        Thread{
-             mSocketTimerTask.run()
-         }.start()
-//        ip = mSocket!!.inetAddress.hostAddress as String
+        Thread {
+            mSocketTimerTask.run()
+        }.start()
+        val ip = mSocket!!.inetAddress.hostAddress as String
         try {
             while (mInputStream.read(buffer).also { len = it } != -1 && !mSocket!!.isClosed) {
                 mCurrentSystemTime = System.currentTimeMillis()
                 receiveStr += String(buffer, 0, len, Charsets.UTF_8)
                 if (len < 1024) {
-                    mSocketHandler.obtainMessage(SocketHandler.RECEIVER,receiveStr).sendToTarget()
+                    mSocketCallBack.receiver(receiveStr, ip)
+                    mSocketCallBack.write(mOutputStream)
                     receiveStr = ""
                 }
             }
             return true
         } catch (e: java.lang.Exception) {
             if (e is SocketException) {
-                if(type == Constant.SOCKET_DISCONNECT_DEVICE){
-                    mSocketHandler.obtainMessage(SocketHandler.DISCONNECT,1).sendToTarget()
-                }else if (type == Constant.SOCKET_DISCONNECT_APP){
-                    mSocketHandler.obtainMessage(SocketHandler.DISCONNECT,2).sendToTarget()
+                if (type == Constant.SOCKET_DISCONNECT_DEVICE) {
+                    mSocketCallBack.disconnect(1, ip)
+                } else if (type == Constant.SOCKET_DISCONNECT_APP) {
+                    mSocketCallBack.disconnect(2, ip)
+
                 }
+                mOutputStream.close()
                 mInputStream.close()
                 mSocket!!.close()
                 mStop = false
@@ -83,9 +84,16 @@ class SocketDevice(socket: Socket,socketHandler: SocketHandler) : AbstractDevice
 
     }
 
+    override fun write(byteArray: ByteArray) {
+        L.e(StringUtil.byte2HexStr(byteArray))
+        mOutputStream.write(byteArray)
+    }
+
     override fun close() {
         mInputStream.close()
         mSocket!!.close()
         mStop = false
     }
+
+
 }

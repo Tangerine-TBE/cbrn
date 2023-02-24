@@ -29,12 +29,11 @@ class SocketServer private constructor() {
     fun start(socketCallBack: SocketCallBack) {
         close = true
         serverSocket = ServerSocket(Constant.SOCKET_SERVER_PORT)
-        val socketHandler = SocketHandler(socketCallBack)
         Thread {
             try {
                 while (close) {
                     val socketDevice = serverSocket!!.accept()
-                    val device = SocketDevice(socketDevice,socketHandler)
+                    val device = SocketDevice(socketDevice,socketCallBack)
                     devicesCache.add(device)
                     Thread{
                         while (connect && close) {

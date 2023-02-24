@@ -10,6 +10,9 @@ import com.dangkang.cbrn.dialog.WorkBackDialog
 import com.dangkang.cbrn.socket.SocketCallBack
 import com.dangkang.cbrn.socket.SocketServer
 import com.dangkang.core.fragment.BaseFragment
+import com.dangkang.core.utils.L
+import java.io.InputStream
+import java.io.OutputStream
 
 class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     private var viewPagerWsStateAdapter: ViewPagerWsStateAdapter? = null
@@ -25,12 +28,22 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
 
     override fun setBindingView(): ViewBinding {
         SocketServer.instance.start(object :SocketCallBack{
-            override fun disconnect() {
-                /*断开时需要处理的东西*/
+            override fun disconnect(type: Int, ip: String?) {
+                L.e(Thread.currentThread().name)
+                if (type == 1){
+                    L.e("设备主动断开${ip}")
+                }else{
+                    L.e("设备被动断开${ip}")
+
+                }
             }
 
-            override fun receiver(data: String?) {
-                /*接收到消息 设备+1*/
+            override fun receiver(data: String?,ip:String?) {
+                L.e("${data}；ip${ip}")
+            }
+
+            override fun write(outputStream: OutputStream?) {
+                outputStream!!.write(byteArrayOf(0x23))
 
             }
         })
