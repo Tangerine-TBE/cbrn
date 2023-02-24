@@ -54,6 +54,7 @@ class BleDialog(context: Context, mCanceledListener:OnCanceledListener) {
                 val deviceInfo = DaoTool.queryAllDeviceInfo()
                 //发送总数
                 if (deviceInfo.isEmpty()) {
+                    myHandler!!.obtainMessage(5).sendToTarget()
                     return@Thread
                 }
                 val jsonObject = JSONObject()
@@ -123,7 +124,7 @@ class BleDialog(context: Context, mCanceledListener:OnCanceledListener) {
                     4
                 }
                 val resultCmd = BiologicalDevice().getData(
-                    2, type
+                    1, type
                 )
                 BleManager.getInstance()
                     .write(bleDevice, serUUID, wriUUID, resultCmd, object : BleWriteCallback() {

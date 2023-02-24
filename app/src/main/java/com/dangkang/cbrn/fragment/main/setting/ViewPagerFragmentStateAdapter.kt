@@ -71,7 +71,7 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle:
                     val value = item.taint_num
                     val matcher1 = pattern1.matcher(value)
                     val matcher2 = pattern2.matcher(value)
-                    if (!matcher1.matches() || !matcher2.matches()) {
+                    if (!matcher1.matches() && !matcher2.matches()) {
                         item.normal = true
                         hasValue = false
                     }else{
@@ -84,7 +84,7 @@ class ViewPagerFragmentStateAdapter(fragmentManager: FragmentManager, lifecycle:
                     val value = item.taint_num
                     val matcher1 = pattern1.matcher(value)
                     val matcher2 = pattern2.matcher(value)
-                    if (!matcher1.matches() || !matcher2.matches()) {
+                    if (!matcher1.matches()&& !matcher2.matches()) {
                         item.normal = true
                         hasValue = false
                     }else{
