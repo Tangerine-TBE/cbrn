@@ -33,7 +33,9 @@ class SocketServer private constructor() {
             try {
                 while (close) {
                     val socketDevice = serverSocket!!.accept()
-                    val device = SocketDevice(socketDevice, socketCallBack)
+                    val device = SocketDevice(socketDevice, socketCallBack,
+                        readTimeOut = true,
+                    )
                     devicesCache.add(device)
                     Thread {
                         while (connect && close) {

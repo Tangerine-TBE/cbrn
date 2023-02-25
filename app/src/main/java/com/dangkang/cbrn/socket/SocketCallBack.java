@@ -5,6 +5,7 @@ import java.io.OutputStream;
 
 public interface SocketCallBack {
         void disconnect(int type,String ip);
-        void receiver(String data,String ip);
-        void write(OutputStream outputStream);
+        void receiverByte(byte[] data,String ip);
+        void receiverString(String data, String ip);
+        void heartBeat(OutputStream outputStream);
 }

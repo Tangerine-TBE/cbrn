@@ -171,7 +171,13 @@ class BiologicsWSFragment : BaseFragment<ViewBinding>(),OnIconClickListener {
 
     override fun onPause() {
         super.onPause()
-        _mActivity.unregisterReceiver(systemListener)
+        try {
+            BleManager.getInstance().cancelScan()
+            mScanStop = true
+            _mActivity.unregisterReceiver(systemListener)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 
     /**

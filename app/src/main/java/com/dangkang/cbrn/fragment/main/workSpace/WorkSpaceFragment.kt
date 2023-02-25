@@ -3,8 +3,10 @@ package com.dangkang.cbrn.fragment.main.workSpace
 import android.os.Bundle
 import android.view.View
 import androidx.viewbinding.ViewBinding
+import com.blankj.utilcode.util.StringUtils
 import com.dangkang.cbrn.R
 import com.dangkang.cbrn.databinding.FragmentWorkSpaceBinding
+import com.dangkang.cbrn.device.socket.SocketConverter
 import com.dangkang.cbrn.dialog.BleDialog
 import com.dangkang.cbrn.dialog.WorkBackDialog
 import com.dangkang.cbrn.socket.AbstractDevice
@@ -13,6 +15,8 @@ import com.dangkang.cbrn.socket.SocketDevice
 import com.dangkang.cbrn.socket.SocketServer
 import com.dangkang.core.fragment.BaseFragment
 import com.dangkang.core.utils.L
+import com.dangkang.core.utils.StringUtil
+import io.reactivex.Observable
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -29,28 +33,26 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
     }
 
     override fun setBindingView(): ViewBinding {
-        SocketServer.instance.start(object :SocketCallBack{
+        SocketServer.instance.start(object : SocketCallBack {
             override fun disconnect(type: Int, ip: String?) {
                 L.e(Thread.currentThread().name)
-                if (type == 1){
-                    L.e("设备主动断开${ip}")
-                }else{
+                if (type == 1) {
                     L.e("设备被动断开${ip}")
-
+                } else {
+                    L.e("设备主动断开${ip}")
                 }
             }
-
-            override fun receiver(data: String?,ip:String?) {
-                L.e("${data}；ip${ip}")
-               val abstractDevice =  SocketServer.instance.findDeviceByIp(ip!!)
-                abstractDevice!!.write(byteArrayOf(0x23))
-
-
-
+            override fun receiverByte(data: ByteArray?, ip: String?) {
+               val string =  StringUtil.byte2HexStr(data)
+                L.e("${string}；ip${ip}")
+                SocketConverter().data(data,ip)
             }
 
-            override fun write(outputStream: OutputStream?) {
-//                outputStream!!.write(byteArrayOf(0x23))
+            override fun receiverString(data: String?, ip: String?) {
+                L.e("${data}；ip${ip}")
+
+            }
+            override fun heartBeat(outputStream: OutputStream?) {
 
             }
         })
@@ -58,12 +60,13 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
         binding = fragmentWorkSpaceBinding
         return initView(binding as FragmentWorkSpaceBinding)
     }
-    public fun changeItemStatus(model:Int){
-        if(model == 1){
 
-        }else if (model == 2){
+    public fun changeItemStatus(model: Int) {
+        if (model == 1) {
 
-        }else if (model == 3){
+        } else if (model == 2) {
+
+        } else if (model == 3) {
 
         }
     }
@@ -80,7 +83,8 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
         fragmentMainBinding.titleBar.connectInfo.text = "未连接模块..."
         fragmentMainBinding.titleBar.back.setOnClickListener {
             if (workBackDialog == null) {
-                workBackDialog = WorkBackDialog(_mActivity,
+                workBackDialog = WorkBackDialog(
+                    _mActivity,
                     R.style.DialogStyle,
                     object : WorkBackDialog.OnItemSelected {
                         override fun onSaveItem() {
@@ -117,7 +121,8 @@ class WorkSpaceFragment : BaseFragment<ViewBinding>(), View.OnClickListener {
 
     override fun onBackPressedSupport(): Boolean {
         if (workBackDialog == null) {
-            workBackDialog = WorkBackDialog(_mActivity,
+            workBackDialog = WorkBackDialog(
+                _mActivity,
                 R.style.DialogStyle,
                 object : WorkBackDialog.OnItemSelected {
                     override fun onSaveItem() {

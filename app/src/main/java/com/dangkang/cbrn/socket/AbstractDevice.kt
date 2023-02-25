@@ -5,4 +5,5 @@ interface AbstractDevice {
     fun read(): Boolean
     fun write(byteArray: ByteArray):Boolean
     var ip:String
+    var alive :Boolean
 }
