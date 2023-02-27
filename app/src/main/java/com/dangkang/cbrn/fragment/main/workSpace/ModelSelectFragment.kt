@@ -5,10 +5,15 @@ import androidx.viewbinding.ViewBinding
 import com.dangkang.cbrn.adapter.workspace.ModelSelectAdapter
 import com.dangkang.cbrn.bean.ModelDeviceBean
 import com.dangkang.cbrn.databinding.FragmentSocketBingBinding
+import com.dangkang.cbrn.event.ItemEvent
 import com.dangkang.cbrn.weight.SimplePaddingDecoration
 import com.dangkang.core.fragment.BaseFragment
+import com.dangkang.core.utils.L
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class ModelSelectFragment : BaseFragment<ViewBinding>(),ModelSelectAdapter.OnModelSelected {
+open class ModelSelectFragment : BaseFragment<ViewBinding>(),ModelSelectAdapter.OnModelSelected {
     override fun onBackPressedSupport(): Boolean {
         val fragment = findFragment(WorkSpaceFragment::class.java)
         return if (fragment != null) {
@@ -21,7 +26,13 @@ class ModelSelectFragment : BaseFragment<ViewBinding>(),ModelSelectAdapter.OnMod
 
     override fun setBindingView(): ViewBinding {
         binding = FragmentSocketBingBinding.inflate(layoutInflater)
+        EventBus.getDefault().register(this)
         return initView(binding as FragmentSocketBingBinding)
+    }
+
+    override fun onDestroyView() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroyView()
     }
 
     private fun initView(viewBinding: FragmentSocketBingBinding): FragmentSocketBingBinding {
@@ -41,7 +52,13 @@ class ModelSelectFragment : BaseFragment<ViewBinding>(),ModelSelectAdapter.OnMod
     override fun onSelected(modelDeviceBean: ModelDeviceBean?) {
         if (modelDeviceBean?.model == 3){
             val workSpaceFragment = findFragment(WorkSpaceFragment::class.java)
-
+            EventBus.getDefault().post(EventBus())
         }
     }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+   open fun changeEvent(eventBus: EventBus){
+        L.e("changed")
+    }
+
+
 }

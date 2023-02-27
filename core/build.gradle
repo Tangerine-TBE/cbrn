@@ -49,7 +49,6 @@ dependencies {
     api rootProject.ext.dependencies["rxandroid"]
     api rootProject.ext.dependencies["immersionbar"]
     api rootProject.ext.dependencies["greenDao"]
-    api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["fragmentation"]
     api rootProject.ext.dependencies["PopWindow"]
     api rootProject.ext.dependencies["blankJ"]
@@ -59,4 +58,5 @@ dependencies {
     api rootProject.ext.dependencies["flexbox"]
     api rootProject.ext.dependencies["gosnCore"]
     api rootProject.ext.dependencies["fastJson"]
+    api rootProject.ext.dependencies["EventBus"]
 }

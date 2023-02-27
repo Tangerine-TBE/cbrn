@@ -23,8 +23,6 @@ ext {
             "arouter_api"          : "com.alibaba:arouter-api:1.4.0",
             "arouter_compiler"     : "com.alibaba:arouter-compiler:1.2.1",
             "arouter_annotation"   : "com.alibaba:arouter-annotation:1.0.4",
-            //事件订阅
-            "eventbus"             : "org.greenrobot:eventbus:3.0.0",
             //retrofit
             "retrofit"             : "com.squareup.retrofit2:retrofit:2.4.0",
             "retrofitConverter"    : "com.squareup.retrofit2:converter-gson:2.4.0",
@@ -68,10 +66,11 @@ ext {
             "blankJ"               : "com.blankj:utilcodex:1.31.1",
             "bleCore"              : "com.github.Jasonchenlijian:FastBle:2.4.0",
             "permission"           : "pub.devrel:easypermissions:3.0.0",
-            "tabLayout": "q.rorbin:VerticalTabLayout:1.2.5",
-            "flexbox": "com.google.android:flexbox:1.1.0",
-            "gosnCore":     "com.google.code.gson:gson:2.8.5",
-            "fastJson":"com.alibaba:fastjson:2.0.23"
+            "tabLayout"            : "q.rorbin:VerticalTabLayout:1.2.5",
+            "flexbox"              : "com.google.android:flexbox:1.1.0",
+            "gosnCore"             : "com.google.code.gson:gson:2.8.5",
+            "fastJson"             : "com.alibaba:fastjson:2.0.23",
+            "EventBus"             : "org.greenrobot:eventbus:3.3.1"
 
     ]
 }
